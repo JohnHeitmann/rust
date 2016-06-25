@@ -21,24 +21,24 @@
 /// The representation of a trait object like `&SomeTrait`.
 ///
 /// This struct has the same layout as types like `&SomeTrait` and
-/// `Box<AnotherTrait>`. The [Trait Objects chapter of the
+/// [`Box<AnotherTrait>`]. The [Trait Objects chapter of the
 /// Book][moreinfo] contains more details about the precise nature of
 /// these internals.
 ///
 /// [moreinfo]: ../../book/trait-objects.html#representation
 ///
-/// `TraitObject` is guaranteed to match layouts, but it is not the
+/// [`TraitObject`] is guaranteed to match layouts, but it is not the
 /// type of trait objects (e.g. the fields are not directly accessible
 /// on a `&SomeTrait`) nor does it control that layout (changing the
 /// definition will not change the layout of a `&SomeTrait`). It is
 /// only designed to be used by unsafe code that needs to manipulate
 /// the low-level details.
 ///
-/// There is no `Repr` implementation for `TraitObject` because there
+/// There is no `Repr` implementation for [`TraitObject`] because there
 /// is no way to refer to all trait objects generically, so the only
 /// way to create values of this type is with functions like
-/// `std::mem::transmute`. Similarly, the only way to create a true
-/// trait object from a `TraitObject` value is with `transmute`.
+/// [`std::mem::transmute`]. Similarly, the only way to create a true
+/// trait object from a [`TraitObject`] value is with [`transmute`].
 ///
 /// Synthesizing a trait object with mismatched types—one where the
 /// vtable does not correspond to the type of the value to which the
@@ -77,8 +77,8 @@
 ///
 /// let other_value: i32 = 456;
 ///
-/// // construct a new object, pointing to a different `i32`, being
-/// // careful to use the `i32` vtable from `object`
+/// // construct a new object, pointing to a different [`i32`], being
+/// // careful to use the [`i32`] vtable from `object`
 /// let synthesized: &Foo = unsafe {
 ///      mem::transmute(raw::TraitObject {
 ///          data: &other_value as *const _ as *mut (),
@@ -90,6 +90,12 @@
 /// // `other_value` directly
 /// assert_eq!(synthesized.bar(), 457);
 /// ```
+///
+/// [`Box<AnotherTrait>`]: ../../std/boxed/struct.Box.html
+/// [`TraitObject`]: ../../std/raw/struct.TraitObject.html
+/// [`i32`]: ../../std/primitive.i32.html
+/// [`std::mem::transmute`]: ../../std/mem/fn.transmute.html
+/// [`transmute`]: ../../std/mem/fn.transmute.html
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[allow(missing_debug_implementations)]

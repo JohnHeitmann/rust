@@ -10,7 +10,9 @@
 
 //! Slice management and manipulation
 //!
-//! For more details `std::slice`.
+//! For more details [`std::slice`].
+//!
+//! [`std::slice`]: ../../std/slice/index.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -1728,12 +1730,14 @@ pub unsafe fn from_raw_parts<'a, T>(p: *const T, len: usize) -> &'a [T] {
     mem::transmute(Repr { data: p, len: len })
 }
 
-/// Performs the same functionality as `from_raw_parts`, except that a mutable
+/// Performs the same functionality as [`from_raw_parts`], except that a mutable
 /// slice is returned.
 ///
-/// This function is unsafe for the same reasons as `from_raw_parts`, as well
+/// This function is unsafe for the same reasons as [`from_raw_parts`], as well
 /// as not being able to provide a non-aliasing guarantee of the returned
 /// mutable slice.
+///
+/// [`from_raw_parts`]: ../../collections/slice/fn.from_raw_parts.html
 #[inline]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub unsafe fn from_raw_parts_mut<'a, T>(p: *mut T, len: usize) -> &'a mut [T] {

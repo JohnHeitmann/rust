@@ -8,16 +8,16 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! This module implements the `Any` trait, which enables dynamic typing
+//! This module implements the [`Any`] trait, which enables dynamic typing
 //! of any `'static` type through runtime reflection.
 //!
-//! `Any` itself can be used to get a `TypeId`, and has more features when used
+//! [`Any`] itself can be used to get a [`TypeId`], and has more features when used
 //! as a trait object. As `&Any` (a borrowed trait object), it has the `is` and
 //! `downcast_ref` methods, to test if the contained value is of a given type,
 //! and to get a reference to the inner value as a type. As `&mut Any`, there
 //! is also the `downcast_mut` method, for getting a mutable reference to the
-//! inner value. `Box<Any>` adds the `downcast` method, which attempts to
-//! convert to a `Box<T>`. See the [`Box`] documentation for the full details.
+//! inner value. [`Box<Any>`] adds the `downcast` method, which attempts to
+//! convert to a [`Box<T>`]. See the [`Box`] documentation for the full details.
 //!
 //! Note that &Any is limited to testing whether a value is of a specified
 //! concrete type, and cannot be used to test whether a type implements a trait.
@@ -68,6 +68,11 @@
 //!     do_work(&my_i8);
 //! }
 //! ```
+//!
+//! [`Any`]: ../../std/any/trait.Any.html
+//! [`Box<Any>`]: ../../std/boxed/struct.Box.html
+//! [`Box<T>`]: ../../std/boxed/struct.Box.html
+//! [`TypeId`]: ../../std/any/struct.TypeId.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -85,10 +90,12 @@ use marker::{Reflect, Sized};
 
 /// A type to emulate dynamic typing.
 ///
-/// Most types implement `Any`. However, any type which contains a non-`'static` reference does not.
+/// Most types implement [`Any`]. However, any type which contains a non-`'static` reference does not.
 /// See the [module-level documentation][mod] for more details.
 ///
 /// [mod]: index.html
+///
+/// [`Any`]: ../../std/any/trait.Any.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Any: Reflect + 'static {
     /// Gets the `TypeId` of `self`.
@@ -204,14 +211,16 @@ impl Any+Send {
 // TypeID and its methods
 ///////////////////////////////////////////////////////////////////////////////
 
-/// A `TypeId` represents a globally unique identifier for a type.
+/// A [`TypeId`] represents a globally unique identifier for a type.
 ///
-/// Each `TypeId` is an opaque object which does not allow inspection of what's
+/// Each [`TypeId`] is an opaque object which does not allow inspection of what's
 /// inside but does allow basic operations such as cloning, comparison,
 /// printing, and showing.
 ///
-/// A `TypeId` is currently only available for types which ascribe to `'static`,
+/// A [`TypeId`] is currently only available for types which ascribe to `'static`,
 /// but this limitation may be removed in the future.
+///
+/// [`TypeId`]: ../../std/any/struct.TypeId.html
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Hash)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct TypeId {

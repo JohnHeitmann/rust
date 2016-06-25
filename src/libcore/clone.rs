@@ -8,15 +8,15 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! The `Clone` trait for types that cannot be 'implicitly copied'.
+//! The [`Clone`] trait for types that cannot be 'implicitly copied'.
 //!
 //! In Rust, some simple types are "implicitly copyable" and when you
 //! assign them or pass them as arguments, the receiver will get a copy,
 //! leaving the original value in place. These types do not require
 //! allocation to copy and do not have finalizers (i.e. they do not
-//! contain owned boxes or implement `Drop`), so the compiler considers
+//! contain owned boxes or implement [`Drop`]), so the compiler considers
 //! them cheap and safe to copy. For other types copies must be made
-//! explicitly, by convention implementing the `Clone` trait and calling
+//! explicitly, by convention implementing the [`Clone`] trait and calling
 //! the `clone` method.
 //!
 //! Basic usage example:
@@ -41,6 +41,9 @@
 //!    let copy = f.clone(); // and now we can clone it!
 //! }
 //! ```
+//!
+//! [`Clone`]: ../../std/clone/trait.Clone.html
+//! [`Drop`]: ../../std/ops/trait.Drop.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -48,29 +51,29 @@ use marker::Sized;
 
 /// A common trait for the ability to explicitly duplicate an object.
 ///
-/// Differs from `Copy` in that `Copy` is implicit and extremely inexpensive, while
-/// `Clone` is always explicit and may or may not be expensive. In order to enforce
-/// these characteristics, Rust does not allow you to reimplement `Copy`, but you
-/// may reimplement `Clone` and run arbitrary code.
+/// Differs from [`Copy`] in that [`Copy`] is implicit and extremely inexpensive, while
+/// [`Clone`] is always explicit and may or may not be expensive. In order to enforce
+/// these characteristics, Rust does not allow you to reimplement [`Copy`], but you
+/// may reimplement [`Clone`] and run arbitrary code.
 ///
-/// Since `Clone` is more general than `Copy`, you can automatically make anything
-/// `Copy` be `Clone` as well.
+/// Since [`Clone`] is more general than [`Copy`], you can automatically make anything
+/// [`Copy`] be [`Clone`] as well.
 ///
 /// ## Derivable
 ///
-/// This trait can be used with `#[derive]` if all fields are `Clone`. The `derive`d
+/// This trait can be used with `#[derive]` if all fields are [`Clone`]. The `derive`d
 /// implementation of `clone()` calls `clone()` on each field.
 ///
-/// ## How can I implement `Clone`?
+/// ## How can I implement [`Clone`]?
 ///
-/// Types that are `Copy` should have a trivial implementation of `Clone`. More formally:
+/// Types that are [`Copy`] should have a trivial implementation of [`Clone`]. More formally:
 /// if `T: Copy`, `x: T`, and `y: &T`, then `let x = y.clone();` is equivalent to `let x = *y;`.
 /// Manual implementations should be careful to uphold this invariant; however, unsafe code
 /// must not rely on it to ensure memory safety.
 ///
-/// An example is an array holding more than 32 elements of a type that is `Clone`; the standard
-/// library only implements `Clone` up until arrays of size 32. In this case, the implementation of
-/// `Clone` cannot be `derive`d, but can be implemented as:
+/// An example is an array holding more than 32 elements of a type that is [`Clone`]; the standard
+/// library only implements [`Clone`] up until arrays of size 32. In this case, the implementation of
+/// [`Clone`] cannot be `derive`d, but can be implemented as:
 ///
 /// ```
 /// #[derive(Copy)]
@@ -82,6 +85,9 @@ use marker::Sized;
 ///     fn clone(&self) -> Stats { *self }
 /// }
 /// ```
+///
+/// [`Clone`]: ../../std/clone/trait.Clone.html
+/// [`Copy`]: ../../std/marker/trait.Copy.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Clone : Sized {
     /// Returns a copy of the value.

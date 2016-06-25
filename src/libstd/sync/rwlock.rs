@@ -31,15 +31,15 @@ use sys_common::rwlock as sys;
 /// particular policy will be used.
 ///
 /// The type parameter `T` represents the data that this lock protects. It is
-/// required that `T` satisfies `Send` to be shared across threads and `Sync` to
+/// required that `T` satisfies [`Send`] to be shared across threads and [`Sync`] to
 /// allow concurrent access through readers. The RAII guards returned from the
-/// locking methods implement `Deref` (and `DerefMut` for the `write` methods)
+/// locking methods implement [`Deref`] \(and [`DerefMut`] for the `write` methods)
 /// to allow access to the contained of the lock.
 ///
 /// # Poisoning
 ///
-/// An `RwLock`, like `Mutex`, will become poisoned on a panic. Note, however,
-/// that an `RwLock` may only be poisoned if a panic occurs while it is locked
+/// An [`RwLock`], like [`Mutex`], will become poisoned on a panic. Note, however,
+/// that an [`RwLock`] may only be poisoned if a panic occurs while it is locked
 /// exclusively (write mode). If a panic occurs in any reader, then the lock
 /// will not be poisoned.
 ///
@@ -65,6 +65,13 @@ use sys_common::rwlock as sys;
 ///     assert_eq!(*w, 6);
 /// } // write lock is dropped here
 /// ```
+///
+/// [`Deref`]: ../../../std/ops/trait.Deref.html
+/// [`DerefMut`]: ../../../std/ops/trait.DerefMut.html
+/// [`Mutex`]: ../../../std/sync/struct.Mutex.html
+/// [`RwLock`]: ../../../std/sync/struct.RwLock.html
+/// [`Send`]: ../../../std/marker/trait.Send.html
+/// [`Sync`]: ../../../std/marker/trait.Sync.html
 #[stable(feature = "rust1", since = "1.0.0")]
 #[allow(deprecated)]
 pub struct RwLock<T: ?Sized> {

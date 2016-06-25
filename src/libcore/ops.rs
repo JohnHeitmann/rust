@@ -24,12 +24,12 @@
 //! Another option is to rely on the types involved providing additional
 //! operator implementations for references. For example, for a user-defined
 //! type `T` which is supposed to support addition, it is probably a good
-//! idea to have both `T` and `&T` implement the traits `Add<T>` and `Add<&T>`
+//! idea to have both `T` and `&T` implement the traits [`Add<T>`] and [`Add<&T>`]
 //! so that generic code can be written without unnecessary cloning.
 //!
 //! # Examples
 //!
-//! This example creates a `Point` struct that implements `Add` and `Sub`, and
+//! This example creates a `Point` struct that implements [`Add`] and [`Sub`], and
 //! then demonstrates adding and subtracting two `Point`s.
 //!
 //! ```rust
@@ -64,6 +64,11 @@
 //!
 //! See the documentation for each trait for a minimum implementation that
 //! prints something to the screen.
+//!
+//! [`Add`]: ../../std/ops/trait.Add.html
+//! [`Add<&T>`]: ../../std/ops/trait.Add.html
+//! [`Add<T>`]: ../../std/ops/trait.Add.html
+//! [`Sub`]: ../../std/ops/trait.Sub.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -73,12 +78,12 @@ use convert::From;
 use marker::{Sized, Unsize};
 use num::One;
 
-/// The `Drop` trait is used to run some code when a value goes out of scope.
+/// The [`Drop`] trait is used to run some code when a value goes out of scope.
 /// This is sometimes called a 'destructor'.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `Drop`. The `drop` method is called when `_x`
+/// A trivial implementation of [`Drop`]. The [`drop`] method is called when `_x`
 /// goes out of scope, and therefore `main` prints `Dropping!`.
 ///
 /// ```
@@ -94,6 +99,9 @@ use num::One;
 ///     let _x = HasDrop;
 /// }
 /// ```
+///
+/// [`Drop`]: ../../std/ops/trait.Drop.html
+/// [`drop`]: ../../std/mem/fn.drop.html
 #[lang = "drop"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Drop {
@@ -164,11 +172,11 @@ macro_rules! forward_ref_binop {
     }
 }
 
-/// The `Add` trait is used to specify the functionality of `+`.
+/// The [`Add`] trait is used to specify the functionality of `+`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `Add`. When `Foo + Foo` happens, it ends up
+/// A trivial implementation of [`Add`]. When `Foo + Foo` happens, it ends up
 /// calling `add`, and therefore, `main` prints `Adding!`.
 ///
 /// ```
@@ -189,6 +197,8 @@ macro_rules! forward_ref_binop {
 ///     Foo + Foo;
 /// }
 /// ```
+///
+/// [`Add`]: ../../std/ops/trait.Add.html
 #[lang = "add"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Add<RHS=Self> {
@@ -218,11 +228,11 @@ macro_rules! add_impl {
 
 add_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 
-/// The `Sub` trait is used to specify the functionality of `-`.
+/// The [`Sub`] trait is used to specify the functionality of `-`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `Sub`. When `Foo - Foo` happens, it ends up
+/// A trivial implementation of [`Sub`]. When `Foo - Foo` happens, it ends up
 /// calling `sub`, and therefore, `main` prints `Subtracting!`.
 ///
 /// ```
@@ -243,6 +253,8 @@ add_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 ///     Foo - Foo;
 /// }
 /// ```
+///
+/// [`Sub`]: ../../std/ops/trait.Sub.html
 #[lang = "sub"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Sub<RHS=Self> {
@@ -272,11 +284,11 @@ macro_rules! sub_impl {
 
 sub_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 
-/// The `Mul` trait is used to specify the functionality of `*`.
+/// The [`Mul`] trait is used to specify the functionality of `*`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `Mul`. When `Foo * Foo` happens, it ends up
+/// A trivial implementation of [`Mul`]. When `Foo * Foo` happens, it ends up
 /// calling `mul`, and therefore, `main` prints `Multiplying!`.
 ///
 /// ```
@@ -297,6 +309,8 @@ sub_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 ///     Foo * Foo;
 /// }
 /// ```
+///
+/// [`Mul`]: ../../std/ops/trait.Mul.html
 #[lang = "mul"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Mul<RHS=Self> {
@@ -326,11 +340,11 @@ macro_rules! mul_impl {
 
 mul_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 
-/// The `Div` trait is used to specify the functionality of `/`.
+/// The [`Div`] trait is used to specify the functionality of `/`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `Div`. When `Foo / Foo` happens, it ends up
+/// A trivial implementation of [`Div`]. When `Foo / Foo` happens, it ends up
 /// calling `div`, and therefore, `main` prints `Dividing!`.
 ///
 /// ```
@@ -351,6 +365,8 @@ mul_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 ///     Foo / Foo;
 /// }
 /// ```
+///
+/// [`Div`]: ../../std/ops/trait.Div.html
 #[lang = "div"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Div<RHS=Self> {
@@ -397,11 +413,11 @@ macro_rules! div_impl_float {
 
 div_impl_float! { f32 f64 }
 
-/// The `Rem` trait is used to specify the functionality of `%`.
+/// The [`Rem`] trait is used to specify the functionality of `%`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `Rem`. When `Foo % Foo` happens, it ends up
+/// A trivial implementation of [`Rem`]. When `Foo % Foo` happens, it ends up
 /// calling `rem`, and therefore, `main` prints `Remainder-ing!`.
 ///
 /// ```
@@ -422,6 +438,8 @@ div_impl_float! { f32 f64 }
 ///     Foo % Foo;
 /// }
 /// ```
+///
+/// [`Rem`]: ../../std/ops/trait.Rem.html
 #[lang = "rem"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Rem<RHS=Self> {
@@ -468,11 +486,11 @@ macro_rules! rem_impl_float {
 
 rem_impl_float! { f32 f64 }
 
-/// The `Neg` trait is used to specify the functionality of unary `-`.
+/// The [`Neg`] trait is used to specify the functionality of unary `-`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `Neg`. When `-Foo` happens, it ends up calling
+/// A trivial implementation of [`Neg`]. When `-Foo` happens, it ends up calling
 /// `neg`, and therefore, `main` prints `Negating!`.
 ///
 /// ```
@@ -493,6 +511,8 @@ rem_impl_float! { f32 f64 }
 ///     -Foo;
 /// }
 /// ```
+///
+/// [`Neg`]: ../../std/ops/trait.Neg.html
 #[lang = "neg"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Neg {
@@ -536,11 +556,11 @@ macro_rules! neg_impl_unsigned {
 // neg_impl_unsigned! { usize u8 u16 u32 u64 }
 neg_impl_numeric! { isize i8 i16 i32 i64 f32 f64 }
 
-/// The `Not` trait is used to specify the functionality of unary `!`.
+/// The [`Not`] trait is used to specify the functionality of unary `!`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `Not`. When `!Foo` happens, it ends up calling
+/// A trivial implementation of [`Not`]. When `!Foo` happens, it ends up calling
 /// `not`, and therefore, `main` prints `Not-ing!`.
 ///
 /// ```
@@ -561,6 +581,8 @@ neg_impl_numeric! { isize i8 i16 i32 i64 f32 f64 }
 ///     !Foo;
 /// }
 /// ```
+///
+/// [`Not`]: ../../std/ops/trait.Not.html
 #[lang = "not"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Not {
@@ -589,11 +611,11 @@ macro_rules! not_impl {
 
 not_impl! { bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 }
 
-/// The `BitAnd` trait is used to specify the functionality of `&`.
+/// The [`BitAnd`] trait is used to specify the functionality of `&`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `BitAnd`. When `Foo & Foo` happens, it ends up
+/// A trivial implementation of [`BitAnd`]. When `Foo & Foo` happens, it ends up
 /// calling `bitand`, and therefore, `main` prints `Bitwise And-ing!`.
 ///
 /// ```
@@ -614,6 +636,8 @@ not_impl! { bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 }
 ///     Foo & Foo;
 /// }
 /// ```
+///
+/// [`BitAnd`]: ../../std/ops/trait.BitAnd.html
 #[lang = "bitand"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait BitAnd<RHS=Self> {
@@ -642,11 +666,11 @@ macro_rules! bitand_impl {
 
 bitand_impl! { bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 }
 
-/// The `BitOr` trait is used to specify the functionality of `|`.
+/// The [`BitOr`] trait is used to specify the functionality of `|`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `BitOr`. When `Foo | Foo` happens, it ends up
+/// A trivial implementation of [`BitOr`]. When `Foo | Foo` happens, it ends up
 /// calling `bitor`, and therefore, `main` prints `Bitwise Or-ing!`.
 ///
 /// ```
@@ -667,6 +691,8 @@ bitand_impl! { bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 }
 ///     Foo | Foo;
 /// }
 /// ```
+///
+/// [`BitOr`]: ../../std/ops/trait.BitOr.html
 #[lang = "bitor"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait BitOr<RHS=Self> {
@@ -695,11 +721,11 @@ macro_rules! bitor_impl {
 
 bitor_impl! { bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 }
 
-/// The `BitXor` trait is used to specify the functionality of `^`.
+/// The [`BitXor`] trait is used to specify the functionality of `^`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `BitXor`. When `Foo ^ Foo` happens, it ends up
+/// A trivial implementation of [`BitXor`]. When `Foo ^ Foo` happens, it ends up
 /// calling `bitxor`, and therefore, `main` prints `Bitwise Xor-ing!`.
 ///
 /// ```
@@ -720,6 +746,8 @@ bitor_impl! { bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 }
 ///     Foo ^ Foo;
 /// }
 /// ```
+///
+/// [`BitXor`]: ../../std/ops/trait.BitXor.html
 #[lang = "bitxor"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait BitXor<RHS=Self> {
@@ -748,11 +776,11 @@ macro_rules! bitxor_impl {
 
 bitxor_impl! { bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 }
 
-/// The `Shl` trait is used to specify the functionality of `<<`.
+/// The [`Shl`] trait is used to specify the functionality of `<<`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `Shl`. When `Foo << Foo` happens, it ends up
+/// A trivial implementation of [`Shl`]. When `Foo << Foo` happens, it ends up
 /// calling `shl`, and therefore, `main` prints `Shifting left!`.
 ///
 /// ```
@@ -773,6 +801,8 @@ bitxor_impl! { bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 }
 ///     Foo << Foo;
 /// }
 /// ```
+///
+/// [`Shl`]: ../../std/ops/trait.Shl.html
 #[lang = "shl"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Shl<RHS> {
@@ -820,11 +850,11 @@ macro_rules! shl_impl_all {
 
 shl_impl_all! { u8 u16 u32 u64 usize i8 i16 i32 i64 isize }
 
-/// The `Shr` trait is used to specify the functionality of `>>`.
+/// The [`Shr`] trait is used to specify the functionality of `>>`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `Shr`. When `Foo >> Foo` happens, it ends up
+/// A trivial implementation of [`Shr`]. When `Foo >> Foo` happens, it ends up
 /// calling `shr`, and therefore, `main` prints `Shifting right!`.
 ///
 /// ```
@@ -845,6 +875,8 @@ shl_impl_all! { u8 u16 u32 u64 usize i8 i16 i32 i64 isize }
 ///     Foo >> Foo;
 /// }
 /// ```
+///
+/// [`Shr`]: ../../std/ops/trait.Shr.html
 #[lang = "shr"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Shr<RHS> {
@@ -892,11 +924,11 @@ macro_rules! shr_impl_all {
 
 shr_impl_all! { u8 u16 u32 u64 usize i8 i16 i32 i64 isize }
 
-/// The `AddAssign` trait is used to specify the functionality of `+=`.
+/// The [`AddAssign`] trait is used to specify the functionality of `+=`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `AddAssign`. When `Foo += Foo` happens, it ends up
+/// A trivial implementation of [`AddAssign`]. When `Foo += Foo` happens, it ends up
 /// calling `add_assign`, and therefore, `main` prints `Adding!`.
 ///
 /// ```
@@ -916,6 +948,8 @@ shr_impl_all! { u8 u16 u32 u64 usize i8 i16 i32 i64 isize }
 ///     foo += Foo;
 /// }
 /// ```
+///
+/// [`AddAssign`]: ../../std/ops/trait.AddAssign.html
 #[lang = "add_assign"]
 #[stable(feature = "op_assign_traits", since = "1.8.0")]
 pub trait AddAssign<Rhs=Self> {
@@ -937,11 +971,11 @@ macro_rules! add_assign_impl {
 
 add_assign_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 
-/// The `SubAssign` trait is used to specify the functionality of `-=`.
+/// The [`SubAssign`] trait is used to specify the functionality of `-=`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `SubAssign`. When `Foo -= Foo` happens, it ends up
+/// A trivial implementation of [`SubAssign`]. When `Foo -= Foo` happens, it ends up
 /// calling `sub_assign`, and therefore, `main` prints `Subtracting!`.
 ///
 /// ```
@@ -961,6 +995,8 @@ add_assign_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 ///     foo -= Foo;
 /// }
 /// ```
+///
+/// [`SubAssign`]: ../../std/ops/trait.SubAssign.html
 #[lang = "sub_assign"]
 #[stable(feature = "op_assign_traits", since = "1.8.0")]
 pub trait SubAssign<Rhs=Self> {
@@ -982,11 +1018,11 @@ macro_rules! sub_assign_impl {
 
 sub_assign_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 
-/// The `MulAssign` trait is used to specify the functionality of `*=`.
+/// The [`MulAssign`] trait is used to specify the functionality of `*=`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `MulAssign`. When `Foo *= Foo` happens, it ends up
+/// A trivial implementation of [`MulAssign`]. When `Foo *= Foo` happens, it ends up
 /// calling `mul_assign`, and therefore, `main` prints `Multiplying!`.
 ///
 /// ```
@@ -1006,6 +1042,8 @@ sub_assign_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 ///     foo *= Foo;
 /// }
 /// ```
+///
+/// [`MulAssign`]: ../../std/ops/trait.MulAssign.html
 #[lang = "mul_assign"]
 #[stable(feature = "op_assign_traits", since = "1.8.0")]
 pub trait MulAssign<Rhs=Self> {
@@ -1027,11 +1065,11 @@ macro_rules! mul_assign_impl {
 
 mul_assign_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 
-/// The `DivAssign` trait is used to specify the functionality of `/=`.
+/// The [`DivAssign`] trait is used to specify the functionality of `/=`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `DivAssign`. When `Foo /= Foo` happens, it ends up
+/// A trivial implementation of [`DivAssign`]. When `Foo /= Foo` happens, it ends up
 /// calling `div_assign`, and therefore, `main` prints `Dividing!`.
 ///
 /// ```
@@ -1051,6 +1089,8 @@ mul_assign_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 ///     foo /= Foo;
 /// }
 /// ```
+///
+/// [`DivAssign`]: ../../std/ops/trait.DivAssign.html
 #[lang = "div_assign"]
 #[stable(feature = "op_assign_traits", since = "1.8.0")]
 pub trait DivAssign<Rhs=Self> {
@@ -1071,11 +1111,11 @@ macro_rules! div_assign_impl {
 
 div_assign_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 
-/// The `RemAssign` trait is used to specify the functionality of `%=`.
+/// The [`RemAssign`] trait is used to specify the functionality of `%=`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `RemAssign`. When `Foo %= Foo` happens, it ends up
+/// A trivial implementation of [`RemAssign`]. When `Foo %= Foo` happens, it ends up
 /// calling `rem_assign`, and therefore, `main` prints `Remainder-ing!`.
 ///
 /// ```
@@ -1095,6 +1135,8 @@ div_assign_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 ///     foo %= Foo;
 /// }
 /// ```
+///
+/// [`RemAssign`]: ../../std/ops/trait.RemAssign.html
 #[lang = "rem_assign"]
 #[stable(feature = "op_assign_traits", since = "1.8.0")]
 pub trait RemAssign<Rhs=Self> {
@@ -1115,11 +1157,11 @@ macro_rules! rem_assign_impl {
 
 rem_assign_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 
-/// The `BitAndAssign` trait is used to specify the functionality of `&=`.
+/// The [`BitAndAssign`] trait is used to specify the functionality of `&=`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `BitAndAssign`. When `Foo &= Foo` happens, it ends up
+/// A trivial implementation of [`BitAndAssign`]. When `Foo &= Foo` happens, it ends up
 /// calling `bitand_assign`, and therefore, `main` prints `Bitwise And-ing!`.
 ///
 /// ```
@@ -1139,6 +1181,8 @@ rem_assign_impl! { usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 }
 ///     foo &= Foo;
 /// }
 /// ```
+///
+/// [`BitAndAssign`]: ../../std/ops/trait.BitAndAssign.html
 #[lang = "bitand_assign"]
 #[stable(feature = "op_assign_traits", since = "1.8.0")]
 pub trait BitAndAssign<Rhs=Self> {
@@ -1159,11 +1203,11 @@ macro_rules! bitand_assign_impl {
 
 bitand_assign_impl! { bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 }
 
-/// The `BitOrAssign` trait is used to specify the functionality of `|=`.
+/// The [`BitOrAssign`] trait is used to specify the functionality of `|=`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `BitOrAssign`. When `Foo |= Foo` happens, it ends up
+/// A trivial implementation of [`BitOrAssign`]. When `Foo |= Foo` happens, it ends up
 /// calling `bitor_assign`, and therefore, `main` prints `Bitwise Or-ing!`.
 ///
 /// ```
@@ -1183,6 +1227,8 @@ bitand_assign_impl! { bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 }
 ///     foo |= Foo;
 /// }
 /// ```
+///
+/// [`BitOrAssign`]: ../../std/ops/trait.BitOrAssign.html
 #[lang = "bitor_assign"]
 #[stable(feature = "op_assign_traits", since = "1.8.0")]
 pub trait BitOrAssign<Rhs=Self> {
@@ -1203,11 +1249,11 @@ macro_rules! bitor_assign_impl {
 
 bitor_assign_impl! { bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 }
 
-/// The `BitXorAssign` trait is used to specify the functionality of `^=`.
+/// The [`BitXorAssign`] trait is used to specify the functionality of `^=`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `BitXorAssign`. When `Foo ^= Foo` happens, it ends up
+/// A trivial implementation of [`BitXorAssign`]. When `Foo ^= Foo` happens, it ends up
 /// calling `bitxor_assign`, and therefore, `main` prints `Bitwise Xor-ing!`.
 ///
 /// ```
@@ -1227,6 +1273,8 @@ bitor_assign_impl! { bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 }
 ///     foo ^= Foo;
 /// }
 /// ```
+///
+/// [`BitXorAssign`]: ../../std/ops/trait.BitXorAssign.html
 #[lang = "bitxor_assign"]
 #[stable(feature = "op_assign_traits", since = "1.8.0")]
 pub trait BitXorAssign<Rhs=Self> {
@@ -1247,11 +1295,11 @@ macro_rules! bitxor_assign_impl {
 
 bitxor_assign_impl! { bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 }
 
-/// The `ShlAssign` trait is used to specify the functionality of `<<=`.
+/// The [`ShlAssign`] trait is used to specify the functionality of `<<=`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `ShlAssign`. When `Foo <<= Foo` happens, it ends up
+/// A trivial implementation of [`ShlAssign`]. When `Foo <<= Foo` happens, it ends up
 /// calling `shl_assign`, and therefore, `main` prints `Shifting left!`.
 ///
 /// ```
@@ -1271,6 +1319,8 @@ bitxor_assign_impl! { bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 }
 ///     foo <<= Foo;
 /// }
 /// ```
+///
+/// [`ShlAssign`]: ../../std/ops/trait.ShlAssign.html
 #[lang = "shl_assign"]
 #[stable(feature = "op_assign_traits", since = "1.8.0")]
 pub trait ShlAssign<Rhs> {
@@ -1310,11 +1360,11 @@ macro_rules! shl_assign_impl_all {
 
 shl_assign_impl_all! { u8 u16 u32 u64 usize i8 i16 i32 i64 isize }
 
-/// The `ShrAssign` trait is used to specify the functionality of `>>=`.
+/// The [`ShrAssign`] trait is used to specify the functionality of `>>=`.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `ShrAssign`. When `Foo >>= Foo` happens, it ends up
+/// A trivial implementation of [`ShrAssign`]. When `Foo >>= Foo` happens, it ends up
 /// calling `shr_assign`, and therefore, `main` prints `Shifting right!`.
 ///
 /// ```
@@ -1334,6 +1384,8 @@ shl_assign_impl_all! { u8 u16 u32 u64 usize i8 i16 i32 i64 isize }
 ///     foo >>= Foo;
 /// }
 /// ```
+///
+/// [`ShrAssign`]: ../../std/ops/trait.ShrAssign.html
 #[lang = "shr_assign"]
 #[stable(feature = "op_assign_traits", since = "1.8.0")]
 pub trait ShrAssign<Rhs=Self> {
@@ -1373,12 +1425,12 @@ macro_rules! shr_assign_impl_all {
 
 shr_assign_impl_all! { u8 u16 u32 u64 usize i8 i16 i32 i64 isize }
 
-/// The `Index` trait is used to specify the functionality of indexing operations
+/// The [`Index`] trait is used to specify the functionality of indexing operations
 /// like `arr[idx]` when used in an immutable context.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `Index`. When `Foo[Bar]` happens, it ends up
+/// A trivial implementation of [`Index`]. When `Foo[Bar]` happens, it ends up
 /// calling `index`, and therefore, `main` prints `Indexing!`.
 ///
 /// ```
@@ -1401,6 +1453,8 @@ shr_assign_impl_all! { u8 u16 u32 u64 usize i8 i16 i32 i64 isize }
 ///     Foo[Bar];
 /// }
 /// ```
+///
+/// [`Index`]: ../../std/ops/trait.Index.html
 #[lang = "index"]
 #[rustc_on_unimplemented = "the type `{Self}` cannot be indexed by `{Idx}`"]
 #[stable(feature = "rust1", since = "1.0.0")]
@@ -1414,12 +1468,12 @@ pub trait Index<Idx: ?Sized> {
     fn index(&self, index: Idx) -> &Self::Output;
 }
 
-/// The `IndexMut` trait is used to specify the functionality of indexing
+/// The [`IndexMut`] trait is used to specify the functionality of indexing
 /// operations like `arr[idx]`, when used in a mutable context.
 ///
 /// # Examples
 ///
-/// A trivial implementation of `IndexMut`. When `Foo[Bar]` happens, it ends up
+/// A trivial implementation of [`IndexMut`]. When `Foo[Bar]` happens, it ends up
 /// calling `index_mut`, and therefore, `main` prints `Indexing!`.
 ///
 /// ```
@@ -1448,6 +1502,8 @@ pub trait Index<Idx: ?Sized> {
 ///     &mut Foo[Bar];
 /// }
 /// ```
+///
+/// [`IndexMut`]: ../../std/ops/trait.IndexMut.html
 #[lang = "index_mut"]
 #[rustc_on_unimplemented = "the type `{Self}` cannot be mutably indexed by `{Idx}`"]
 #[stable(feature = "rust1", since = "1.0.0")]
@@ -1812,10 +1868,10 @@ impl<Idx: PartialOrd<Idx>> RangeToInclusive<Idx> {
 // RangeToInclusive<Idx> cannot impl From<RangeTo<Idx>>
 // because underflow would be possible with (..0).into()
 
-/// The `Deref` trait is used to specify the functionality of dereferencing
+/// The [`Deref`] trait is used to specify the functionality of dereferencing
 /// operations, like `*v`.
 ///
-/// `Deref` also enables ['`Deref` coercions'][coercions].
+/// [`Deref`] also enables ['[`Deref`] coercions'][coercions].
 ///
 /// [coercions]: ../../book/deref-coercions.html
 ///
@@ -1844,6 +1900,8 @@ impl<Idx: PartialOrd<Idx>> RangeToInclusive<Idx> {
 ///     assert_eq!('a', *x);
 /// }
 /// ```
+///
+/// [`Deref`]: ../../std/ops/trait.Deref.html
 #[lang = "deref"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Deref {
@@ -1870,10 +1928,10 @@ impl<'a, T: ?Sized> Deref for &'a mut T {
     fn deref(&self) -> &T { *self }
 }
 
-/// The `DerefMut` trait is used to specify the functionality of dereferencing
+/// The [`DerefMut`] trait is used to specify the functionality of dereferencing
 /// mutably like `*v = 1;`
 ///
-/// `DerefMut` also enables ['`Deref` coercions'][coercions].
+/// [`DerefMut`] also enables ['[`Deref`] coercions'][coercions].
 ///
 /// [coercions]: ../../book/deref-coercions.html
 ///
@@ -1909,6 +1967,9 @@ impl<'a, T: ?Sized> Deref for &'a mut T {
 ///     assert_eq!('b', *x);
 /// }
 /// ```
+///
+/// [`Deref`]: ../../std/ops/trait.Deref.html
+/// [`DerefMut`]: ../../std/ops/trait.DerefMut.html
 #[lang = "deref_mut"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait DerefMut: Deref {
@@ -2054,21 +2115,25 @@ impl<T: ?Sized+Unsize<U>, U: ?Sized> CoerceUnsized<*const U> for *const T {}
 /// Both `in (PLACE) EXPR` and `box EXPR` desugar into expressions
 /// that allocate an intermediate "place" that holds uninitialized
 /// state.  The desugaring evaluates EXPR, and writes the result at
-/// the address returned by the `pointer` method of this trait.
+/// the address returned by the [`pointer`] method of this trait.
 ///
-/// A `Place` can be thought of as a special representation for a
+/// A [`Place`] can be thought of as a special representation for a
 /// hypothetical `&uninit` reference (which Rust cannot currently
 /// express directly). That is, it represents a pointer to
 /// uninitialized storage.
 ///
 /// The client is responsible for two steps: First, initializing the
-/// payload (it can access its address via `pointer`). Second,
+/// payload (it can access its address via [`pointer`]). Second,
 /// converting the agent to an instance of the owning pointer, via the
-/// appropriate `finalize` method (see the `InPlace`.
+/// appropriate `finalize` method (see the [`InPlace`].
 ///
 /// If evaluating EXPR fails, then the destructor for the
 /// implementation of Place to clean up any intermediate state
 /// (e.g. deallocate box storage, pop a stack, etc).
+///
+/// [`InPlace`]: ../../std/ops/trait.InPlace.html
+/// [`Place`]: ../../std/ops/trait.Place.html
+/// [`pointer`]: ../../std/primitive.pointer.html
 #[unstable(feature = "placement_new_protocol", issue = "27779")]
 pub trait Place<Data: ?Sized> {
     /// Returns the address where the input value will be written.
@@ -2094,12 +2159,16 @@ pub trait Place<Data: ?Sized> {
 ///
 /// The type of `in (PLACE) EXPR` is derived from the type of `PLACE`;
 /// if the type of `PLACE` is `P`, then the final type of the whole
-/// expression is `P::Place::Owner` (see the `InPlace` and `Boxed`
+/// expression is `P::Place::Owner` (see the [`InPlace`] and [`Boxed`]
 /// traits).
 ///
 /// Values for types implementing this trait usually are transient
 /// intermediate values (e.g. the return value of `Vec::emplace_back`)
-/// or `Copy`, since the `make_place` method takes `self` by value.
+/// or [`Copy`], since the `make_place` method takes `self` by value.
+///
+/// [`Boxed`]: ../../std/ops/trait.Boxed.html
+/// [`Copy`]: ../../std/marker/trait.Copy.html
+/// [`InPlace`]: ../../std/ops/trait.InPlace.html
 #[unstable(feature = "placement_new_protocol", issue = "27779")]
 pub trait Placer<Data: ?Sized> {
     /// `Place` is the intermedate agent guarding the
@@ -2110,7 +2179,9 @@ pub trait Placer<Data: ?Sized> {
     fn make_place(self) -> Self::Place;
 }
 
-/// Specialization of `Place` trait supporting `in (PLACE) EXPR`.
+/// Specialization of [`Place`] trait supporting `in (PLACE) EXPR`.
+///
+/// [`Place`]: ../../std/ops/trait.Place.html
 #[unstable(feature = "placement_new_protocol", issue = "27779")]
 pub trait InPlace<Data: ?Sized>: Place<Data> {
     /// `Owner` is the type of the end value of `in (PLACE) EXPR`
@@ -2144,10 +2215,13 @@ pub trait InPlace<Data: ?Sized>: Place<Data> {
 ///
 /// The type of `box EXPR` is supplied from its surrounding
 /// context; in the above expansion, the result type `T` is used
-/// to determine which implementation of `Boxed` to use, and that
+/// to determine which implementation of [`Boxed`] to use, and that
 /// `<T as Boxed>` in turn dictates determines which
-/// implementation of `BoxPlace` to use, namely:
+/// implementation of [`BoxPlace`] to use, namely:
 /// `<<T as Boxed>::Place as BoxPlace>`.
+///
+/// [`BoxPlace`]: ../../std/ops/trait.BoxPlace.html
+/// [`Boxed`]: ../../std/ops/trait.Boxed.html
 #[unstable(feature = "placement_new_protocol", issue = "27779")]
 pub trait Boxed {
     /// The kind of data that is stored in this kind of box.
@@ -2161,7 +2235,9 @@ pub trait Boxed {
     unsafe fn finalize(filled: Self::Place) -> Self;
 }
 
-/// Specialization of `Place` trait supporting `box EXPR`.
+/// Specialization of [`Place`] trait supporting `box EXPR`.
+///
+/// [`Place`]: ../../std/ops/trait.Place.html
 #[unstable(feature = "placement_new_protocol", issue = "27779")]
 pub trait BoxPlace<Data: ?Sized> : Place<Data> {
     /// Creates a globally fresh place.

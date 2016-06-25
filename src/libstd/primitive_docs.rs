@@ -12,11 +12,11 @@
 //
 /// The boolean type.
 ///
-/// The `bool` represents a value, which could only be either `true` or `false`.
+/// The [`bool`] represents a value, which could only be either `true` or `false`.
 ///
 /// # Basic usage
 ///
-/// `bool` implements various traits, such as [`BitAnd`], [`BitOr`], [`Not`], etc.,
+/// [`bool`] implements various traits, such as [`BitAnd`], [`BitOr`], [`Not`], etc.,
 /// which allow us to perform boolean operations using `&`, `|` and `!`.
 ///
 /// [`if`] always demands a `bool` value. [`assert!`], being an important macro in testing,
@@ -35,7 +35,7 @@
 ///
 /// # Examples
 ///
-/// A trivial example of the usage of `bool`,
+/// A trivial example of the usage of [`bool`],
 ///
 /// ```
 /// let praise_the_borrow_checker = true;
@@ -54,16 +54,18 @@
 /// }
 /// ```
 ///
-/// Also, since `bool` implements the [`Copy`](marker/trait.Copy.html) trait, we don't
+/// Also, since [`bool`] implements the [`Copy`](marker/trait.Copy.html) trait, we don't
 /// have to worry about the move semantics (just like the integer and float primitives).
+///
+/// [`bool`]: ../../std/primitive.bool.html
 mod prim_bool { }
 
 #[doc(primitive = "char")]
 //
 /// A character type.
 ///
-/// The `char` type represents a single character. More specifically, since
-/// 'character' isn't a well-defined concept in Unicode, `char` is a '[Unicode
+/// The [`char`] type represents a single character. More specifically, since
+/// 'character' isn't a well-defined concept in Unicode, [`char`] is a '[Unicode
 /// scalar value]', which is similar to, but not the same as, a '[Unicode code
 /// point]'.
 ///
@@ -71,12 +73,12 @@ mod prim_bool { }
 /// [Unicode code point]: http://www.unicode.org/glossary/#code_point
 ///
 /// This documentation describes a number of methods and trait implementations on the
-/// `char` type. For technical reasons, there is additional, separate
-/// documentation in [the `std::char` module](char/index.html) as well.
+/// [`char`] type. For technical reasons, there is additional, separate
+/// documentation in [the [`std::char`] module](char/index.html) as well.
 ///
 /// # Representation
 ///
-/// `char` is always four bytes in size. This is a different representation than
+/// [`char`] is always four bytes in size. This is a different representation than
 /// a given character would have as part of a [`String`]. For example:
 ///
 /// ```
@@ -107,7 +109,7 @@ mod prim_bool { }
 /// assert_eq!(None, iter.next());
 /// ```
 ///
-/// This means it won't fit into a `char`. Trying to create a literal with
+/// This means it won't fit into a [`char`]. Trying to create a literal with
 /// `let heart = '❤️';` gives an error:
 ///
 /// ```text
@@ -116,8 +118,8 @@ mod prim_bool { }
 ///             ^~
 /// ```
 ///
-/// Another implication of the 4-byte fixed size of a `char` is that
-/// per-`char` processing can end up using a lot more memory:
+/// Another implication of the 4-byte fixed size of a [`char`] is that
+/// per-[`char`] processing can end up using a lot more memory:
 ///
 /// ```
 /// let s = String::from("love: ❤️");
@@ -126,6 +128,9 @@ mod prim_bool { }
 /// assert_eq!(12, s.len() * std::mem::size_of::<u8>());
 /// assert_eq!(32, v.len() * std::mem::size_of::<char>());
 /// ```
+///
+/// [`char`]: ../../std/primitive.char.html
+/// [`std::char`]: ../../std/char/index.html
 mod prim_char { }
 
 #[doc(primitive = "unit")]
@@ -172,9 +177,9 @@ mod prim_unit { }
 /// Working with raw pointers in Rust is uncommon,
 /// typically limited to a few patterns.
 ///
-/// Use the `null` function to create null pointers, and the `is_null` method
+/// Use the [`null`] function to create null pointers, and the `is_null` method
 /// of the `*const T` type  to check for null. The `*const T` type also defines
-/// the `offset` method, for pointer math.
+/// the [`offset`] method, for pointer math.
 ///
 /// # Common ways to create raw pointers
 ///
@@ -200,7 +205,7 @@ mod prim_unit { }
 /// and requires no resource management later,
 /// but you must not use the pointer after its lifetime.
 ///
-/// ## 2. Consume a box (`Box<T>`).
+/// ## 2. Consume a box ([`Box<T>`]).
 ///
 /// The `into_raw` function consumes a box and returns
 /// the raw pointer. It doesn't destroy `T` or deallocate any memory.
@@ -209,14 +214,14 @@ mod prim_unit { }
 /// let my_speed: Box<i32> = Box::new(88);
 /// let my_speed: *mut i32 = Box::into_raw(my_speed);
 ///
-/// // By taking ownership of the original `Box<T>` though
+/// // By taking ownership of the original [`Box<T>`] though
 /// // we are obligated to put it together later to be destroyed.
 /// unsafe {
 ///     drop(Box::from_raw(my_speed));
 /// }
 /// ```
 ///
-/// Note that here the call to `drop` is for clarity - it indicates
+/// Note that here the call to [`drop`] is for clarity - it indicates
 /// that we are done with the given value and it should be destroyed.
 ///
 /// ## 3. Get it from C.
@@ -238,12 +243,20 @@ mod prim_unit { }
 /// }
 /// ```
 ///
-/// Usually you wouldn't literally use `malloc` and `free` from Rust,
+/// Usually you wouldn't literally use [`malloc`] and [`free`] from Rust,
 /// but C APIs hand out a lot of pointers generally, so are a common source
 /// of raw pointers in Rust.
 ///
-/// *[See also the `std::ptr` module](ptr/index.html).*
+/// *[See also the [`std::ptr`] module](ptr/index.html).*
 ///
+///
+/// [`Box<T>`]: ../../collections/boxed/struct.Box.html
+/// [`drop`]: ../../std/mem/fn.drop.html
+/// [`free`]: ../../libc/fn.free.html
+/// [`malloc`]: ../../libc/fn.malloc.html
+/// [`null`]: ../../std/ptr/fn.null.html
+/// [`offset`]: ../../std/intrinsics/fn.offset.html
+/// [`std::ptr`]: ../../std/ptr/index.html
 mod prim_pointer { }
 
 #[doc(primitive = "array")]
@@ -253,21 +266,21 @@ mod prim_pointer { }
 ///
 /// Arrays values are created either with an explicit expression that lists
 /// each element: `[x, y, z]` or a repeat expression: `[x; N]`. The repeat
-/// expression requires that the element type is `Copy`.
+/// expression requires that the element type is [`Copy`].
 ///
-/// The type `[T; N]` is `Copy` if `T: Copy`.
+/// The type `[T; N]` is [`Copy`] if `T: Copy`.
 ///
 /// Arrays of sizes from 0 to 32 (inclusive) implement the following traits if
 /// the element type allows it:
 ///
-/// - `Clone` (only if `T: Copy`)
-/// - `Debug`
-/// - `IntoIterator` (implemented for `&[T; N]` and `&mut [T; N]`)
-/// - `PartialEq`, `PartialOrd`, `Ord`, `Eq`
-/// - `Hash`
-/// - `AsRef`, `AsMut`
-/// - `Borrow`, `BorrowMut`
-/// - `Default`
+/// - [`Clone`] \(only if `T: Copy`)
+/// - [`Debug`]
+/// - [`IntoIterator`] \(implemented for `&[T; N]` and `&mut [T; N]`)
+/// - [`PartialEq`], [`PartialOrd`], [`Ord`], [`Eq`]
+/// - [`Hash`]
+/// - [`AsRef`], [`AsMut`]
+/// - [`Borrow`], [`BorrowMut`]
+/// - [`Default`]
 ///
 /// Arrays coerce to [slices (`[T]`)][slice], so their methods can be called on
 /// arrays.
@@ -293,6 +306,21 @@ mod prim_pointer { }
 ///
 /// ```
 ///
+///
+/// [`AsMut`]: ../../std/convert/trait.AsMut.html
+/// [`AsRef`]: ../../std/convert/trait.AsRef.html
+/// [`Borrow`]: ../../std/borrow/trait.Borrow.html
+/// [`BorrowMut`]: ../../std/borrow/trait.BorrowMut.html
+/// [`Clone`]: ../../std/clone/trait.Clone.html
+/// [`Copy`]: ../../std/marker/trait.Copy.html
+/// [`Debug`]: ../../std/fmt/trait.Debug.html
+/// [`Default`]: ../../std/default/trait.Default.html
+/// [`Eq`]: ../../std/cmp/trait.Eq.html
+/// [`Hash`]: ../../std/hash/trait.Hash.html
+/// [`IntoIterator`]: ../../std/iter/trait.IntoIterator.html
+/// [`Ord`]: ../../std/cmp/trait.Ord.html
+/// [`PartialEq`]: ../../std/cmp/trait.PartialEq.html
+/// [`PartialOrd`]: ../../std/cmp/trait.PartialOrd.html
 mod prim_array { }
 
 #[doc(primitive = "slice")]
@@ -321,23 +349,25 @@ mod prim_array { }
 /// assert_eq!(x, &[1, 7, 3]);
 /// ```
 ///
-/// *[See also the `std::slice` module](slice/index.html).*
+/// *[See also the [`std::slice`] module](slice/index.html).*
 ///
+///
+/// [`std::slice`]: ../../std/slice/index.html
 mod prim_slice { }
 
 #[doc(primitive = "str")]
 //
 /// String slices.
 ///
-/// The `str` type, also called a 'string slice', is the most primitive string
+/// The [`str`] type, also called a 'string slice', is the most primitive string
 /// type. It is usually seen in its borrowed form, `&str`. It is also the type
 /// of string literals, `&'static str`.
 ///
 /// Strings slices are always valid UTF-8.
 ///
 /// This documentation describes a number of methods and trait implementations
-/// on the `str` type. For technical reasons, there is additional, separate
-/// documentation in [the `std::str` module](str/index.html) as well.
+/// on the [`str`] type. For technical reasons, there is additional, separate
+/// documentation in [the [`std::str`] module](str/index.html) as well.
 ///
 /// # Examples
 ///
@@ -385,6 +415,8 @@ mod prim_slice { }
 ///
 /// [`.as_ptr()`]: #method.as_ptr
 /// [`len()`]: #method.len
+/// [`std::str`]: ../../std/str/index.html
+/// [`str`]: ../../std/primitive.str.html
 mod prim_str { }
 
 #[doc(primitive = "tuple")]
@@ -490,9 +522,12 @@ mod prim_tuple { }
 ///
 /// *[See also the `std::f32` module](f32/index.html).*
 ///
-/// However, please note that examples are shared between the `f64` and `f32`
-/// primitive types. So it's normal if you see usage of `f64` in there.
+/// However, please note that examples are shared between the [`f64`] and [`f32`]
+/// primitive types. So it's normal if you see usage of [`f64`] in there.
 ///
+///
+/// [`f32`]: ../../std/primitive.f32.html
+/// [`f64`]: ../../std/primitive.f64.html
 mod prim_f32 { }
 
 #[doc(primitive = "f64")]
@@ -501,9 +536,12 @@ mod prim_f32 { }
 ///
 /// *[See also the `std::f64` module](f64/index.html).*
 ///
-/// However, please note that examples are shared between the `f64` and `f32`
-/// primitive types. So it's normal if you see usage of `f32` in there.
+/// However, please note that examples are shared between the [`f64`] and [`f32`]
+/// primitive types. So it's normal if you see usage of [`f32`] in there.
 ///
+///
+/// [`f32`]: ../../std/primitive.f32.html
+/// [`f64`]: ../../std/primitive.f64.html
 mod prim_f64 { }
 
 #[doc(primitive = "i8")]
@@ -542,32 +580,40 @@ mod prim_i64 { }
 //
 /// The 8-bit unsigned integer type.
 ///
-/// *[See also the `std::u8` module](u8/index.html).*
+/// *[See also the [`std::u8`] module](u8/index.html).*
 ///
+///
+/// [`std::u8`]: ../../std/u8/index.html
 mod prim_u8 { }
 
 #[doc(primitive = "u16")]
 //
 /// The 16-bit unsigned integer type.
 ///
-/// *[See also the `std::u16` module](u16/index.html).*
+/// *[See also the [`std::u16`] module](u16/index.html).*
 ///
+///
+/// [`std::u16`]: ../../std/u16/index.html
 mod prim_u16 { }
 
 #[doc(primitive = "u32")]
 //
 /// The 32-bit unsigned integer type.
 ///
-/// *[See also the `std::u32` module](u32/index.html).*
+/// *[See also the [`std::u32`] module](u32/index.html).*
 ///
+///
+/// [`std::u32`]: ../../std/u32/index.html
 mod prim_u32 { }
 
 #[doc(primitive = "u64")]
 //
 /// The 64-bit unsigned integer type.
 ///
-/// *[See also the `std::u64` module](u64/index.html).*
+/// *[See also the [`std::u64`] module](u64/index.html).*
 ///
+///
+/// [`std::u64`]: ../../std/u64/index.html
 mod prim_u64 { }
 
 #[doc(primitive = "isize")]
@@ -582,6 +628,8 @@ mod prim_isize { }
 //
 /// The pointer-sized unsigned integer type.
 ///
-/// *[See also the `std::usize` module](usize/index.html).*
+/// *[See also the [`std::usize`] module](usize/index.html).*
 ///
+///
+/// [`std::usize`]: ../../std/usize/index.html
 mod prim_usize { }

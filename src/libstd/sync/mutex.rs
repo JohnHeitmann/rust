@@ -42,7 +42,7 @@ use sys_common::poison::{self, TryLockError, TryLockResult, LockResult};
 /// among threads to ensure that a possibly invalid invariant is not witnessed.
 ///
 /// A poisoned mutex, however, does not prevent all access to the underlying
-/// data. The `PoisonError` type has an `into_inner` method which will return
+/// data. The [`PoisonError`] type has an `into_inner` method which will return
 /// the guard that would have otherwise been returned on a successful lock. This
 /// allows access to the data, despite the lock being poisoned.
 ///
@@ -112,6 +112,8 @@ use sys_common::poison::{self, TryLockError, TryLockResult, LockResult};
 ///
 /// *guard += 1;
 /// ```
+///
+/// [`PoisonError`]: ../../../std/sync/struct.PoisonError.html
 #[stable(feature = "rust1", since = "1.0.0")]
 #[allow(deprecated)]
 pub struct Mutex<T: ?Sized> {
@@ -135,8 +137,8 @@ unsafe impl<T: ?Sized + Send> Sync for Mutex<T> { }
 ///
 /// Note that this is a separate type because using a Mutex correctly means that
 /// it needs to have a destructor run. In Rust, statics are not allowed to have
-/// destructors. As a result, a `StaticMutex` has one extra method when compared
-/// to a `Mutex`, a `destroy` method. This method is unsafe to call, and
+/// destructors. As a result, a [`StaticMutex`] has one extra method when compared
+/// to a [`Mutex`], a `destroy` method. This method is unsafe to call, and
 /// documentation can be found directly on the method.
 ///
 /// # Examples
@@ -154,6 +156,9 @@ unsafe impl<T: ?Sized + Send> Sync for Mutex<T> { }
 /// }
 /// // lock is unlocked here.
 /// ```
+///
+/// [`Mutex`]: ../../../std/sync/struct.Mutex.html
+/// [`StaticMutex`]: ../../../std/sync/struct.StaticMutex.html
 #[unstable(feature = "static_mutex",
            reason = "may be merged with Mutex in the future",
            issue = "27717")]
@@ -171,7 +176,10 @@ pub struct StaticMutex {
 /// dropped (falls out of scope), the lock will be unlocked.
 ///
 /// The data protected by the mutex can be access through this guard via its
-/// `Deref` and `DerefMut` implementations
+/// [`Deref`] and [`DerefMut`] implementations
+///
+/// [`Deref`]: ../../../std/ops/trait.Deref.html
+/// [`DerefMut`]: ../../../std/ops/trait.DerefMut.html
 #[must_use]
 #[stable(feature = "rust1", since = "1.0.0")]
 #[allow(deprecated)]

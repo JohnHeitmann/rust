@@ -133,7 +133,9 @@ pub enum Bound<T> {
     Unbounded,
 }
 
-/// An intermediate trait for specialization of `Extend`.
+/// An intermediate trait for specialization of [`Extend`].
+///
+/// [`Extend`]: /std/iter/trait.Extend.html
 #[doc(hidden)]
 trait SpecExtend<I: IntoIterator> {
     /// Extends `self` with the contents of the given iterator.

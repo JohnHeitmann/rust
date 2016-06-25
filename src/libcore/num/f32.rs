@@ -8,7 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Operations and constants for 32-bits floats (`f32` type)
+//! Operations and constants for 32-bits floats ([`f32`] type)
+//!
+//! [`f32`]: ../../../std/primitive.f32.html
 
 // FIXME: MIN_VALUE and MAX_VALUE literals are parsed as -inf and inf #14353
 #![allow(overflowing_literals)]

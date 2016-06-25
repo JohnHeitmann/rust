@@ -8,7 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Implementation of `std::os` functionality for Windows
+//! Implementation of [`std::os`] functionality for Windows
+//!
+//! [`std::os`]: ../../../../std/os/index.html
 
 #![allow(bad_style)]
 

@@ -55,7 +55,7 @@
 //! it), unless this parent is the main thread.
 //!
 //! The parent thread can also wait on the completion of the child
-//! thread; a call to `spawn` produces a `JoinHandle`, which provides
+//! thread; a call to [`spawn`] produces a [`JoinHandle`], which provides
 //! a `join` method for waiting:
 //!
 //! ```rust
@@ -74,7 +74,7 @@
 //!
 //! ## Configuring threads
 //!
-//! A new thread can be configured before it is spawned via the `Builder` type,
+//! A new thread can be configured before it is spawned via the [`Builder`] type,
 //! which currently allows you to set the name and stack size for the child thread:
 //!
 //! ```rust
@@ -86,13 +86,13 @@
 //! });
 //! ```
 //!
-//! ## The `Thread` type
+//! ## The [`Thread`] type
 //!
-//! Threads are represented via the `Thread` type, which you can get in one of
+//! Threads are represented via the [`Thread`] type, which you can get in one of
 //! two ways:
 //!
 //! * By spawning a new thread, e.g. using the `thread::spawn` function, and
-//!   calling `thread()` on the `JoinHandle`.
+//!   calling `thread()` on the [`JoinHandle`].
 //! * By requesting the current thread, using the `thread::current` function.
 //!
 //! The `thread::current()` function is available even for threads not spawned
@@ -105,7 +105,7 @@
 //! blocks the current thread, which can then be resumed from another thread by
 //! calling the `unpark()` method on the blocked thread's handle.
 //!
-//! Conceptually, each `Thread` handle has an associated token, which is
+//! Conceptually, each [`Thread`] handle has an associated token, which is
 //! initially not present:
 //!
 //! * The `thread::park()` function blocks the current thread unless or until
@@ -114,16 +114,16 @@
 //!   token. `thread::park_timeout()` does the same, but allows specifying a
 //!   maximum time to block the thread for.
 //!
-//! * The `unpark()` method on a `Thread` atomically makes the token available
+//! * The `unpark()` method on a [`Thread`] atomically makes the token available
 //!   if it wasn't already.
 //!
-//! In other words, each `Thread` acts a bit like a semaphore with initial count
+//! In other words, each [`Thread`] acts a bit like a semaphore with initial count
 //! 0, except that the semaphore is *saturating* (the count cannot go above 1),
 //! and can return spuriously.
 //!
 //! The API is typically used by acquiring a handle to the current thread,
 //! placing that handle in a shared data structure so that other threads can
-//! find it, and then `park`ing. When some desired condition is met, another
+//! find it, and then [`park`]ing. When some desired condition is met, another
 //! thread calls `unpark` on the handle.
 //!
 //! The motivation for this design is twofold:
@@ -144,7 +144,7 @@
 //!
 //! * Owned thread-local storage. This is a type of thread local key which
 //!   owns the value that it contains, and will destroy the value when the
-//!   thread exits. This variant is created with the `thread_local!` macro and
+//!   thread exits. This variant is created with the [`thread_local!`] macro and
 //!   can contain any value which is `'static` (no borrowed pointers).
 //!
 //! * Scoped thread-local storage. This type of key is used to store a reference
@@ -157,7 +157,16 @@
 //! closure. Thread-local keys only allow shared access to values as there is no
 //! way to guarantee uniqueness if a mutable borrow was allowed. Most values
 //! will want to make use of some form of **interior mutability** through the
-//! `Cell` or `RefCell` types.
+//! [`Cell`] or [`RefCell`] types.
+//!
+//! [`Builder`]: ../../../std/thread/struct.Builder.html
+//! [`Cell`]: ../../../std/cell/struct.Cell.html
+//! [`JoinHandle`]: ../../../std/thread/struct.JoinHandle.html
+//! [`RefCell`]: ../../../std/cell/struct.RefCell.html
+//! [`Thread`]: ../../../std/thread/struct.Thread.html
+//! [`park`]: ../../../std/thread/fn.park.html
+//! [`spawn`]: ../../../std/thread/fn.spawn.html
+//! [`thread_local!`]: ../../../std/macro.thread_local!.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -285,7 +294,7 @@ impl Builder {
 // Free functions
 ////////////////////////////////////////////////////////////////////////////////
 
-/// Spawns a new thread, returning a `JoinHandle` for it.
+/// Spawns a new thread, returning a [`JoinHandle`] for it.
 ///
 /// The join handle will implicitly *detach* the child thread upon being
 /// dropped. In this case, the child thread may outlive the parent (unless
@@ -293,12 +302,15 @@ impl Builder {
 /// the main thread finishes.) Additionally, the join handle provides a `join`
 /// method that can be used to join the child thread. If the child thread
 /// panics, `join` will return an `Err` containing the argument given to
-/// `panic`.
+/// [`panic`].
 ///
 /// # Panics
 ///
 /// Panics if the OS fails to create a thread; use `Builder::spawn`
 /// to recover from such errors.
+///
+/// [`JoinHandle`]: ../../../std/thread/struct.JoinHandle.html
+/// [`panic`]: ../../../core/panicking/fn.panic.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn spawn<F, T>(f: F) -> JoinHandle<T> where
     F: FnOnce() -> T, F: Send + 'static, T: Send + 'static
@@ -397,12 +409,14 @@ pub fn sleep(dur: Duration) {
 /// find it, and then parking (in a loop with a check for the token actually
 /// being acquired).
 ///
-/// A call to `park` does not guarantee that the thread will remain parked
+/// A call to [`park`] does not guarantee that the thread will remain parked
 /// forever, and callers should be prepared for this possibility.
 ///
 /// See the [module documentation][thread] for more detail.
 ///
 /// [thread]: index.html
+///
+/// [`park`]: ../../../std/thread/fn.park.html
 //
 // The implementation currently uses the trivial strategy of a Mutex+Condvar
 // with wakeup flag, which does not actually allow spurious wakeups. In the
@@ -465,7 +479,9 @@ pub fn park_timeout(dur: Duration) {
 // Thread
 ////////////////////////////////////////////////////////////////////////////////
 
-/// The internal representation of a `Thread` handle
+/// The internal representation of a [`Thread`] handle
+///
+/// [`Thread`]: ../../../std/thread/struct.Thread.html
 struct Inner {
     name: Option<CString>,      // Guaranteed to be UTF-8
     lock: Mutex<bool>,          // true when there is a buffered unpark
@@ -605,11 +621,14 @@ impl<T> JoinInner<T> {
 
 /// An owned permission to join on a thread (block on its termination).
 ///
-/// A `JoinHandle` *detaches* the child thread when it is dropped.
+/// A [`JoinHandle`] *detaches* the child thread when it is dropped.
 ///
-/// Due to platform restrictions, it is not possible to `Clone` this
+/// Due to platform restrictions, it is not possible to [`Clone`] this
 /// handle: the ability to join a child thread is a uniquely-owned
 /// permission.
+///
+/// [`Clone`]: ../../../std/clone/trait.Clone.html
+/// [`JoinHandle`]: ../../../std/thread/struct.JoinHandle.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct JoinHandle<T>(JoinInner<T>);
 

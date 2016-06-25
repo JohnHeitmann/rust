@@ -36,12 +36,13 @@ pub mod pattern;
 /// A trait to abstract the idea of creating a new instance of a type from a
 /// string.
 ///
-/// `FromStr`'s [`from_str()`] method is often used implicitly, through
+/// [`FromStr`]'s [`from_str()`] method is often used implicitly, through
 /// [`str`]'s [`parse()`] method. See [`parse()`]'s documentation for examples.
 ///
 /// [`from_str()`]: #tymethod.from_str
 /// [`str`]: ../../std/primitive.str.html
 /// [`parse()`]: ../../std/primitive.str.html#method.parse
+/// [`FromStr`]: ../../../collections/str/trait.FromStr.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait FromStr: Sized {
     /// The associated error which can be returned from parsing.
@@ -108,7 +109,9 @@ impl FromStr for bool {
     }
 }
 
-/// An error returned when parsing a `bool` from a string fails.
+/// An error returned when parsing a [`bool`] from a string fails.
+///
+/// [`bool`]: ../../../std/primitive.bool.html
 #[derive(Debug, Clone, PartialEq)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct ParseBoolError { _priv: () }
@@ -124,11 +127,15 @@ impl fmt::Display for ParseBoolError {
 Section: Creating a string
 */
 
-/// Errors which can occur when attempting to interpret a sequence of `u8`
+/// Errors which can occur when attempting to interpret a sequence of [`u8`]
 /// as a string.
 ///
-/// As such, the `from_utf8` family of functions and methods for both `String`s
+/// As such, the [`from_utf8`] family of functions and methods for both [`String`]s
 /// and `&str`s make use of this error, for example.
+///
+/// [`String`]: ../../../std/string/struct.String.html
+/// [`from_utf8`]: ../../../collections/str/fn.from_utf8.html
+/// [`u8`]: ../../../std/primitive.u8.html
 #[derive(Copy, Eq, PartialEq, Clone, Debug)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct Utf8Error {
@@ -164,7 +171,7 @@ impl Utf8Error {
 
 /// Converts a slice of bytes to a string slice.
 ///
-/// A string slice (`&str`) is made of bytes (`u8`), and a byte slice (`&[u8]`)
+/// A string slice (`&str`) is made of bytes ([`u8`]), and a byte slice (`&[u8]`)
 /// is made of bytes, so this function converts between the two. Not all byte
 /// slices are valid string slices, however: `&str` requires that it is valid
 /// UTF-8. `from_utf8()` checks to ensure that the bytes are valid UTF-8, and
@@ -177,7 +184,7 @@ impl Utf8Error {
 ///
 /// [fromutf8u]: fn.from_utf8_unchecked.html
 ///
-/// If you need a `String` instead of a `&str`, consider
+/// If you need a [`String`] instead of a `&str`, consider
 /// [`String::from_utf8()`][string].
 ///
 /// [string]: ../../std/string/struct.String.html#method.from_utf8
@@ -236,6 +243,9 @@ impl Utf8Error {
 ///
 /// assert_eq!("💖", sparkle_heart);
 /// ```
+///
+/// [`String`]: ../../../std/string/struct.String.html
+/// [`u8`]: ../../../std/primitive.u8.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn from_utf8(v: &[u8]) -> Result<&str, Utf8Error> {
     run_utf8_validation(v)?;
@@ -263,9 +273,11 @@ pub fn from_utf8(v: &[u8]) -> Result<&str, Utf8Error> {
 /// source lifetime is safe in the context, such as by providing a helper
 /// function taking the lifetime of a host value for the str, or by explicit
 /// annotation.
-/// Performs the same functionality as `from_raw_parts`, except that a mutable
+/// Performs the same functionality as [`from_raw_parts`], except that a mutable
 /// str is returned.
 ///
+///
+/// [`from_raw_parts`]: ../../../collections/slice/fn.from_raw_parts.html
 unsafe fn from_raw_parts_mut<'a>(p: *mut u8, len: usize) -> &'a mut str {
     mem::transmute::<&mut [u8], &mut str>(slice::from_raw_parts_mut(p, len))
 }
@@ -526,11 +538,12 @@ impl<'a> CharIndices<'a> {
 }
 
 /// External iterator for a string's bytes.
-/// Use with the `std::iter` module.
+/// Use with the [`std::iter`] module.
 ///
 /// Created with the method [`bytes()`].
 ///
 /// [`bytes()`]: ../../std/primitive.str.html#method.bytes
+/// [`std::iter`]: ../../../std/iter/index.html
 #[stable(feature = "rust1", since = "1.0.0")]
 #[derive(Clone, Debug)]
 pub struct Bytes<'a>(Cloned<slice::Iter<'a, u8>>);
@@ -597,7 +610,7 @@ macro_rules! derive_pattern_clone {
 }
 
 /// This macro generates two public iterator structs
-/// wrapping a private internal one that makes use of the `Pattern` API.
+/// wrapping a private internal one that makes use of the [`Pattern`] API.
 ///
 /// For all patterns `P: Pattern<'a>` the following items will be
 /// generated (generics omitted):
@@ -624,16 +637,22 @@ macro_rules! derive_pattern_clone {
 /// semantic as a DoubleEndedIterator by delegating to `pattern::Searcher` and
 /// `pattern::ReverseSearcher` for both forward and reverse iteration.
 ///
-/// "Almost", because a `Searcher` and a `ReverseSearcher` for a given
-/// `Pattern` might not return the same elements, so actually implementing
-/// `DoubleEndedIterator` for it would be incorrect.
+/// "Almost", because a [`Searcher`] and a [`ReverseSearcher`] for a given
+/// [`Pattern`] might not return the same elements, so actually implementing
+/// [`DoubleEndedIterator`] for it would be incorrect.
 /// (See the docs in `str::pattern` for more details)
 ///
 /// However, the internal struct still represents a single ended iterator from
 /// either end, and depending on pattern is also a valid double ended iterator,
-/// so the two wrapper structs implement `Iterator`
-/// and `DoubleEndedIterator` depending on the concrete pattern type, leading
+/// so the two wrapper structs implement [`Iterator`]
+/// and [`DoubleEndedIterator`] depending on the concrete pattern type, leading
 /// to the complex impls seen above.
+///
+/// [`DoubleEndedIterator`]: ../../../std/iter/trait.DoubleEndedIterator.html
+/// [`Iterator`]: ../../../std/iter/trait.Iterator.html
+/// [`Pattern`]: ../../../std/str/pattern/trait.Pattern.html
+/// [`ReverseSearcher`]: ../../../std/str/pattern/trait.ReverseSearcher.html
+/// [`Searcher`]: ../../../collections/str/pattern/trait.Searcher.html
 macro_rules! generate_pattern_iterators {
     {
         // Forward iterator

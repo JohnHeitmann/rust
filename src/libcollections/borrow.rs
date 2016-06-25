@@ -37,12 +37,15 @@ impl<'a, B: ?Sized> Borrow<B> for Cow<'a, B>
     }
 }
 
-/// A generalization of `Clone` to borrowed data.
+/// A generalization of [`Clone`] to borrowed data.
 ///
 /// Some types make it possible to go from borrowed to owned, usually by
-/// implementing the `Clone` trait. But `Clone` works only for going from `&T`
-/// to `T`. The `ToOwned` trait generalizes `Clone` to construct owned data
+/// implementing the [`Clone`] trait. But [`Clone`] works only for going from `&T`
+/// to `T`. The [`ToOwned`] trait generalizes [`Clone`] to construct owned data
 /// from any borrow of a given type.
+///
+/// [`Clone`]: /std/clone/trait.Clone.html
+/// [`ToOwned`]: /std/borrow/trait.ToOwned.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait ToOwned {
     #[stable(feature = "rust1", since = "1.0.0")]
@@ -75,12 +78,12 @@ impl<T> ToOwned for T where T: Clone {
 
 /// A clone-on-write smart pointer.
 ///
-/// The type `Cow` is a smart pointer providing clone-on-write functionality: it
+/// The type [`Cow`] is a smart pointer providing clone-on-write functionality: it
 /// can enclose and provide immutable access to borrowed data, and clone the
 /// data lazily when mutation or ownership is required. The type is designed to
-/// work with general borrowed data via the `Borrow` trait.
+/// work with general borrowed data via the [`Borrow`] trait.
 ///
-/// `Cow` implements `Deref`, which means that you can call
+/// [`Cow`] implements [`Deref`], which means that you can call
 /// non-mutating methods directly on the data it encloses. If mutation
 /// is desired, `to_mut` will obtain a mutable reference to an owned
 /// value, cloning if necessary.
@@ -101,6 +104,10 @@ impl<T> ToOwned for T where T: Clone {
 ///     }
 /// }
 /// ```
+///
+/// [`Borrow`]: /std/borrow/trait.Borrow.html
+/// [`Cow`]: /std/borrow/enum.Cow.html
+/// [`Deref`]: /std/ops/trait.Deref.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub enum Cow<'a, B: ?Sized + 'a>
     where B: ToOwned

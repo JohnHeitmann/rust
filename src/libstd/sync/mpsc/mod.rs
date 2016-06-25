@@ -13,11 +13,11 @@
 //! This module provides message-based communication over channels, concretely
 //! defined among three types:
 //!
-//! * `Sender`
-//! * `SyncSender`
-//! * `Receiver`
+//! * [`Sender`]
+//! * [`SyncSender`]
+//! * [`Receiver`]
 //!
-//! A `Sender` or `SyncSender` is used to send data to a `Receiver`. Both
+//! A [`Sender`] or [`SyncSender`] is used to send data to a [`Receiver`]. Both
 //! senders are clone-able (multi-producer) such that many threads can send
 //! simultaneously to one receiver (single-consumer).
 //!
@@ -112,6 +112,10 @@
 //! });
 //! rx.recv().unwrap();
 //! ```
+//!
+//! [`Receiver`]: ../../../../std/sync/mpsc/struct.Receiver.html
+//! [`Sender`]: ../../../../std/sync/mpsc/struct.Sender.html
+//! [`SyncSender`]: ../../../../std/sync/mpsc/struct.SyncSender.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -347,19 +351,24 @@ unsafe impl<T: Send> Send for SyncSender<T> {}
 #[stable(feature = "rust1", since = "1.0.0")]
 impl<T> !Sync for SyncSender<T> {}
 
-/// An error returned from the `send` function on channels.
+/// An error returned from the [`send`] function on channels.
 ///
-/// A `send` operation can only fail if the receiving end of a channel is
+/// A [`send`] operation can only fail if the receiving end of a channel is
 /// disconnected, implying that the data could never be received. The error
 /// contains the data being sent as a payload so it can be recovered.
+///
+/// [`send`]: ../../../../libc/fn.send.html
 #[stable(feature = "rust1", since = "1.0.0")]
 #[derive(PartialEq, Eq, Clone, Copy)]
 pub struct SendError<T>(#[stable(feature = "rust1", since = "1.0.0")] pub T);
 
-/// An error returned from the `recv` function on a `Receiver`.
+/// An error returned from the [`recv`] function on a [`Receiver`].
 ///
-/// The `recv` operation can only fail if the sending half of a channel is
+/// The [`recv`] operation can only fail if the sending half of a channel is
 /// disconnected, implying that no further messages will ever be received.
+///
+/// [`Receiver`]: ../../../../std/sync/mpsc/struct.Receiver.html
+/// [`recv`]: ../../../../libc/fn.recv.html
 #[derive(PartialEq, Eq, Clone, Copy, Debug)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct RecvError;
@@ -475,7 +484,7 @@ pub fn channel<T>() -> (Sender<T>, Receiver<T>) {
 
 /// Creates a new synchronous, bounded channel.
 ///
-/// Like asynchronous channels, the `Receiver` will block until a message
+/// Like asynchronous channels, the [`Receiver`] will block until a message
 /// becomes available. These channels differ greatly in the semantics of the
 /// sender from asynchronous channels, however.
 ///
@@ -485,8 +494,8 @@ pub fn channel<T>() -> (Sender<T>, Receiver<T>) {
 /// becomes  "rendezvous channel" where each send will not return until a recv
 /// is paired with it.
 ///
-/// As with asynchronous channels, all senders will panic in `send` if the
-/// `Receiver` has been destroyed.
+/// As with asynchronous channels, all senders will panic in [`send`] if the
+/// [`Receiver`] has been destroyed.
 ///
 /// # Examples
 ///
@@ -507,6 +516,9 @@ pub fn channel<T>() -> (Sender<T>, Receiver<T>) {
 /// assert_eq!(rx.recv().unwrap(), 1);
 /// assert_eq!(rx.recv().unwrap(), 2);
 /// ```
+///
+/// [`Receiver`]: ../../../../std/sync/mpsc/struct.Receiver.html
+/// [`send`]: ../../../../libc/fn.send.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn sync_channel<T>(bound: usize) -> (SyncSender<T>, Receiver<T>) {
     let a = Arc::new(UnsafeCell::new(sync::Packet::new(bound)));

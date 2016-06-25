@@ -10,7 +10,7 @@
 
 //! Traits, helpers, and type definitions for core I/O functionality.
 //!
-//! The `std::io` module contains a number of common things you'll need
+//! The [`std::io`] module contains a number of common things you'll need
 //! when doing input and output. The most core part of this module is
 //! the [`Read`][read] and [`Write`][write] traits, which provide the
 //! most general interface for reading and writing input and output.
@@ -20,11 +20,11 @@
 //!
 //! # Read and Write
 //!
-//! Because they are traits, `Read` and `Write` are implemented by a number
+//! Because they are traits, [`Read`] and `Write` are implemented by a number
 //! of other types, and you can implement them for your types too. As such,
 //! you'll see a few different types of I/O throughout the documentation in
-//! this module: `File`s, `TcpStream`s, and sometimes even `Vec<T>`s. For
-//! example, `Read` adds a `read()` method, which we can use on `File`s:
+//! this module: [`File`]s, [`TcpStream`]s, and sometimes even [`Vec<T>`]s. For
+//! example, [`Read`] adds a `read()` method, which we can use on [`File`]s:
 //!
 //! ```
 //! use std::io;
@@ -43,15 +43,15 @@
 //! # }
 //! ```
 //!
-//! `Read` and `Write` are so important, implementors of the two traits have a
+//! [`Read`] and `Write` are so important, implementors of the two traits have a
 //! nickname: readers and writers. So you'll sometimes see 'a reader' instead
-//! of 'a type that implements the `Read` trait'. Much easier!
+//! of 'a type that implements the [`Read`] trait'. Much easier!
 //!
 //! ## Seek and BufRead
 //!
 //! Beyond that, there are two important traits that are provided: [`Seek`][seek]
 //! and [`BufRead`][bufread]. Both of these build on top of a reader to control
-//! how the reading happens. `Seek` lets you control where the next byte is
+//! how the reading happens. [`Seek`] lets you control where the next byte is
 //! coming from:
 //!
 //! ```
@@ -78,18 +78,18 @@
 //! [seek]: trait.Seek.html
 //! [bufread]: trait.BufRead.html
 //!
-//! `BufRead` uses an internal buffer to provide a number of other ways to read, but
+//! [`BufRead`] uses an internal buffer to provide a number of other ways to read, but
 //! to show it off, we'll need to talk about buffers in general. Keep reading!
 //!
 //! ## BufReader and BufWriter
 //!
 //! Byte-based interfaces are unwieldy and can be inefficient, as we'd need to be
 //! making near-constant calls to the operating system. To help with this,
-//! `std::io` comes with two structs, `BufReader` and `BufWriter`, which wrap
+//! [`std::io`] comes with two structs, [`BufReader`] and [`BufWriter`], which wrap
 //! readers and writers. The wrapper uses a buffer, reducing the number of
 //! calls and providing nicer methods for accessing exactly what you want.
 //!
-//! For example, `BufReader` works with the `BufRead` trait to add extra
+//! For example, [`BufReader`] works with the [`BufRead`] trait to add extra
 //! methods to any reader:
 //!
 //! ```
@@ -111,7 +111,7 @@
 //! # }
 //! ```
 //!
-//! `BufWriter` doesn't add any new ways of writing; it just buffers every call
+//! [`BufWriter`] doesn't add any new ways of writing; it just buffers every call
 //! to [`write()`][write()]:
 //!
 //! ```
@@ -166,11 +166,11 @@
 //! ```
 //!
 //! Of course, using `io::stdout()` directly is less common than something like
-//! `println!`.
+//! [`println!`].
 //!
 //! ## Iterator types
 //!
-//! A large number of the structures provided by `std::io` are for various
+//! A large number of the structures provided by [`std::io`] are for various
 //! ways of iterating over I/O. For example, `Lines` is used to split over
 //! lines:
 //!
@@ -212,7 +212,7 @@
 //! ## io::Result
 //!
 //! Last, but certainly not least, is [`io::Result`][result]. This type is used
-//! as the return type of many `std::io` functions that can cause an error, and
+//! as the return type of many [`std::io`] functions that can cause an error, and
 //! can be returned from your own functions as well. Many of the examples in this
 //! module use the [`try!`][try] macro:
 //!
@@ -246,6 +246,17 @@
 //! any possibly unclear semantics. Note, however, that this is informative, not a binding
 //! contract. The implementation of many of these functions are subject to change over
 //! time and may call fewer or more syscalls/library functions.
+//!
+//! [`BufRead`]: ../../../std/io/trait.BufRead.html
+//! [`BufReader`]: ../../../std/io/struct.BufReader.html
+//! [`BufWriter`]: ../../../std/io/struct.BufWriter.html
+//! [`File`]: ../../../std/fs/struct.File.html
+//! [`Read`]: ../../../std/io/trait.Read.html
+//! [`Seek`]: ../../../std/io/trait.Seek.html
+//! [`TcpStream`]: ../../../std/net/struct.TcpStream.html
+//! [`Vec<T>`]: ../../../std/vec/struct.Vec.html
+//! [`println!`]: ../../../std/macro.println!.html
+//! [`std::io`]: ../../../std/io/index.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -373,9 +384,9 @@ fn read_to_end<R: Read + ?Sized>(r: &mut R, buf: &mut Vec<u8>) -> Result<usize> 
     ret
 }
 
-/// The `Read` trait allows for reading bytes from a source.
+/// The [`Read`] trait allows for reading bytes from a source.
 ///
-/// Implementors of the `Read` trait are sometimes called 'readers'.
+/// Implementors of the [`Read`] trait are sometimes called 'readers'.
 ///
 /// Readers are defined by one required method, `read()`. Each call to `read`
 /// will attempt to pull bytes from this source into a provided buffer. A
@@ -384,7 +395,7 @@ fn read_to_end<R: Read + ?Sized>(r: &mut R, buf: &mut Vec<u8>) -> Result<usize> 
 /// a single method.
 ///
 /// Readers are intended to be composable with one another. Many implementors
-/// throughout `std::io` take and provide types which implement the `Read`
+/// throughout [`std::io`] take and provide types which implement the [`Read`]
 /// trait.
 ///
 /// Please note that each call to `read` may involve a system call, and
@@ -424,6 +435,9 @@ fn read_to_end<R: Read + ?Sized>(r: &mut R, buf: &mut Vec<u8>) -> Result<usize> 
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`Read`]: ../../../std/io/trait.Read.html
+/// [`std::io`]: ../../../std/io/index.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Read {
     /// Pull some bytes from this source into the specified buffer, returning
@@ -826,7 +840,7 @@ pub trait Read {
 ///   'true sink'.
 ///
 /// Writers are intended to be composable with one another. Many implementors
-/// throughout `std::io` take and provide types which implement the `Write`
+/// throughout [`std::io`] take and provide types which implement the `Write`
 /// trait.
 ///
 /// # Examples
@@ -842,6 +856,8 @@ pub trait Read {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`std::io`]: ../../../std/io/index.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Write {
     /// Write a buffer into this object, returning how many bytes were written.
@@ -1047,7 +1063,7 @@ pub trait Write {
     fn by_ref(&mut self) -> &mut Self where Self: Sized { self }
 }
 
-/// The `Seek` trait provides a cursor which can be moved within a stream of
+/// The [`Seek`] trait provides a cursor which can be moved within a stream of
 /// bytes.
 ///
 /// The stream typically has a fixed size, allowing seeking relative to either
@@ -1073,6 +1089,8 @@ pub trait Write {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`Seek`]: ../../../std/io/trait.Seek.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Seek {
     /// Seek to an offset, in bytes, in a stream.
@@ -1145,11 +1163,11 @@ fn read_until<R: BufRead + ?Sized>(r: &mut R, delim: u8, buf: &mut Vec<u8>)
     }
 }
 
-/// A `BufRead` is a type of `Read`er which has an internal buffer, allowing it
+/// A [`BufRead`] is a type of [`Read`]er which has an internal buffer, allowing it
 /// to perform extra ways of reading.
 ///
 /// For example, reading line-by-line is inefficient without using a buffer, so
-/// if you want to read by line, you'll need `BufRead`, which includes a
+/// if you want to read by line, you'll need [`BufRead`], which includes a
 /// [`read_line()`][readline] method as well as a [`lines()`][lines] iterator.
 ///
 /// [readline]: #method.read_line
@@ -1157,7 +1175,7 @@ fn read_until<R: BufRead + ?Sized>(r: &mut R, delim: u8, buf: &mut Vec<u8>)
 ///
 /// # Examples
 ///
-/// A locked standard input implements `BufRead`:
+/// A locked standard input implements [`BufRead`]:
 ///
 /// ```
 /// use std::io;
@@ -1169,11 +1187,11 @@ fn read_until<R: BufRead + ?Sized>(r: &mut R, delim: u8, buf: &mut Vec<u8>)
 /// }
 /// ```
 ///
-/// If you have something that implements `Read`, you can use the [`BufReader`
-/// type][bufreader] to turn it into a `BufRead`.
+/// If you have something that implements [`Read`], you can use the [`BufReader`
+/// type][bufreader] to turn it into a [`BufRead`].
 ///
 /// For example, [`File`][file] implements `Read`, but not `BufRead`.
-/// `BufReader` to the rescue!
+/// [`BufReader`] to the rescue!
 ///
 /// [bufreader]: struct.BufReader.html
 /// [file]: ../fs/struct.File.html
@@ -1195,6 +1213,10 @@ fn read_until<R: BufRead + ?Sized>(r: &mut R, delim: u8, buf: &mut Vec<u8>)
 /// # }
 /// ```
 ///
+///
+/// [`BufRead`]: ../../../std/io/trait.BufRead.html
+/// [`BufReader`]: ../../../std/io/struct.BufReader.html
+/// [`Read`]: ../../../std/io/trait.Read.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait BufRead: Read {
     /// Fills the internal buffer of this object, returning the buffer contents.
@@ -1522,12 +1544,14 @@ impl<T: BufRead> BufRead for Take<T> {
     }
 }
 
-/// An iterator over `u8` values of a reader.
+/// An iterator over [`u8`] values of a reader.
 ///
 /// This struct is generally created by calling [`bytes()`][bytes] on a reader.
 /// Please see the documentation of `bytes()` for more details.
 ///
 /// [bytes]: trait.Read.html#method.bytes
+///
+/// [`u8`]: ../../../std/primitive.u8.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct Bytes<R> {
     inner: R,
@@ -1547,12 +1571,14 @@ impl<R: Read> Iterator for Bytes<R> {
     }
 }
 
-/// An iterator over the `char`s of a reader.
+/// An iterator over the [`char`]s of a reader.
 ///
 /// This struct is generally created by calling [`chars()`][chars] on a reader.
 /// Please see the documentation of `chars()` for more details.
 ///
 /// [chars]: trait.Read.html#method.chars
+///
+/// [`char`]: ../../../std/primitive.char.html
 #[unstable(feature = "io", reason = "awaiting stability of Read::chars",
            issue = "27802")]
 pub struct Chars<R> {
@@ -1636,13 +1662,15 @@ impl fmt::Display for CharsError {
     }
 }
 
-/// An iterator over the contents of an instance of `BufRead` split on a
+/// An iterator over the contents of an instance of [`BufRead`] split on a
 /// particular byte.
 ///
 /// This struct is generally created by calling [`split()`][split] on a
-/// `BufRead`. Please see the documentation of `split()` for more details.
+/// [`BufRead`]. Please see the documentation of `split()` for more details.
 ///
 /// [split]: trait.BufRead.html#method.split
+///
+/// [`BufRead`]: ../../../std/io/trait.BufRead.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct Split<B> {
     buf: B,
@@ -1668,12 +1696,14 @@ impl<B: BufRead> Iterator for Split<B> {
     }
 }
 
-/// An iterator over the lines of an instance of `BufRead`.
+/// An iterator over the lines of an instance of [`BufRead`].
 ///
 /// This struct is generally created by calling [`lines()`][lines] on a
-/// `BufRead`. Please see the documentation of `lines()` for more details.
+/// [`BufRead`]. Please see the documentation of `lines()` for more details.
 ///
 /// [lines]: trait.BufRead.html#method.lines
+///
+/// [`BufRead`]: ../../../std/io/trait.BufRead.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct Lines<B> {
     buf: B,

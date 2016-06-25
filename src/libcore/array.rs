@@ -8,11 +8,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Implementations of things like `Eq` for fixed-length arrays
+//! Implementations of things like [`Eq`] for fixed-length arrays
 //! up to a certain length. Eventually we should able to generalize
 //! to all lengths.
 //!
 //! *[See also the array primitive type](../../std/primitive.array.html).*
+//!
+//! [`Eq`]: ../../std/cmp/trait.Eq.html
 
 #![unstable(feature = "fixed_size_array",
             reason = "traits and impls are better expressed through generic \

@@ -29,8 +29,8 @@ const INITIAL_CAPACITY: usize = 32;
 /// An implementation of a hash set using the underlying representation of a
 /// HashMap where the value is ().
 ///
-/// As with the `HashMap` type, a `HashSet` requires that the elements
-/// implement the `Eq` and `Hash` traits. This can frequently be achieved by
+/// As with the [`HashMap`] type, a [`HashSet`] requires that the elements
+/// implement the [`Eq`] and [`Hash`] traits. This can frequently be achieved by
 /// using `#[derive(PartialEq, Eq, Hash)]`. If you implement these yourself,
 /// it is important that the following property holds:
 ///
@@ -42,9 +42,9 @@ const INITIAL_CAPACITY: usize = 32;
 ///
 ///
 /// It is a logic error for an item to be modified in such a way that the
-/// item's hash, as determined by the `Hash` trait, or its equality, as
-/// determined by the `Eq` trait, changes while it is in the set. This is
-/// normally only possible through `Cell`, `RefCell`, global state, I/O, or
+/// item's hash, as determined by the [`Hash`] trait, or its equality, as
+/// determined by the [`Eq`] trait, changes while it is in the set. This is
+/// normally only possible through [`Cell`], [`RefCell`], global state, I/O, or
 /// unsafe code.
 ///
 /// # Examples
@@ -52,7 +52,7 @@ const INITIAL_CAPACITY: usize = 32;
 /// ```
 /// use std::collections::HashSet;
 /// // Type inference lets us omit an explicit type signature (which
-/// // would be `HashSet<&str>` in this example).
+/// // would be [`HashSet<&str>`] in this example).
 /// let mut books = HashSet::new();
 ///
 /// // Add some books.
@@ -76,9 +76,9 @@ const INITIAL_CAPACITY: usize = 32;
 /// }
 /// ```
 ///
-/// The easiest way to use `HashSet` with a custom type is to derive
-/// `Eq` and `Hash`. We must also derive `PartialEq`, this will in the
-/// future be implied by `Eq`.
+/// The easiest way to use [`HashSet`] with a custom type is to derive
+/// [`Eq`] and [`Hash`]. We must also derive [`PartialEq`], this will in the
+/// future be implied by [`Eq`].
 ///
 /// ```
 /// use std::collections::HashSet;
@@ -100,6 +100,15 @@ const INITIAL_CAPACITY: usize = 32;
 ///     println!("{:?}", x);
 /// }
 /// ```
+///
+/// [`Cell`]: ../../../../std/cell/struct.Cell.html
+/// [`Eq`]: ../../../../std/cmp/trait.Eq.html
+/// [`Hash`]: ../../../../std/hash/trait.Hash.html
+/// [`HashMap`]: ../../../../std/collections/struct.HashMap.html
+/// [`HashSet`]: ../../../../std/collections/hash_set/struct.HashSet.html
+/// [`HashSet<&str>`]: ../../../../std/collections/hash_set/struct.HashSet.html
+/// [`PartialEq`]: ../../../../std/cmp/trait.PartialEq.html
+/// [`RefCell`]: ../../../../std/cell/struct.RefCell.html
 #[derive(Clone)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct HashSet<T, S = RandomState> {

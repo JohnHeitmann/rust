@@ -19,7 +19,7 @@
 //!
 //! # Examples
 //!
-//! There are multiple ways to create a new `String` from a string literal:
+//! There are multiple ways to create a new [`String`] from a string literal:
 //!
 //! ```rust
 //! let s = "Hello".to_string();
@@ -28,7 +28,7 @@
 //! let s: String = "also this".into();
 //! ```
 //!
-//! You can create a new `String` from an existing one by concatenating with
+//! You can create a new [`String`] from an existing one by concatenating with
 //! `+`:
 //!
 //! ```rust
@@ -37,7 +37,7 @@
 //! let message = s + " world!";
 //! ```
 //!
-//! If you have a vector of valid UTF-8 bytes, you can make a `String` out of
+//! If you have a vector of valid UTF-8 bytes, you can make a [`String`] out of
 //! it. You can do the reverse too.
 //!
 //! ```rust
@@ -52,6 +52,8 @@
 //!
 //! assert_eq!(bytes, [240, 159, 146, 150]);
 //! ```
+//!
+//! [`String`]: /std/string/struct.String.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -73,7 +75,7 @@ use boxed::Box;
 
 /// A UTF-8 encoded, growable string.
 ///
-/// The `String` type is the most common string type that has ownership over the
+/// The [`String`] type is the most common string type that has ownership over the
 /// contents of the string. It has a close relationship with its borrowed
 /// counterpart, the primitive [`str`].
 ///
@@ -81,7 +83,7 @@ use boxed::Box;
 ///
 /// # Examples
 ///
-/// You can create a `String` from a literal string with `String::from`:
+/// You can create a [`String`] from a literal string with `String::from`:
 ///
 /// ```
 /// let hello = String::from("Hello, world!");
@@ -101,7 +103,7 @@ use boxed::Box;
 /// [`push()`]: #method.push
 /// [`push_str()`]: #method.push_str
 ///
-/// If you have a vector of UTF-8 bytes, you can create a `String` from it with
+/// If you have a vector of UTF-8 bytes, you can create a [`String`] from it with
 /// the [`from_utf8()`] method:
 ///
 /// ```
@@ -118,10 +120,10 @@ use boxed::Box;
 ///
 /// # UTF-8
 ///
-/// `String`s are always valid UTF-8. This has a few implications, the first of
+/// [`String`]s are always valid UTF-8. This has a few implications, the first of
 /// which is that if you need a non-UTF-8 string, consider [`OsString`]. It is
 /// similar, but without the UTF-8 constraint. The second implication is that
-/// you cannot index into a `String`:
+/// you cannot index into a [`String`]:
 ///
 /// ```ignore
 /// let s = "hello";
@@ -142,8 +144,8 @@ use boxed::Box;
 ///
 /// # Deref
 ///
-/// `String`s implement [`Deref`]`<Target=str>`, and so inherit all of [`str`]'s
-/// methods. In addition, this means that you can pass a `String` to any
+/// [`String`]s implement [`Deref`]`<Target=str>`, and so inherit all of [`str`]'s
+/// methods. In addition, this means that you can pass a [`String`] to any
 /// function which takes a [`&str`] by using an ampersand (`&`):
 ///
 /// ```
@@ -164,8 +166,8 @@ use boxed::Box;
 ///
 /// # Representation
 ///
-/// A `String` is made up of three components: a pointer to some bytes, a
-/// length, and a capacity. The pointer points to an internal buffer `String`
+/// A [`String`] is made up of three components: a pointer to some bytes, a
+/// length, and a capacity. The pointer points to an internal buffer [`String`]
 /// uses to store its data. The length is the number of bytes currently stored
 /// in the buffer, and the capacity is the size of the buffer in bytes. As such,
 /// the length will always be less than or equal to the capacity.
@@ -202,7 +204,7 @@ use boxed::Box;
 /// [`len()`]: #method.len
 /// [`capacity()`]: #method.capacity
 ///
-/// If a `String` has enough capacity, adding elements to it will not
+/// If a [`String`] has enough capacity, adding elements to it will not
 /// re-allocate. For example, consider this program:
 ///
 /// ```
@@ -256,13 +258,15 @@ use boxed::Box;
 /// ```
 ///
 /// Here, there's no need to allocate more memory inside the loop.
+///
+/// [`String`]: /std/string/struct.String.html
 #[derive(PartialOrd, Eq, Ord)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct String {
     vec: Vec<u8>,
 }
 
-/// A possible error value when converting a `String` from a UTF-8 byte vector.
+/// A possible error value when converting a [`String`] from a UTF-8 byte vector.
 ///
 /// This type is the error type for the [`from_utf8()`] method on [`String`]. It
 /// is designed in such a way to carefully avoid reallocations: the
@@ -275,7 +279,7 @@ pub struct String {
 ///
 /// The [`Utf8Error`] type provided by [`std::str`] represents an error that may
 /// occur when converting a slice of [`u8`]s to a [`&str`]. In this sense, it's
-/// an analogue to `FromUtf8Error`, and you can get one from a `FromUtf8Error`
+/// an analogue to [`FromUtf8Error`], and you can get one from a [`FromUtf8Error`]
 /// through the [`utf8_error()`] method.
 ///
 /// [`Utf8Error`]: ../../std/str/struct.Utf8Error.html
@@ -297,6 +301,9 @@ pub struct String {
 /// assert!(value.is_err());
 /// assert_eq!(vec![0, 159], value.unwrap_err().into_bytes());
 /// ```
+///
+/// [`FromUtf8Error`]: /std/string/struct.FromUtf8Error.html
+/// [`String`]: /std/string/struct.String.html
 #[stable(feature = "rust1", since = "1.0.0")]
 #[derive(Debug)]
 pub struct FromUtf8Error {
@@ -304,7 +311,7 @@ pub struct FromUtf8Error {
     error: Utf8Error,
 }
 
-/// A possible error value when converting a `String` from a UTF-16 byte slice.
+/// A possible error value when converting a [`String`] from a UTF-16 byte slice.
 ///
 /// This type is the error type for the [`from_utf16()`] method on [`String`].
 ///
@@ -322,6 +329,8 @@ pub struct FromUtf8Error {
 ///
 /// assert!(String::from_utf16(v).is_err());
 /// ```
+///
+/// [`String`]: /std/string/struct.String.html
 #[stable(feature = "rust1", since = "1.0.0")]
 #[derive(Debug)]
 pub struct FromUtf16Error(());
@@ -1675,7 +1684,7 @@ impl ops::DerefMut for String {
     }
 }
 
-/// An error when parsing a `String`.
+/// An error when parsing a [`String`].
 ///
 /// This `enum` is slightly awkward: it will never actually exist. This error is
 /// part of the type signature of the implementation of [`FromStr`] on
@@ -1731,7 +1740,7 @@ impl PartialEq for ParseError {
 #[stable(feature = "str_parse_error", since = "1.5.0")]
 impl Eq for ParseError {}
 
-/// A trait for converting a value to a `String`.
+/// A trait for converting a value to a [`String`].
 ///
 /// This trait is automatically implemented for any type which implements the
 /// [`Display`] trait. As such, `ToString` shouldn't be implemented directly:
@@ -1739,6 +1748,7 @@ impl Eq for ParseError {}
 /// implementation for free.
 ///
 /// [`Display`]: ../../std/fmt/trait.Display.html
+/// [`String`]: /std/string/struct.String.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait ToString {
     /// Converts the given value to a `String`.
@@ -1838,7 +1848,7 @@ impl fmt::Write for String {
     }
 }
 
-/// A draining iterator for `String`.
+/// A draining iterator for [`String`].
 ///
 /// This struct is created by the [`drain()`] method on [`String`]. See its
 /// documentation for more.

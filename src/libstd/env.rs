@@ -25,7 +25,7 @@ use io;
 use path::{Path, PathBuf};
 use sys::os as os_imp;
 
-/// Returns the current working directory as a `PathBuf`.
+/// Returns the current working directory as a [`PathBuf`].
 ///
 /// # Errors
 ///
@@ -44,6 +44,8 @@ use sys::os as os_imp;
 /// let p = env::current_dir().unwrap();
 /// println!("The current directory is {}", p.display());
 /// ```
+///
+/// [`PathBuf`]: ../../std/path/struct.PathBuf.html
 #[stable(feature = "env", since = "1.0.0")]
 pub fn current_dir() -> io::Result<PathBuf> {
     os_imp::getcwd()
@@ -326,10 +328,13 @@ fn _remove_var(k: &OsStr) {
     })
 }
 
-/// An iterator over `PathBuf` instances for parsing an environment variable
+/// An iterator over [`PathBuf`] instances for parsing an environment variable
 /// according to platform-specific conventions.
 ///
-/// This structure is returned from `std::env::split_paths`.
+/// This structure is returned from [`std::env::split_paths`].
+///
+/// [`PathBuf`]: ../../std/path/struct.PathBuf.html
+/// [`std::env::split_paths`]: ../../std/env/fn.split_paths.html
 #[stable(feature = "env", since = "1.0.0")]
 pub struct SplitPaths<'a> { inner: os_imp::SplitPaths<'a> }
 
@@ -365,21 +370,23 @@ impl<'a> Iterator for SplitPaths<'a> {
     fn size_hint(&self) -> (usize, Option<usize>) { self.inner.size_hint() }
 }
 
-/// Error type returned from `std::env::join_paths` when paths fail to be
+/// Error type returned from [`std::env::join_paths`] when paths fail to be
 /// joined.
+///
+/// [`std::env::join_paths`]: ../../std/env/fn.join_paths.html
 #[derive(Debug)]
 #[stable(feature = "env", since = "1.0.0")]
 pub struct JoinPathsError {
     inner: os_imp::JoinPathsError
 }
 
-/// Joins a collection of `Path`s appropriately for the `PATH`
+/// Joins a collection of [`Path`]s appropriately for the `PATH`
 /// environment variable.
 ///
-/// Returns an `OsString` on success.
+/// Returns an [`OsString`] on success.
 ///
 /// Returns an `Err` (containing an error message) if one of the input
-/// `Path`s contains an invalid character for constructing the `PATH`
+/// [`Path`]s contains an invalid character for constructing the `PATH`
 /// variable (a double quote on Windows or a colon on Unix).
 ///
 /// # Examples
@@ -395,6 +402,9 @@ pub struct JoinPathsError {
 ///     env::set_var("PATH", &new_path);
 /// }
 /// ```
+///
+/// [`OsString`]: ../../std/ffi/struct.OsString.html
+/// [`Path`]: ../../std/path/struct.Path.html
 #[stable(feature = "env", since = "1.0.0")]
 pub fn join_paths<I, T>(paths: I) -> Result<OsString, JoinPathsError>
     where I: IntoIterator<Item=T>, T: AsRef<OsStr>
@@ -422,7 +432,7 @@ impl Error for JoinPathsError {
 ///
 /// Returns the value of the 'HOME' environment variable if it is set
 /// and not equal to the empty string. Otherwise, it tries to determine the
-/// home directory by invoking the `getpwuid_r` function on the UID of the
+/// home directory by invoking the [`getpwuid_r`] function on the UID of the
 /// current user.
 ///
 /// # Windows
@@ -445,6 +455,8 @@ impl Error for JoinPathsError {
 ///     None => println!("Impossible to get your home dir!"),
 /// }
 /// ```
+///
+/// [`getpwuid_r`]: ../../libc/fn.getpwuid_r.html
 #[stable(feature = "env", since = "1.0.0")]
 pub fn home_dir() -> Option<PathBuf> {
     os_imp::home_dir()
@@ -459,7 +471,7 @@ pub fn home_dir() -> Option<PathBuf> {
 ///
 /// On Windows, returns the value of, in order, the `TMP`, `TEMP`,
 /// `USERPROFILE` environment variable if any are set and not the empty
-/// string. Otherwise, `temp_dir` returns the path of the Windows directory.
+/// string. Otherwise, [`temp_dir`] returns the path of the Windows directory.
 /// This behavior is identical to that of [`GetTempPath`][msdn], which this
 /// function uses internally.
 ///
@@ -477,6 +489,8 @@ pub fn home_dir() -> Option<PathBuf> {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`temp_dir`]: ../../std/env/fn.temp_dir.html
 #[stable(feature = "env", since = "1.0.0")]
 pub fn temp_dir() -> PathBuf {
     os_imp::temp_dir()
@@ -509,17 +523,23 @@ pub fn current_exe() -> io::Result<PathBuf> {
     os_imp::current_exe()
 }
 
-/// An iterator over the arguments of a process, yielding a `String` value
+/// An iterator over the arguments of a process, yielding a [`String`] value
 /// for each argument.
 ///
-/// This structure is created through the `std::env::args` method.
+/// This structure is created through the [`std::env::args`] method.
+///
+/// [`String`]: ../../std/string/struct.String.html
+/// [`std::env::args`]: ../../std/env/fn.args.html
 #[stable(feature = "env", since = "1.0.0")]
 pub struct Args { inner: ArgsOs }
 
-/// An iterator over the arguments of a process, yielding an `OsString` value
+/// An iterator over the arguments of a process, yielding an [`OsString`] value
 /// for each argument.
 ///
-/// This structure is created through the `std::env::args_os` method.
+/// This structure is created through the [`std::env::args_os`] method.
+///
+/// [`OsString`]: ../../std/ffi/struct.OsString.html
+/// [`std::env::args_os`]: ../../std/env/fn.args_os.html
 #[stable(feature = "env", since = "1.0.0")]
 pub struct ArgsOs { inner: os_imp::Args }
 
@@ -534,7 +554,7 @@ pub struct ArgsOs { inner: os_imp::Args }
 ///
 /// The returned iterator will panic during iteration if any argument to the
 /// process is not valid unicode. If this is not desired,
-/// use the `args_os` function instead.
+/// use the [`args_os`] function instead.
 ///
 /// # Examples
 ///
@@ -546,6 +566,8 @@ pub struct ArgsOs { inner: os_imp::Args }
 ///     println!("{}", argument);
 /// }
 /// ```
+///
+/// [`args_os`]: ../../std/env/fn.args_os.html
 #[stable(feature = "env", since = "1.0.0")]
 pub fn args() -> Args {
     Args { inner: args_os() }

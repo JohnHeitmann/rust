@@ -10,8 +10,10 @@
 
 //! A doubly-linked list with owned nodes.
 //!
-//! The `LinkedList` allows pushing and popping elements at either end and is thus
+//! The [`LinkedList`] allows pushing and popping elements at either end and is thus
 //! efficiently usable as a double-ended queue.
+//!
+//! [`LinkedList`]: /std/collections/struct.LinkedList.html
 
 // LinkedList is constructed like a singly-linked list over the field `next`.
 // including the last link being None; each Node owns its `next` field.
@@ -56,7 +58,9 @@ struct Node<T> {
     value: T,
 }
 
-/// An iterator over references to the items of a `LinkedList`.
+/// An iterator over references to the items of a [`LinkedList`].
+///
+/// [`LinkedList`]: /std/collections/struct.LinkedList.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct Iter<'a, T: 'a> {
     head: &'a Link<T>,
@@ -76,7 +80,9 @@ impl<'a, T> Clone for Iter<'a, T> {
     }
 }
 
-/// An iterator over mutable references to the items of a `LinkedList`.
+/// An iterator over mutable references to the items of a [`LinkedList`].
+///
+/// [`LinkedList`]: /std/collections/struct.LinkedList.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct IterMut<'a, T: 'a> {
     list: &'a mut LinkedList<T>,
@@ -85,7 +91,9 @@ pub struct IterMut<'a, T: 'a> {
     nelem: usize,
 }
 
-/// An iterator over the items of a `LinkedList`.
+/// An iterator over the items of a [`LinkedList`].
+///
+/// [`LinkedList`]: /std/collections/struct.LinkedList.html
 #[derive(Clone)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct IntoIter<T> {
@@ -1066,9 +1074,11 @@ unsafe fn finalize<T>(node: IntermediateBox<Node<T>>) -> Box<Node<T>> {
     node
 }
 
-/// A place for insertion at the front of a `LinkedList`.
+/// A place for insertion at the front of a [`LinkedList`].
 ///
 /// See [`LinkedList::front_place`](struct.LinkedList.html#method.front_place) for details.
+///
+/// [`LinkedList`]: /std/collections/struct.LinkedList.html
 #[must_use = "places do nothing unless written to with `<-` syntax"]
 #[unstable(feature = "collection_placement",
            reason = "struct name and placement protocol are subject to change",
@@ -1110,9 +1120,11 @@ impl<'a, T> InPlace<T> for FrontPlace<'a, T> {
     }
 }
 
-/// A place for insertion at the back of a `LinkedList`.
+/// A place for insertion at the back of a [`LinkedList`].
 ///
 /// See [`LinkedList::back_place`](struct.LinkedList.html#method.back_place) for details.
+///
+/// [`LinkedList`]: /std/collections/struct.LinkedList.html
 #[must_use = "places do nothing unless written to with `<-` syntax"]
 #[unstable(feature = "collection_placement",
            reason = "struct name and placement protocol are subject to change",

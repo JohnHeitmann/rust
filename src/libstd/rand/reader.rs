@@ -15,12 +15,14 @@
 use io::prelude::*;
 use rand::Rng;
 
-/// An RNG that reads random bytes straight from a `Read`. This will
+/// An RNG that reads random bytes straight from a [`Read`]. This will
 /// work best with an infinite reader, but this is not required.
 ///
 /// # Panics
 ///
 /// It will panic if it there is insufficient data to fulfill a request.
+///
+/// [`Read`]: ../../../std/io/trait.Read.html
 pub struct ReaderRng<R> {
     reader: R
 }

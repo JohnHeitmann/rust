@@ -10,9 +10,9 @@
 
 //! Cross-platform path manipulation.
 //!
-//! This module provides two types, `PathBuf` and `Path` (akin to `String` and
-//! `str`), for working with paths abstractly. These types are thin wrappers
-//! around `OsString` and `OsStr` respectively, meaning that they work directly
+//! This module provides two types, [`PathBuf`] and [`Path`] \(akin to [`String`] and
+//! [`str`]), for working with paths abstractly. These types are thin wrappers
+//! around [`OsString`] and [`OsStr`] respectively, meaning that they work directly
 //! on strings according to the local platform's path syntax.
 //!
 //! ## Simple usage
@@ -20,7 +20,7 @@
 //! Path manipulation includes both parsing components from slices and building
 //! new owned paths.
 //!
-//! To parse a path, you can create a `Path` slice from a `str`
+//! To parse a path, you can create a [`Path`] slice from a [`str`]
 //! slice and start asking questions:
 //!
 //! ```rust
@@ -32,7 +32,7 @@
 //! let parent_dir = path.parent();
 //! ```
 //!
-//! To build or modify paths, use `PathBuf`:
+//! To build or modify paths, use [`PathBuf`]:
 //!
 //! ```rust
 //! use std::path::PathBuf;
@@ -96,6 +96,13 @@
 //! that `b` is a symbolic link (so its parent isn't `a`). Further
 //! normalization is possible to build on top of the components APIs,
 //! and will be included in this library in the near future.
+//!
+//! [`OsStr`]: ../../std/ffi/struct.OsStr.html
+//! [`OsString`]: ../../std/ffi/struct.OsString.html
+//! [`Path`]: ../../std/path/struct.Path.html
+//! [`PathBuf`]: ../../std/path/struct.PathBuf.html
+//! [`String`]: ../../std/string/struct.String.html
+//! [`str`]: ../../std/primitive.str.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -610,7 +617,9 @@ pub struct Components<'a> {
     back: State,
 }
 
-/// An iterator over the components of a path, as `OsStr` slices.
+/// An iterator over the components of a path, as [`OsStr`] slices.
+///
+/// [`OsStr`]: ../../std/ffi/struct.OsStr.html
 #[derive(Clone)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct Iter<'a> {
@@ -962,11 +971,11 @@ impl<'a> cmp::Ord for Components<'a> {
 // Basic types and traits
 ////////////////////////////////////////////////////////////////////////////////
 
-/// An owned, mutable path (akin to `String`).
+/// An owned, mutable path (akin to [`String`]).
 ///
 /// This type provides methods like `push` and `set_extension` that mutate the
-/// path in place. It also implements `Deref` to `Path`, meaning that all
-/// methods on `Path` slices are available on `PathBuf` values as well.
+/// path in place. It also implements [`Deref`] to [`Path`], meaning that all
+/// methods on [`Path`] slices are available on [`PathBuf`] values as well.
 ///
 /// More details about the overall approach can be found in
 /// the module documentation.
@@ -981,6 +990,11 @@ impl<'a> cmp::Ord for Components<'a> {
 /// path.push("system32");
 /// path.set_extension("dll");
 /// ```
+///
+/// [`Deref`]: ../../std/ops/trait.Deref.html
+/// [`Path`]: ../../std/path/struct.Path.html
+/// [`PathBuf`]: ../../std/path/struct.PathBuf.html
+/// [`String`]: ../../std/string/struct.String.html
 #[derive(Clone)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct PathBuf {
@@ -1278,7 +1292,7 @@ impl Into<OsString> for PathBuf {
     }
 }
 
-/// A slice of a path (akin to `str`).
+/// A slice of a path (akin to [`str`]).
 ///
 /// This type supports a number of operations for inspecting a path, including
 /// breaking the path into its components (separated by `/` or `\`, depending on
@@ -1287,7 +1301,7 @@ impl Into<OsString> for PathBuf {
 /// the module documentation.
 ///
 /// This is an *unsized* type, meaning that it must always be used behind a
-/// pointer like `&` or `Box`.
+/// pointer like `&` or [`Box`].
 ///
 /// # Examples
 ///
@@ -1300,6 +1314,9 @@ impl Into<OsString> for PathBuf {
 /// let parent_dir = path.parent();
 /// ```
 ///
+///
+/// [`Box`]: ../../collections/boxed/struct.Box.html
+/// [`str`]: ../../std/primitive.str.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct Path {
     inner: OsStr,

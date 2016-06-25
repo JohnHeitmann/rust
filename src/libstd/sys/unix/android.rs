@@ -19,12 +19,14 @@
 //! with API level 9. We then in theory want to work on that and all future
 //! versions of Android!
 //!
-//! Some of the detection here is done at runtime via `dlopen` and
+//! Some of the detection here is done at runtime via [`dlopen`] and
 //! introspection. Other times no detection is performed at all and we just
 //! provide a fallback implementation as some versions of Android we support
 //! don't have the function.
 //!
 //! You'll find more details below about why each compatibility shim is needed.
+//!
+//! [`dlopen`]: ../../../../libc/fn.dlopen.html
 
 #![cfg(target_os = "android")]
 

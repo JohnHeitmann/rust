@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Utilities for formatting and printing `String`s
+//! Utilities for formatting and printing [`String`]s
 //!
 //! This module contains the runtime support for the `format!` syntax extension.
 //! This macro is implemented in the compiler to emit calls to this module in
@@ -112,7 +112,7 @@
 //!
 //! If this syntax is used, then the number of characters to print precedes the
 //! actual object being formatted, and the number of characters must have the
-//! type `usize`. Although a `usize` can be printed with `{}`, it is invalid to
+//! type [`usize`]. Although a [`usize`] can be printed with `{}`, it is invalid to
 //! reference an argument as such. For example this is another invalid format
 //! string:
 //!
@@ -124,8 +124,8 @@
 //!
 //! When requesting that an argument be formatted with a particular type, you
 //! are actually requesting that an argument ascribes to a particular trait.
-//! This allows multiple actual types to be formatted via `{:x}` (like `i8` as
-//! well as `isize`).  The current mapping of types to traits is:
+//! This allows multiple actual types to be formatted via `{:x}` (like [`i8`] as
+//! well as [`isize`]).  The current mapping of types to traits is:
 //!
 //! * *nothing* ⇒ [`Display`](trait.Display.html)
 //! * `?` ⇒ [`Debug`](trait.Debug.html)
@@ -160,11 +160,11 @@
 //! should emit output into the `f.buf` stream. It is up to each format trait
 //! implementation to correctly adhere to the requested formatting parameters.
 //! The values of these parameters will be listed in the fields of the
-//! `Formatter` struct. In order to help with this, the `Formatter` struct also
+//! [`Formatter`] struct. In order to help with this, the [`Formatter`] struct also
 //! provides some helper methods.
 //!
 //! Additionally, the return value of this function is `fmt::Result` which is a
-//! typedef to `Result<(), std::io::Error>` (also known as `std::io::Result<()>`).
+//! typedef to `Result<(), std::io::Error>` (also known as [`std::io::Result<()>`]).
 //! Formatting implementations should ensure that they return errors from `write!`
 //! correctly (propagating errors upward).
 //!
@@ -224,7 +224,7 @@
 //!   all types implement the `Display` trait.
 //! - `fmt::Debug` implementations should be implemented for **all** public types.
 //!   Output will typically represent the internal state as faithfully as possible.
-//!   The purpose of the `Debug` trait is to facilitate debugging Rust code. In
+//!   The purpose of the [`Debug`] trait is to facilitate debugging Rust code. In
 //!   most cases, using `#[derive(Debug)]` is sufficient and recommended.
 //!
 //! Some examples of the output from both traits:
@@ -264,7 +264,7 @@
 //! write!(&mut w, "Hello {}!", "world");
 //! ```
 //!
-//! ### `print!`
+//! ### [`print!`]
 //!
 //! This and `println` emit their output to stdout. Similarly to the `write!`
 //! macro, the goal of these macros is to avoid intermediate allocations when
@@ -275,7 +275,7 @@
 //! println!("I have a newline {}", "character at the end");
 //! ```
 //!
-//! ### `format_args!`
+//! ### [`format_args!`]
 //!
 //! This is a curious macro which is used to safely pass around
 //! an opaque object describing the format string. This object
@@ -298,8 +298,8 @@
 //! my_fmt_fn(format_args!(", or a {} too", "function"));
 //! ```
 //!
-//! The result of the `format_args!` macro is a value of type `fmt::Arguments`.
-//! This structure can then be passed to the `write` and `format` functions
+//! The result of the [`format_args!`] macro is a value of type `fmt::Arguments`.
+//! This structure can then be passed to the `write` and [`format`] functions
 //! inside this module in order to process the format string.
 //! The goal of this macro is to even further prevent intermediate allocations
 //! when dealing formatting strings.
@@ -366,7 +366,7 @@
 //! * `-` - Currently not used
 //! * `#` - This flag is indicates that the "alternate" form of printing should
 //!         be used. The alternate forms are:
-//!     * `#?` - pretty-print the `Debug` formatting
+//!     * `#?` - pretty-print the [`Debug`] formatting
 //!     * `#x` - precedes the argument with a `0x`
 //!     * `#X` - precedes the argument with a `0x`
 //!     * `#b` - precedes the argument with a `0b`
@@ -389,9 +389,9 @@
 //! the `0` flag is specified for numerics, then the implicit fill character is
 //! `0`.
 //!
-//! The value for the width can also be provided as a `usize` in the list of
+//! The value for the width can also be provided as a [`usize`] in the list of
 //! parameters by using the dollar syntax indicating that the second argument is
-//! a `usize` specifying the width, for example:
+//! a [`usize`] specifying the width, for example:
 //!
 //! ```
 //! // All of these print "Hello x    !"
@@ -424,12 +424,12 @@
 //!
 //! 2. An integer or name followed by dollar sign `.N$`:
 //!
-//!    use format *argument* `N` (which must be a `usize`) as the precision.
+//!    use format *argument* `N` (which must be a [`usize`]) as the precision.
 //!
 //! 3. An asterisk `.*`:
 //!
 //!    `.*` means that this `{...}` is associated with *two* format inputs rather than one: the
-//!    first input holds the `usize` precision, and the second holds the value to print.  Note that
+//!    first input holds the [`usize`] precision, and the second holds the value to print.  Note that
 //!    in this case, if one uses the format string `{<arg>:<spec>.*}`, then the `<arg>` part refers
 //!    to the *value* to print, and the `precision` must come in the input preceding `<arg>`.
 //!
@@ -483,6 +483,17 @@
 //! The literal characters `{` and `}` may be included in a string by preceding
 //! them with the same character. For example, the `{` character is escaped with
 //! `{{` and the `}` character is escaped with `}}`.
+//!
+//! [`Debug`]: /std/fmt/trait.Debug.html
+//! [`Formatter`]: /std/fmt/struct.Formatter.html
+//! [`String`]: /std/string/struct.String.html
+//! [`format`]: /std/fmt/fn.format.html
+//! [`format_args!`]: /std/macro.format_args!.html
+//! [`i8`]: /std/primitive.i8.html
+//! [`isize`]: /std/primitive.isize.html
+//! [`print!`]: /std/macro.print!.html
+//! [`std::io::Result<()>`]: /std/io/type.Result.html
+//! [`usize`]: /std/primitive.usize.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -512,7 +523,7 @@ use string;
 ///
 /// # Arguments
 ///
-///   * args - a structure of arguments generated via the `format_args!` macro.
+///   * args - a structure of arguments generated via the [`format_args!`] macro.
 ///
 /// # Examples
 ///
@@ -534,6 +545,8 @@ use string;
 /// ```
 ///
 /// [format!]: ../macro.format!.html
+///
+/// [`format_args!`]: /std/macro.format_args!.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn format(args: Arguments) -> string::String {
     let mut output = string::String::new();

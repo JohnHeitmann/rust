@@ -20,11 +20,11 @@ use fmt;
 use io::{self, DEFAULT_BUF_SIZE, Error, ErrorKind, SeekFrom};
 use memchr;
 
-/// The `BufReader` struct adds buffering to any reader.
+/// The [`BufReader`] struct adds buffering to any reader.
 ///
-/// It can be excessively inefficient to work directly with a `Read` instance.
-/// For example, every call to `read` on `TcpStream` results in a system call.
-/// A `BufReader` performs large, infrequent reads on the underlying `Read`
+/// It can be excessively inefficient to work directly with a [`Read`] instance.
+/// For example, every call to `read` on [`TcpStream`] results in a system call.
+/// A [`BufReader`] performs large, infrequent reads on the underlying [`Read`]
 /// and maintains an in-memory buffer of the results.
 ///
 /// # Examples
@@ -44,6 +44,10 @@ use memchr;
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`BufReader`]: ../../../std/io/struct.BufReader.html
+/// [`Read`]: ../../../std/io/trait.Read.html
+/// [`TcpStream`]: ../../../std/net/struct.TcpStream.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct BufReader<R> {
     inner: R,
@@ -256,15 +260,15 @@ impl<R: Seek> Seek for BufReader<R> {
 /// Wraps a writer and buffers its output.
 ///
 /// It can be excessively inefficient to work directly with something that
-/// implements `Write`. For example, every call to `write` on `TcpStream`
-/// results in a system call. A `BufWriter` keeps an in-memory buffer of data
+/// implements `Write`. For example, every call to `write` on [`TcpStream`]
+/// results in a system call. A [`BufWriter`] keeps an in-memory buffer of data
 /// and writes it to an underlying writer in large, infrequent batches.
 ///
 /// The buffer will be written out when the writer is dropped.
 ///
 /// # Examples
 ///
-/// Let's write the numbers one through ten to a `TcpStream`:
+/// Let's write the numbers one through ten to a [`TcpStream`]:
 ///
 /// ```no_run
 /// use std::io::prelude::*;
@@ -279,7 +283,7 @@ impl<R: Seek> Seek for BufReader<R> {
 ///
 /// Because we're not buffering, we write each one in turn, incurring the
 /// overhead of a system call per byte written. We can fix this with a
-/// `BufWriter`:
+/// [`BufWriter`]:
 ///
 /// ```no_run
 /// use std::io::prelude::*;
@@ -293,9 +297,12 @@ impl<R: Seek> Seek for BufReader<R> {
 /// }
 /// ```
 ///
-/// By wrapping the stream with a `BufWriter`, these ten writes are all grouped
+/// By wrapping the stream with a [`BufWriter`], these ten writes are all grouped
 /// together by the buffer, and will all be written out in one system call when
 /// the `stream` is dropped.
+///
+/// [`BufWriter`]: ../../../std/io/struct.BufWriter.html
+/// [`TcpStream`]: ../../../std/net/struct.TcpStream.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct BufWriter<W: Write> {
     inner: Option<W>,
@@ -320,7 +327,7 @@ pub struct BufWriter<W: Write> {
 ///
 /// // do stuff with the stream
 ///
-/// // we want to get our `TcpStream` back, so let's try:
+/// // we want to get our [`TcpStream`] back, so let's try:
 ///
 /// let stream = match stream.into_inner() {
 ///     Ok(s) => s,
@@ -330,6 +337,8 @@ pub struct BufWriter<W: Write> {
 ///     }
 /// };
 /// ```
+///
+/// [`TcpStream`]: ../../../std/net/struct.TcpStream.html
 #[derive(Debug)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct IntoInnerError<W>(W, Error);
@@ -599,17 +608,17 @@ impl<W> fmt::Display for IntoInnerError<W> {
 /// The [`BufWriter`][bufwriter] struct wraps a writer and buffers its output.
 /// But it only does this batched write when it goes out of scope, or when the
 /// internal buffer is full. Sometimes, you'd prefer to write each line as it's
-/// completed, rather than the entire buffer at once. Enter `LineWriter`. It
+/// completed, rather than the entire buffer at once. Enter [`LineWriter`]. It
 /// does exactly that.
 ///
 /// [bufwriter]: struct.BufWriter.html
 ///
-/// If there's still a partial line in the buffer when the `LineWriter` is
+/// If there's still a partial line in the buffer when the [`LineWriter`] is
 /// dropped, it will flush those contents.
 ///
 /// # Examples
 ///
-/// We can use `LineWriter` to write one line at a time, significantly
+/// We can use [`LineWriter`] to write one line at a time, significantly
 /// reducing the number of actual writes to the file.
 ///
 /// ```
@@ -641,6 +650,8 @@ impl<W> fmt::Display for IntoInnerError<W> {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`LineWriter`]: ../../../std/io/struct.LineWriter.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct LineWriter<W: Write> {
     inner: BufWriter<W>,

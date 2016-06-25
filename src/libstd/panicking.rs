@@ -79,9 +79,9 @@ static FIRST_PANIC: AtomicBool = AtomicBool::new(true);
 /// is invoked. As such, the hook will run with both the aborting and unwinding
 /// runtimes. The default hook prints a message to standard error and generates
 /// a backtrace if requested, but this behavior can be customized with the
-/// `set_hook` and `take_hook` functions.
+/// [`set_hook`] and [`take_hook`] functions.
 ///
-/// The hook is provided with a `PanicInfo` struct which contains information
+/// The hook is provided with a [`PanicInfo`] struct which contains information
 /// about the origin of the panic, including the payload passed to `panic!` and
 /// the source code location from which the panic originated.
 ///
@@ -90,6 +90,10 @@ static FIRST_PANIC: AtomicBool = AtomicBool::new(true);
 /// # Panics
 ///
 /// Panics if called from a panicking thread.
+///
+/// [`PanicInfo`]: ../../std/panic/struct.PanicInfo.html
+/// [`set_hook`]: ../../std/panic/fn.set_hook.html
+/// [`take_hook`]: ../../std/panic/fn.take_hook.html
 #[stable(feature = "panic_hooks", since = "1.10.0")]
 pub fn set_hook(hook: Box<Fn(&PanicInfo) + 'static + Sync + Send>) {
     if thread::panicking() {
@@ -332,8 +336,10 @@ pub fn begin_panic<M: Any + Send>(msg: M, file_line: &(&'static str, u32)) -> ! 
 /// panics and panic hooks.
 ///
 /// This is the entry point or panics from libcore, formatted panics, and
-/// `Box<Any>` panics. Here we'll verify that we're not panicking recursively,
+/// [`Box<Any>`] panics. Here we'll verify that we're not panicking recursively,
 /// run panic hooks, and then delegate to the actual implementation of panics.
+///
+/// [`Box<Any>`]: ../../collections/boxed/struct.Box.html
 #[inline(never)]
 #[cold]
 fn rust_panic_with_hook(msg: Box<Any + Send>,

@@ -10,10 +10,10 @@
 
 //! Functionality for ordering and comparison.
 //!
-//! This module defines both `PartialOrd` and `PartialEq` traits which are used
+//! This module defines both [`PartialOrd`] and [`PartialEq`] traits which are used
 //! by the compiler to implement comparison operators. Rust programs may
-//! implement `PartialOrd` to overload the `<`, `<=`, `>`, and `>=` operators,
-//! and may implement `PartialEq` to overload the `==` and `!=` operators.
+//! implement [`PartialOrd`] to overload the `<`, `<=`, `>`, and `>=` operators,
+//! and may implement [`PartialEq`] to overload the `==` and `!=` operators.
 //!
 //! # Examples
 //!
@@ -29,6 +29,9 @@
 //! assert_eq!(x == y, false);
 //! assert_eq!(x.eq(&y), false);
 //! ```
+//!
+//! [`PartialEq`]: ../../std/cmp/trait.PartialEq.html
+//! [`PartialOrd`]: ../../std/cmp/trait.PartialOrd.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -42,7 +45,7 @@ use option::Option::{self, Some};
 ///
 /// This trait allows for partial equality, for types that do not have a full
 /// equivalence relation.  For example, in floating point numbers `NaN != NaN`,
-/// so floating point types implement `PartialEq` but not `Eq`.
+/// so floating point types implement [`PartialEq`] but not [`Eq`].
 ///
 /// Formally, the equality must be (for all `a`, `b` and `c`):
 ///
@@ -60,7 +63,7 @@ use option::Option::{self, Some};
 /// are not equal. When `derive`d on enums, each variant is equal to itself
 /// and not equal to the other variants.
 ///
-/// ## How can I implement `PartialEq`?
+/// ## How can I implement [`PartialEq`]?
 ///
 /// PartialEq only requires the `eq` method to be implemented; `ne` is defined
 /// in terms of it by default. Any manual implementation of `ne` *must* respect
@@ -100,6 +103,9 @@ use option::Option::{self, Some};
 /// assert_eq!(x == y, false);
 /// assert_eq!(x.eq(&y), false);
 /// ```
+///
+/// [`Eq`]: ../../std/cmp/trait.Eq.html
+/// [`PartialEq`]: ../../std/cmp/trait.PartialEq.html
 #[lang = "eq"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait PartialEq<Rhs: ?Sized = Self> {
@@ -124,21 +130,21 @@ pub trait PartialEq<Rhs: ?Sized = Self> {
 /// - symmetric: `a == b` implies `b == a`; and
 /// - transitive: `a == b` and `b == c` implies `a == c`.
 ///
-/// This property cannot be checked by the compiler, and therefore `Eq` implies
-/// `PartialEq`, and has no extra methods.
+/// This property cannot be checked by the compiler, and therefore [`Eq`] implies
+/// [`PartialEq`], and has no extra methods.
 ///
 /// ## Derivable
 ///
-/// This trait can be used with `#[derive]`. When `derive`d, because `Eq` has
+/// This trait can be used with `#[derive]`. When `derive`d, because [`Eq`] has
 /// no extra methods, it is only informing the compiler that this is an
 /// equivalence relation rather than a partial equivalence relation. Note that
-/// the `derive` strategy requires all fields are `PartialEq`, which isn't
+/// the `derive` strategy requires all fields are [`PartialEq`], which isn't
 /// always desired.
 ///
-/// ## How can I implement `Eq`?
+/// ## How can I implement [`Eq`]?
 ///
 /// If you cannot use the `derive` strategy, specify that your type implements
-/// `Eq`, which has no methods:
+/// [`Eq`], which has no methods:
 ///
 /// ```
 /// enum BookFormat { Paperback, Hardback, Ebook }
@@ -153,6 +159,9 @@ pub trait PartialEq<Rhs: ?Sized = Self> {
 /// }
 /// impl Eq for Book {}
 /// ```
+///
+/// [`Eq`]: ../../std/cmp/trait.Eq.html
+/// [`PartialEq`]: ../../std/cmp/trait.PartialEq.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Eq: PartialEq<Self> {
     // FIXME #13101: this method is used solely by #[deriving] to
@@ -251,9 +260,9 @@ impl Ordering {
 /// This trait can be used with `#[derive]`. When `derive`d, it will produce a lexicographic
 /// ordering based on the top-to-bottom declaration order of the struct's members.
 ///
-/// ## How can I implement `Ord`?
+/// ## How can I implement [`Ord`]?
 ///
-/// `Ord` requires that the type also be `PartialOrd` and `Eq` (which requires `PartialEq`).
+/// [`Ord`] requires that the type also be [`PartialOrd`] and [`Eq`] \(which requires [`PartialEq`]).
 ///
 /// Then you must define an implementation for `cmp()`. You may find it useful to use
 /// `cmp()` on your type's fields.
@@ -289,6 +298,11 @@ impl Ordering {
 ///     }
 /// }
 /// ```
+///
+/// [`Eq`]: ../../std/cmp/trait.Eq.html
+/// [`Ord`]: ../../std/cmp/trait.Ord.html
+/// [`PartialEq`]: ../../std/cmp/trait.PartialEq.html
+/// [`PartialOrd`]: ../../std/cmp/trait.PartialOrd.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Ord: Eq + PartialOrd<Self> {
     /// This method returns an `Ordering` between `self` and `other`.
@@ -344,7 +358,7 @@ impl PartialOrd for Ordering {
 /// This trait can be used with `#[derive]`. When `derive`d, it will produce a lexicographic
 /// ordering based on the top-to-bottom declaration order of the struct's members.
 ///
-/// ## How can I implement `Ord`?
+/// ## How can I implement [`Ord`]?
 ///
 /// PartialOrd only requires implementation of the `partial_cmp` method, with the others generated
 /// from default implementations.
@@ -353,9 +367,9 @@ impl PartialOrd for Ordering {
 /// total order. For example, for floating point numbers, `NaN < 0 == false` and `NaN >= 0 ==
 /// false` (cf. IEEE 754-2008 section 5.11).
 ///
-/// `PartialOrd` requires your type to be `PartialEq`.
+/// [`PartialOrd`] requires your type to be [`PartialEq`].
 ///
-/// If your type is `Ord`, you can implement `partial_cmp()` by using `cmp()`:
+/// If your type is [`Ord`], you can implement `partial_cmp()` by using `cmp()`:
 ///
 /// ```
 /// use std::cmp::Ordering;
@@ -421,6 +435,10 @@ impl PartialOrd for Ordering {
 /// assert_eq!(x < y, true);
 /// assert_eq!(x.lt(&y), true);
 /// ```
+///
+/// [`Ord`]: ../../std/cmp/trait.Ord.html
+/// [`PartialEq`]: ../../std/cmp/trait.PartialEq.html
+/// [`PartialOrd`]: ../../std/cmp/trait.PartialOrd.html
 #[lang = "ord"]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait PartialOrd<Rhs: ?Sized = Self>: PartialEq<Rhs> {

@@ -25,14 +25,18 @@ use u32;
 
 /// An owned container for `HANDLE` object, closing them on Drop.
 ///
-/// All methods are inherited through a `Deref` impl to `RawHandle`
+/// All methods are inherited through a [`Deref`] impl to `RawHandle`
+///
+/// [`Deref`]: ../../../../std/ops/trait.Deref.html
 pub struct Handle(RawHandle);
 
 /// A wrapper type for `HANDLE` objects to give them proper Send/Sync inference
 /// as well as Rust-y methods.
 ///
-/// This does **not** drop the handle when it goes out of scope, use `Handle`
+/// This does **not** drop the handle when it goes out of scope, use [`Handle`]
 /// instead for that.
+///
+/// [`Handle`]: ../../../../std/sync/mpsc/struct.Handle.html
 #[derive(Copy, Clone)]
 pub struct RawHandle(c::HANDLE);
 

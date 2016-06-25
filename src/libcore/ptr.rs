@@ -115,7 +115,7 @@ pub unsafe fn replace<T>(dest: *mut T, mut src: T) -> T {
 ///
 /// Beyond accepting a raw pointer, this is unsafe because it semantically
 /// moves the value out of `src` without preventing further usage of `src`.
-/// If `T` is not `Copy`, then care must be taken to ensure that the value at
+/// If `T` is not [`Copy`], then care must be taken to ensure that the value at
 /// `src` is not used before the data is overwritten again (e.g. with `write`,
 /// `zero_memory`, or `copy_memory`). Note that `*src = foo` counts as a use
 /// because it will attempt to drop the value previously at `*src`.
@@ -130,6 +130,8 @@ pub unsafe fn replace<T>(dest: *mut T, mut src: T) -> T {
 ///
 /// unsafe { println!("{}", std::ptr::read(y)); }
 /// ```
+///
+/// [`Copy`]: ../../std/marker/trait.Copy.html
 #[inline(always)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub unsafe fn read<T>(src: *const T) -> T {
@@ -207,7 +209,7 @@ pub unsafe fn write<T>(dst: *mut T, src: T) {
 ///
 /// Beyond accepting a raw pointer, this is unsafe because it semantically
 /// moves the value out of `src` without preventing further usage of `src`.
-/// If `T` is not `Copy`, then care must be taken to ensure that the value at
+/// If `T` is not [`Copy`], then care must be taken to ensure that the value at
 /// `src` is not used before the data is overwritten again (e.g. with `write`,
 /// `zero_memory`, or `copy_memory`). Note that `*src = foo` counts as a use
 /// because it will attempt to drop the value previously at `*src`.
@@ -222,6 +224,8 @@ pub unsafe fn write<T>(dst: *mut T, src: T) {
 ///
 /// unsafe { println!("{}", std::ptr::read_volatile(y)); }
 /// ```
+///
+/// [`Copy`]: ../../std/marker/trait.Copy.html
 #[inline]
 #[stable(feature = "volatile", since = "1.9.0")]
 pub unsafe fn read_volatile<T>(src: *const T) -> T {
@@ -664,12 +668,19 @@ impl<T: ?Sized> PartialOrd for *mut T {
 
 /// A wrapper around a raw non-null `*mut T` that indicates that the possessor
 /// of this wrapper owns the referent. This in turn implies that the
-/// `Unique<T>` is `Send`/`Sync` if `T` is `Send`/`Sync`, unlike a raw
+/// [`Unique<T>`] is [`Send`]/[`Sync`] if `T` is [`Send`]/[`Sync`], unlike a raw
 /// `*mut T` (which conveys no particular ownership semantics).  It
 /// also implies that the referent of the pointer should not be
-/// modified without a unique path to the `Unique` reference. Useful
-/// for building abstractions like `Vec<T>` or `Box<T>`, which
+/// modified without a unique path to the [`Unique`] reference. Useful
+/// for building abstractions like [`Vec<T>`] or [`Box<T>`], which
 /// internally use raw pointers to manage the memory that they own.
+///
+/// [`Box<T>`]: ../../std/boxed/struct.Box.html
+/// [`Send`]: ../../std/marker/trait.Send.html
+/// [`Sync`]: ../../std/marker/trait.Sync.html
+/// [`Unique`]: ../../std/ptr/struct.Unique.html
+/// [`Unique<T>`]: ../../std/ptr/struct.Unique.html
+/// [`Vec<T>`]: ../../std/vec/struct.Vec.html
 #[allow(missing_debug_implementations)]
 #[unstable(feature = "unique", reason = "needs an RFC to flesh out design",
            issue = "27730")]
@@ -683,17 +694,23 @@ pub struct Unique<T: ?Sized> {
     _marker: PhantomData<T>,
 }
 
-/// `Unique` pointers are `Send` if `T` is `Send` because the data they
+/// [`Unique`] pointers are [`Send`] if `T` is [`Send`] because the data they
 /// reference is unaliased. Note that this aliasing invariant is
 /// unenforced by the type system; the abstraction using the
-/// `Unique` must enforce it.
+/// [`Unique`] must enforce it.
+///
+/// [`Send`]: ../../std/marker/trait.Send.html
+/// [`Unique`]: ../../std/ptr/struct.Unique.html
 #[unstable(feature = "unique", issue = "27730")]
 unsafe impl<T: Send + ?Sized> Send for Unique<T> { }
 
-/// `Unique` pointers are `Sync` if `T` is `Sync` because the data they
+/// [`Unique`] pointers are [`Sync`] if `T` is [`Sync`] because the data they
 /// reference is unaliased. Note that this aliasing invariant is
 /// unenforced by the type system; the abstraction using the
-/// `Unique` must enforce it.
+/// [`Unique`] must enforce it.
+///
+/// [`Sync`]: ../../std/marker/trait.Sync.html
+/// [`Unique`]: ../../std/ptr/struct.Unique.html
 #[unstable(feature = "unique", issue = "27730")]
 unsafe impl<T: Sync + ?Sized> Sync for Unique<T> { }
 
@@ -741,8 +758,11 @@ impl<T> fmt::Pointer for Unique<T> {
 
 /// A wrapper around a raw non-null `*mut T` that indicates that the possessor
 /// of this wrapper has shared ownership of the referent. Useful for
-/// building abstractions like `Rc<T>` or `Arc<T>`, which internally
+/// building abstractions like [`Rc<T>`] or [`Arc<T>`], which internally
 /// use raw pointers to manage the memory that they own.
+///
+/// [`Arc<T>`]: ../../std/sync/struct.Arc.html
+/// [`Rc<T>`]: ../../std/rc/struct.Rc.html
 #[allow(missing_debug_implementations)]
 #[unstable(feature = "shared", reason = "needs an RFC to flesh out design",
            issue = "27730")]
@@ -756,12 +776,18 @@ pub struct Shared<T: ?Sized> {
     _marker: PhantomData<T>,
 }
 
-/// `Shared` pointers are not `Send` because the data they reference may be aliased.
+/// [`Shared`] pointers are not [`Send`] because the data they reference may be aliased.
+///
+/// [`Send`]: ../../std/marker/trait.Send.html
+/// [`Shared`]: ../../std/ptr/struct.Shared.html
 // NB: This impl is unnecessary, but should provide better error messages.
 #[unstable(feature = "shared", issue = "27730")]
 impl<T: ?Sized> !Send for Shared<T> { }
 
-/// `Shared` pointers are not `Sync` because the data they reference may be aliased.
+/// [`Shared`] pointers are not [`Sync`] because the data they reference may be aliased.
+///
+/// [`Shared`]: ../../std/ptr/struct.Shared.html
+/// [`Sync`]: ../../std/marker/trait.Sync.html
 // NB: This impl is unnecessary, but should provide better error messages.
 #[unstable(feature = "shared", issue = "27730")]
 impl<T: ?Sized> !Sync for Shared<T> { }

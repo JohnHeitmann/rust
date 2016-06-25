@@ -8,7 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Windows-specific extensions for the primitives in `std::fs`
+//! Windows-specific extensions for the primitives in [`std::fs`]
+//!
+//! [`std::fs`]: ../../../../../std/fs/index.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -18,7 +20,9 @@ use path::Path;
 use sys;
 use sys_common::{AsInnerMut, AsInner};
 
-/// Windows-specific extensions to `OpenOptions`
+/// Windows-specific extensions to [`OpenOptions`]
+///
+/// [`OpenOptions`]: ../../../../../std/fs/struct.OpenOptions.html
 #[stable(feature = "open_options_ext", since = "1.10.0")]
 pub trait OpenOptionsExt {
     /// Overrides the `dwDesiredAccess` argument to the call to `CreateFile`

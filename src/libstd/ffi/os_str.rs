@@ -33,16 +33,21 @@ use sys_common::{AsInner, IntoInner, FromInner};
 ///
 /// * In Rust, strings are always valid UTF-8, but may contain zeros.
 ///
-/// `OsString` and `OsStr` bridge this gap by simultaneously representing Rust
+/// [`OsString`] and [`OsStr`] bridge this gap by simultaneously representing Rust
 /// and platform-native string values, and in particular allowing a Rust string
 /// to be converted into an "OS" string with no cost.
+///
+/// [`OsStr`]: ../../../std/ffi/struct.OsStr.html
+/// [`OsString`]: ../../../std/ffi/struct.OsString.html
 #[derive(Clone)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct OsString {
     inner: Buf
 }
 
-/// Slices into OS strings (see `OsString`).
+/// Slices into OS strings (see [`OsString`]).
+///
+/// [`OsString`]: ../../../std/ffi/struct.OsString.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct OsStr {
     inner: Slice

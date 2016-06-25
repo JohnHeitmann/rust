@@ -70,7 +70,7 @@ use thread::{self, Thread};
 
 /// A synchronization primitive which can be used to run a one-time global
 /// initialization. Useful for one-time initialization for FFI or related
-/// functionality. This type can only be constructed with the `ONCE_INIT`
+/// functionality. This type can only be constructed with the [`ONCE_INIT`]
 /// value.
 ///
 /// # Examples
@@ -84,6 +84,8 @@ use thread::{self, Thread};
 ///     // run initialization here
 /// });
 /// ```
+///
+/// [`ONCE_INIT`]: ../../../std/sync/constant.ONCE_INIT.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct Once {
     // This `state` word is actually an encoded version of just a pointer to a

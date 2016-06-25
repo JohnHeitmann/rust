@@ -10,9 +10,9 @@
 
 //! Optional values.
 //!
-//! Type `Option` represents an optional value: every `Option`
+//! Type [`Option`] represents an optional value: every [`Option`]
 //! is either `Some` and contains a value, or `None`, and
-//! does not. `Option` types are very common in Rust code, as
+//! does not. [`Option`] types are very common in Rust code, as
 //! they have a number of uses:
 //!
 //! * Initial values
@@ -50,6 +50,8 @@
 //! }
 //! ```
 //!
+//!
+//! [`Option`]: ../../std/option/enum.Option.html
 //
 // FIXME: Show how `Option` is used in practice, with lots of methods
 //
@@ -57,10 +59,10 @@
 //!
 //! Rust's pointer types must always point to a valid location; there are
 //! no "null" pointers. Instead, Rust has *optional* pointers, like
-//! the optional owned box, `Option<Box<T>>`.
+//! the optional owned box, [`Option<Box<T>>`].
 //!
-//! The following example uses `Option` to create an optional box of
-//! `i32`. Notice that in order to use the inner `i32` value first the
+//! The following example uses [`Option`] to create an optional box of
+//! [`i32`]. Notice that in order to use the inner [`i32`] value first the
 //! `check_optional` function needs to use pattern matching to
 //! determine whether the box has a value (i.e. it is `Some(...)`) or
 //! not (`None`).
@@ -80,14 +82,14 @@
 //! }
 //! ```
 //!
-//! This usage of `Option` to create safe nullable pointers is so
+//! This usage of [`Option`] to create safe nullable pointers is so
 //! common that Rust does special optimizations to make the
-//! representation of `Option<Box<T>>` a single pointer. Optional pointers
+//! representation of [`Option<Box<T>>`] a single pointer. Optional pointers
 //! in Rust are stored as efficiently as any other pointer type.
 //!
 //! # Examples
 //!
-//! Basic pattern matching on `Option`:
+//! Basic pattern matching on [`Option`]:
 //!
 //! ```
 //! let msg = Some("howdy");
@@ -136,6 +138,10 @@
 //!     None => println!("there are no animals :("),
 //! }
 //! ```
+//!
+//! [`Option`]: ../../std/option/enum.Option.html
+//! [`Option<Box<T>>`]: ../../std/option/enum.Option.html
+//! [`i32`]: ../../std/primitive.i32.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -155,7 +161,9 @@ use result::Result;
 // `Iterator` is an enumeration with one type parameter and two variants,
 // which basically means it must be `Option`.
 
-/// The `Option` type. See [the module level documentation](index.html) for more.
+/// The [`Option`] type. See [the module level documentation](index.html) for more.
+///
+/// [`Option`]: ../../std/option/enum.Option.html
 #[derive(Clone, Copy, PartialEq, PartialOrd, Eq, Ord, Debug, Hash)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub enum Option<T> {

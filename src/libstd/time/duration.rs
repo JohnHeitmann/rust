@@ -21,7 +21,7 @@ const MILLIS_PER_SEC: u64 = 1_000;
 /// APIs binding a system timeout will typically round up the nanosecond
 /// precision if the underlying system does not support that level of precision.
 ///
-/// Durations implement many common traits, including `Add`, `Sub`, and other
+/// Durations implement many common traits, including [`Add`], [`Sub`], and other
 /// ops traits. Currently a duration may only be inspected for its number of
 /// seconds and its nanosecond precision.
 ///
@@ -38,6 +38,9 @@ const MILLIS_PER_SEC: u64 = 1_000;
 ///
 /// let ten_millis = Duration::from_millis(10);
 /// ```
+///
+/// [`Add`]: ../../../std/ops/trait.Add.html
+/// [`Sub`]: ../../../std/ops/trait.Sub.html
 #[stable(feature = "duration", since = "1.3.0")]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
 pub struct Duration {

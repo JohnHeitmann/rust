@@ -153,7 +153,10 @@ pub struct ThreadRng {
 /// The internal RNG used is platform and architecture dependent, even
 /// if the operating system random number generator is rigged to give
 /// the same sequence always. If absolute consistency is required,
-/// explicitly select an RNG, e.g. `IsaacRng` or `Isaac64Rng`.
+/// explicitly select an RNG, e.g. [`IsaacRng`] or [`Isaac64Rng`].
+///
+/// [`Isaac64Rng`]: ../../../rand/isaac/struct.Isaac64Rng.html
+/// [`IsaacRng`]: ../../../rand/isaac/struct.IsaacRng.html
 pub fn thread_rng() -> ThreadRng {
     // used to make space in TLS for a random number generator
     thread_local!(static THREAD_RNG_KEY: Rc<RefCell<ThreadRngInner>> = {

@@ -22,7 +22,9 @@ use super::{DoubleEndedIterator, ExactSizeIterator, Iterator};
 /// Objects that can be stepped over in both directions.
 ///
 /// The `steps_between` function provides a way to efficiently compare
-/// two `Step` objects.
+/// two [`Step`] objects.
+///
+/// [`Step`]: ../../../std/iter/trait.Step.html
 #[unstable(feature = "step_trait",
            reason = "likely to be replaced by finer-grained traits",
            issue = "27741")]

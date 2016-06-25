@@ -8,7 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! The `Default` trait for types which may have meaningful default values.
+//! The [`Default`] trait for types which may have meaningful default values.
+//!
+//! [`Default`]: ../../std/default/trait.Default.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -28,7 +30,7 @@ use marker::Sized;
 /// }
 /// ```
 ///
-/// How can we define some default values? You can use `Default`:
+/// How can we define some default values? You can use [`Default`]:
 ///
 /// ```
 /// # #[allow(dead_code)]
@@ -44,7 +46,7 @@ use marker::Sized;
 /// }
 /// ```
 ///
-/// Now, you get all of the default values. Rust implements `Default` for various primitives types.
+/// Now, you get all of the default values. Rust implements [`Default`] for various primitives types.
 ///
 /// If you want to override a particular option, but still retain the other defaults:
 ///
@@ -63,9 +65,9 @@ use marker::Sized;
 /// ## Derivable
 ///
 /// This trait can be used with `#[derive]` if all of the type's fields implement
-/// `Default`. When `derive`d, it will use the default value for each field's type.
+/// [`Default`]. When `derive`d, it will use the default value for each field's type.
 ///
-/// ## How can I implement `Default`?
+/// ## How can I implement [`Default`]?
 ///
 /// Provide an implementation for the `default()` method that returns the value of
 /// your type that should be the default:
@@ -93,6 +95,8 @@ use marker::Sized;
 ///     bar: f32,
 /// }
 /// ```
+///
+/// [`Default`]: ../../std/default/trait.Default.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Default: Sized {
     /// Returns the "default value" for a type.

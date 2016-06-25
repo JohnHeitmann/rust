@@ -28,8 +28,8 @@ pub use panicking::{take_hook, set_hook, PanicInfo, Location};
 /// A marker trait which represents "panic safe" types in Rust.
 ///
 /// This trait is implemented by default for many types and behaves similarly in
-/// terms of inference of implementation to the `Send` and `Sync` traits. The
-/// purpose of this trait is to encode what types are safe to cross a `catch_unwind`
+/// terms of inference of implementation to the [`Send`] and [`Sync`] traits. The
+/// purpose of this trait is to encode what types are safe to cross a [`catch_unwind`]
 /// boundary with no fear of unwind safety.
 ///
 /// ## What is unwind safety?
@@ -45,7 +45,7 @@ pub use panicking::{take_hook, set_hook, PanicInfo, Location};
 ///
 /// Typically in Rust, it is difficult to perform step (2) because catching a
 /// panic involves either spawning a thread (which in turns makes it difficult
-/// to later witness broken invariants) or using the `catch_unwind` function in this
+/// to later witness broken invariants) or using the [`catch_unwind`] function in this
 /// module. Additionally, even if an invariant is witnessed, it typically isn't a
 /// problem in Rust because there are no uninitialized values (like in C or C++).
 ///
@@ -59,45 +59,51 @@ pub use panicking::{take_hook, set_hook, PanicInfo, Location};
 ///
 /// [rfc]: https://github.com/rust-lang/rfcs/blob/master/text/1236-stabilize-catch-panic.md
 ///
-/// ## What is `UnwindSafe`?
+/// ## What is [`UnwindSafe`]?
 ///
 /// Now that we've got an idea of what unwind safety is in Rust, it's also
 /// important to understand what this trait represents. As mentioned above, one
-/// way to witness broken invariants is through the `catch_unwind` function in this
+/// way to witness broken invariants is through the [`catch_unwind`] function in this
 /// module as it allows catching a panic and then re-using the environment of
 /// the closure.
 ///
-/// Simply put, a type `T` implements `UnwindSafe` if it cannot easily allow
-/// witnessing a broken invariant through the use of `catch_unwind` (catching a
+/// Simply put, a type `T` implements [`UnwindSafe`] if it cannot easily allow
+/// witnessing a broken invariant through the use of [`catch_unwind`] \(catching a
 /// panic). This trait is a marker trait, so it is automatically implemented for
 /// many types, and it is also structurally composed (e.g. a struct is unwind
 /// safe if all of its components are unwind safe).
 ///
 /// Note, however, that this is not an unsafe trait, so there is not a succinct
 /// contract that this trait is providing. Instead it is intended as more of a
-/// "speed bump" to alert users of `catch_unwind` that broken invariants may be
+/// "speed bump" to alert users of [`catch_unwind`] that broken invariants may be
 /// witnessed and may need to be accounted for.
 ///
-/// ## Who implements `UnwindSafe`?
+/// ## Who implements [`UnwindSafe`]?
 ///
 /// Types such as `&mut T` and `&RefCell<T>` are examples which are **not**
 /// unwind safe. The general idea is that any mutable state which can be shared
-/// across `catch_unwind` is not unwind safe by default. This is because it is very
-/// easy to witness a broken invariant outside of `catch_unwind` as the data is
+/// across [`catch_unwind`] is not unwind safe by default. This is because it is very
+/// easy to witness a broken invariant outside of [`catch_unwind`] as the data is
 /// simply accessed as usual.
 ///
 /// Types like `&Mutex<T>`, however, are unwind safe because they implement
 /// poisoning by default. They still allow witnessing a broken invariant, but
 /// they already provide their own "speed bumps" to do so.
 ///
-/// ## When should `UnwindSafe` be used?
+/// ## When should [`UnwindSafe`] be used?
 ///
 /// Is not intended that most types or functions need to worry about this trait.
-/// It is only used as a bound on the `catch_unwind` function and as mentioned above,
-/// the lack of `unsafe` means it is mostly an advisory. The `AssertUnwindSafe`
+/// It is only used as a bound on the [`catch_unwind`] function and as mentioned above,
+/// the lack of `unsafe` means it is mostly an advisory. The [`AssertUnwindSafe`]
 /// wrapper struct in this module can be used to force this trait to be
-/// implemented for any closed over variables passed to the `catch_unwind` function
+/// implemented for any closed over variables passed to the [`catch_unwind`] function
 /// (more on this below).
+///
+/// [`AssertUnwindSafe`]: ../../std/panic/struct.AssertUnwindSafe.html
+/// [`Send`]: ../../std/marker/trait.Send.html
+/// [`Sync`]: ../../std/marker/trait.Sync.html
+/// [`UnwindSafe`]: ../../std/panic/trait.UnwindSafe.html
+/// [`catch_unwind`]: ../../std/panic/fn.catch_unwind.html
 #[stable(feature = "catch_unwind", since = "1.9.0")]
 #[rustc_on_unimplemented = "the type {Self} may not be safely transferred \
                             across an unwind boundary"]
@@ -106,11 +112,14 @@ pub trait UnwindSafe {}
 /// A marker trait representing types where a shared reference is considered
 /// unwind safe.
 ///
-/// This trait is namely not implemented by `UnsafeCell`, the root of all
+/// This trait is namely not implemented by [`UnsafeCell`], the root of all
 /// interior mutability.
 ///
 /// This is a "helper marker trait" used to provide impl blocks for the
-/// `UnwindSafe` trait, for more information see that documentation.
+/// [`UnwindSafe`] trait, for more information see that documentation.
+///
+/// [`UnsafeCell`]: ../../std/cell/struct.UnsafeCell.html
+/// [`UnwindSafe`]: ../../std/panic/trait.UnwindSafe.html
 #[stable(feature = "catch_unwind", since = "1.9.0")]
 #[rustc_on_unimplemented = "the type {Self} contains interior mutability \
                             and a reference may not be safely transferrable \
@@ -119,17 +128,17 @@ pub trait RefUnwindSafe {}
 
 /// A simple wrapper around a type to assert that it is unwind safe.
 ///
-/// When using `catch_unwind` it may be the case that some of the closed over
+/// When using [`catch_unwind`] it may be the case that some of the closed over
 /// variables are not unwind safe. For example if `&mut T` is captured the
 /// compiler will generate a warning indicating that it is not unwind safe. It
 /// may not be the case, however, that this is actually a problem due to the
-/// specific usage of `catch_unwind` if unwind safety is specifically taken into
+/// specific usage of [`catch_unwind`] if unwind safety is specifically taken into
 /// account. This wrapper struct is useful for a quick and lightweight
 /// annotation that a variable is indeed unwind safe.
 ///
 /// # Examples
 ///
-/// One way to use `AssertUnwindSafe` is to assert that the entire closure
+/// One way to use [`AssertUnwindSafe`] is to assert that the entire closure
 /// itself is unwind safe, bypassing all checks for all variables:
 ///
 /// ```
@@ -144,7 +153,7 @@ pub trait RefUnwindSafe {}
 /// //     variable += 3;
 /// // });
 ///
-/// // This, however, will compile due to the `AssertUnwindSafe` wrapper
+/// // This, however, will compile due to the [`AssertUnwindSafe`] wrapper
 /// let result = panic::catch_unwind(AssertUnwindSafe(|| {
 ///     variable += 3;
 /// }));
@@ -174,6 +183,9 @@ pub trait RefUnwindSafe {}
 /// };
 /// // ...
 /// ```
+///
+/// [`AssertUnwindSafe`]: ../../std/panic/struct.AssertUnwindSafe.html
+/// [`catch_unwind`]: ../../std/panic/fn.catch_unwind.html
 #[stable(feature = "catch_unwind", since = "1.9.0")]
 pub struct AssertUnwindSafe<T>(
     #[stable(feature = "catch_unwind", since = "1.9.0")]
@@ -268,12 +280,12 @@ impl<R, F: FnOnce() -> R> FnOnce<()> for AssertUnwindSafe<F> {
 /// can fail on a regular basis. Additionally, this function is not guaranteed
 /// to catch all panics, see the "Notes" section below.
 ///
-/// The closure provided is required to adhere to the `UnwindSafe` trait to ensure
+/// The closure provided is required to adhere to the [`UnwindSafe`] trait to ensure
 /// that all captured variables are safe to cross this boundary. The purpose of
 /// this bound is to encode the concept of [exception safety][rfc] in the type
 /// system. Most usage of this function should not need to worry about this
 /// bound as programs are naturally unwind safe without `unsafe` code. If it
-/// becomes a problem the associated `AssertUnwindSafe` wrapper type in this
+/// becomes a problem the associated [`AssertUnwindSafe`] wrapper type in this
 /// module can be used to quickly assert that the usage here is indeed unwind
 /// safe.
 ///
@@ -301,6 +313,9 @@ impl<R, F: FnOnce() -> R> FnOnce<()> for AssertUnwindSafe<F> {
 /// });
 /// assert!(result.is_err());
 /// ```
+///
+/// [`AssertUnwindSafe`]: ../../std/panic/struct.AssertUnwindSafe.html
+/// [`UnwindSafe`]: ../../std/panic/trait.UnwindSafe.html
 #[stable(feature = "catch_unwind", since = "1.9.0")]
 pub fn catch_unwind<F: FnOnce() -> R + UnwindSafe, R>(f: F) -> Result<R> {
     unsafe {
@@ -310,7 +325,7 @@ pub fn catch_unwind<F: FnOnce() -> R + UnwindSafe, R>(f: F) -> Result<R> {
 
 /// Triggers a panic without invoking the panic hook.
 ///
-/// This is designed to be used in conjunction with `catch_unwind` to, for
+/// This is designed to be used in conjunction with [`catch_unwind`] to, for
 /// example, carry a panic across a layer of C code.
 ///
 /// # Notes
@@ -333,6 +348,8 @@ pub fn catch_unwind<F: FnOnce() -> R + UnwindSafe, R>(f: F) -> Result<R> {
 ///     panic::resume_unwind(err);
 /// }
 /// ```
+///
+/// [`catch_unwind`]: ../../std/panic/fn.catch_unwind.html
 #[stable(feature = "resume_unwind", since = "1.9.0")]
 pub fn resume_unwind(payload: Box<Any + Send>) -> ! {
     panicking::rust_panic(payload)

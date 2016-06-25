@@ -322,21 +322,21 @@ impl hash::Hash for SocketAddrV6 {
 /// This trait is used for generic address resolution when constructing network
 /// objects.  By default it is implemented for the following types:
 ///
-///  * `SocketAddr`, `SocketAddrV4`, `SocketAddrV6` - `to_socket_addrs` is
+///  * `SocketAddr`, [`SocketAddrV4`], [`SocketAddrV6`] - `to_socket_addrs` is
 ///    identity function.
 ///
 ///  * `(IpvNAddr, u16)` - `to_socket_addrs` constructs `SocketAddr` trivially.
 ///
 ///  * `(&str, u16)` - the string should be either a string representation of an
-///    IP address expected by `FromStr` implementation for `IpvNAddr` or a host
+///    IP address expected by [`FromStr`] implementation for `IpvNAddr` or a host
 ///    name.
 ///
 ///  * `&str` - the string should be either a string representation of a
-///    `SocketAddr` as expected by its `FromStr` implementation or a string like
-///    `<host_name>:<port>` pair where `<port>` is a `u16` value.
+///    `SocketAddr` as expected by its [`FromStr`] implementation or a string like
+///    `<host_name>:<port>` pair where `<port>` is a [`u16`] value.
 ///
-/// This trait allows constructing network objects like `TcpStream` or
-/// `UdpSocket` easily with values of various types for the bind/connection
+/// This trait allows constructing network objects like [`TcpStream`] or
+/// [`UdpSocket`] easily with values of various types for the bind/connection
 /// address. It is needed because sometimes one type is more appropriate than
 /// the other: for simple uses a string like `"localhost:12345"` is much nicer
 /// than manual construction of the corresponding `SocketAddr`, but sometimes
@@ -370,6 +370,13 @@ impl hash::Hash for SocketAddrV6 {
 ///     udp_s.send_to(&[7], (ip, 23451)).unwrap();
 /// }
 /// ```
+///
+/// [`FromStr`]: ../../../std/str/trait.FromStr.html
+/// [`SocketAddrV4`]: ../../../std/net/struct.SocketAddrV4.html
+/// [`SocketAddrV6`]: ../../../std/net/struct.SocketAddrV6.html
+/// [`TcpStream`]: ../../../std/net/struct.TcpStream.html
+/// [`UdpSocket`]: ../../../std/net/struct.UdpSocket.html
+/// [`u16`]: ../../../std/primitive.u16.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait ToSocketAddrs {
     /// Returned iterator over socket addresses which this type may correspond

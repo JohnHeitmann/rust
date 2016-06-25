@@ -8,7 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Extensions to `std::process` for Windows.
+//! Extensions to [`std::process`] for Windows.
+//!
+//! [`std::process`]: ../../../../../std/process/index.html
 
 #![stable(feature = "process_extensions", since = "1.2.0")]
 
@@ -82,7 +84,9 @@ impl IntoRawHandle for process::ChildStderr {
     }
 }
 
-/// Windows-specific extensions to `std::process::ExitStatus`
+/// Windows-specific extensions to [`std::process::ExitStatus`]
+///
+/// [`std::process::ExitStatus`]: ../../../../../std/process/struct.ExitStatus.html
 #[unstable(feature = "exit_status_from", issue = "32713")]
 pub trait ExitStatusExt {
     /// Creates a new `ExitStatus` from the raw underlying `u32` return value of

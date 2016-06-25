@@ -12,7 +12,7 @@
 //!
 //! This library uses Rust’s type system to maintain
 //! [well-formedness](https://simonsapin.github.io/wtf-8/#well-formed),
-//! like the `String` and `&str` types do for UTF-8.
+//! like the [`String`] and `&str` types do for UTF-8.
 //!
 //! Since [WTF-8 must not be used
 //! for interchange](https://simonsapin.github.io/wtf-8/#intended-audience),
@@ -20,6 +20,8 @@
 //! of WTF-8 strings,
 //! nor can it decode WTF-8 from arbitrary bytes.
 //! WTF-8 strings can be obtained from UTF-8, UTF-16, or code points.
+//!
+//! [`String`]: ../../../../std/string/struct.String.html
 
 // this module is imported from @SimonSapin's repo and has tons of dead code on
 // unix (it's mostly used on windows), so don't worry about dead code here.
@@ -45,9 +47,11 @@ const UTF8_REPLACEMENT_CHARACTER: &'static [u8] = b"\xEF\xBF\xBD";
 
 /// A Unicode code point: from U+0000 to U+10FFFF.
 ///
-/// Compare with the `char` type,
+/// Compare with the [`char`] type,
 /// which represents a Unicode scalar value:
 /// a code point that is not a surrogate (U+D800 to U+DFFF).
+///
+/// [`char`]: ../../../../std/primitive.char.html
 #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy)]
 pub struct CodePoint {
     value: u32
@@ -119,8 +123,10 @@ impl CodePoint {
 
 /// An owned, growable string of well-formed WTF-8 data.
 ///
-/// Similar to `String`, but can additionally contain surrogate code points
+/// Similar to [`String`], but can additionally contain surrogate code points
 /// if they’re not in a surrogate pair.
+///
+/// [`String`]: ../../../../std/string/struct.String.html
 #[derive(Eq, PartialEq, Ord, PartialOrd, Clone)]
 pub struct Wtf8Buf {
     bytes: Vec<u8>

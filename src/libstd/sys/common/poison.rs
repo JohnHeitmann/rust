@@ -90,9 +90,12 @@ pub type LockResult<Guard> = Result<Guard, PoisonError<Guard>>;
 
 /// A type alias for the result of a nonblocking locking method.
 ///
-/// For more information, see `LockResult`. A `TryLockResult` doesn't
+/// For more information, see [`LockResult`]. A [`TryLockResult`] doesn't
 /// necessarily hold the associated guard in the `Err` type as the lock may not
 /// have been acquired for other reasons.
+///
+/// [`LockResult`]: ../../../../std/sync/type.LockResult.html
+/// [`TryLockResult`]: ../../../../std/sync/type.TryLockResult.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub type TryLockResult<Guard> = Result<Guard, TryLockError<Guard>>;
 

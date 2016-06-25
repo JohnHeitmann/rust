@@ -61,7 +61,7 @@ const MAX_THREE_B: u32 =  0x10000;
     Cn  Unassigned              a reserved unassigned code point or a noncharacter
 */
 
-/// The highest valid code point a `char` can have.
+/// The highest valid code point a [`char`] can have.
 ///
 /// A [`char`] is a [Unicode Scalar Value], which means that it is a [Code
 /// Point], but only ones within a certain range. `MAX` is the highest valid
@@ -70,10 +70,12 @@ const MAX_THREE_B: u32 =  0x10000;
 /// [`char`]: ../../std/primitive.char.html
 /// [Unicode Scalar Value]: http://www.unicode.org/glossary/#unicode_scalar_value
 /// [Code Point]: http://www.unicode.org/glossary/#code_point
+///
+/// [`char`]: ../../std/primitive.char.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub const MAX: char = '\u{10ffff}';
 
-/// Converts a `u32` to a `char`.
+/// Converts a [`u32`] to a [`char`].
 ///
 /// Note that all [`char`]s are valid [`u32`]s, and can be casted to one with
 /// [`as`]:
@@ -119,6 +121,9 @@ pub const MAX: char = '\u{10ffff}';
 ///
 /// assert_eq!(None, c);
 /// ```
+///
+/// [`char`]: ../../std/primitive.char.html
+/// [`u32`]: ../../std/primitive.u32.html
 #[inline]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn from_u32(i: u32) -> Option<char> {
@@ -130,7 +135,7 @@ pub fn from_u32(i: u32) -> Option<char> {
     }
 }
 
-/// Converts a `u32` to a `char`, ignoring validity.
+/// Converts a [`u32`] to a [`char`], ignoring validity.
 ///
 /// Note that all [`char`]s are valid [`u32`]s, and can be casted to one with
 /// [`as`]:
@@ -152,7 +157,7 @@ pub fn from_u32(i: u32) -> Option<char> {
 ///
 /// # Safety
 ///
-/// This function is unsafe, as it may construct invalid `char` values.
+/// This function is unsafe, as it may construct invalid [`char`] values.
 ///
 /// For a safe version of this function, see the [`from_u32()`] function.
 ///
@@ -169,13 +174,16 @@ pub fn from_u32(i: u32) -> Option<char> {
 ///
 /// assert_eq!('❤', c);
 /// ```
+///
+/// [`char`]: ../../std/primitive.char.html
+/// [`u32`]: ../../std/primitive.u32.html
 #[inline]
 #[stable(feature = "char_from_unchecked", since = "1.5.0")]
 pub unsafe fn from_u32_unchecked(i: u32) -> char {
     transmute(i)
 }
 
-/// Converts a digit in the given radix to a `char`.
+/// Converts a digit in the given radix to a [`char`].
 ///
 /// A 'radix' here is sometimes also called a 'base'. A radix of two
 /// indicates a binary number, a radix of ten, decimal, and a radix of
@@ -229,6 +237,8 @@ pub unsafe fn from_u32_unchecked(i: u32) -> char {
 ///
 /// assert!(result.is_err());
 /// ```
+///
+/// [`char`]: ../../std/primitive.char.html
 #[inline]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn from_digit(num: u32, radix: u32) -> Option<char> {
@@ -392,7 +402,7 @@ impl CharExt for char {
 }
 
 /// Returns an iterator that yields the hexadecimal Unicode escape of a
-/// character, as `char`s.
+/// character, as [`char`]s.
 ///
 /// This `struct` is created by the [`escape_unicode()`] method on [`char`]. See
 /// its documentation for more.
@@ -500,7 +510,7 @@ impl ExactSizeIterator for EscapeUnicode {
     }
 }
 
-/// An iterator that yields the literal escape code of a `char`.
+/// An iterator that yields the literal escape code of a [`char`].
 ///
 /// This `struct` is created by the [`escape_default()`] method on [`char`]. See
 /// its documentation for more.
@@ -600,10 +610,13 @@ impl ExactSizeIterator for EscapeDefault {
     }
 }
 
-/// An iterator over `u8` entries represending the UTF-8 encoding of a `char`
+/// An iterator over [`u8`] entries represending the UTF-8 encoding of a [`char`]
 /// value.
 ///
-/// Constructed via the `.encode_utf8()` method on `char`.
+/// Constructed via the `.encode_utf8()` method on [`char`].
+///
+/// [`char`]: ../../std/primitive.char.html
+/// [`u8`]: ../../std/primitive.u8.html
 #[unstable(feature = "unicode", issue = "27784")]
 #[derive(Debug)]
 pub struct EncodeUtf8 {
@@ -638,10 +651,13 @@ impl Iterator for EncodeUtf8 {
     }
 }
 
-/// An iterator over `u16` entries represending the UTF-16 encoding of a `char`
+/// An iterator over [`u16`] entries represending the UTF-16 encoding of a [`char`]
 /// value.
 ///
-/// Constructed via the `.encode_utf16()` method on `char`.
+/// Constructed via the `.encode_utf16()` method on [`char`].
+///
+/// [`char`]: ../../std/primitive.char.html
+/// [`u16`]: ../../std/primitive.u16.html
 #[unstable(feature = "unicode", issue = "27784")]
 #[derive(Debug)]
 pub struct EncodeUtf16 {

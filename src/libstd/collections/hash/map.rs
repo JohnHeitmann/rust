@@ -207,7 +207,7 @@ fn test_resize_policy() {
 /// random data from your platform at the time of creation. This behavior
 /// can be overridden with one of the constructors.
 ///
-/// It is required that the keys implement the `Eq` and `Hash` traits, although
+/// It is required that the keys implement the [`Eq`] and [`Hash`] traits, although
 /// this can frequently be achieved by using `#[derive(PartialEq, Eq, Hash)]`.
 /// If you implement these yourself, it is important that the following
 /// property holds:
@@ -219,9 +219,9 @@ fn test_resize_policy() {
 /// In other words, if two keys are equal, their hashes must be equal.
 ///
 /// It is a logic error for a key to be modified in such a way that the key's
-/// hash, as determined by the `Hash` trait, or its equality, as determined by
-/// the `Eq` trait, changes while it is in the map. This is normally only
-/// possible through `Cell`, `RefCell`, global state, I/O, or unsafe code.
+/// hash, as determined by the [`Hash`] trait, or its equality, as determined by
+/// the [`Eq`] trait, changes while it is in the map. This is normally only
+/// possible through [`Cell`], [`RefCell`], global state, I/O, or unsafe code.
 ///
 /// Relevant papers/articles:
 ///
@@ -237,7 +237,7 @@ fn test_resize_policy() {
 /// use std::collections::HashMap;
 ///
 /// // type inference lets us omit an explicit type signature (which
-/// // would be `HashMap<&str, &str>` in this example).
+/// // would be [`HashMap<&str, &str>`] in this example).
 /// let mut book_reviews = HashMap::new();
 ///
 /// // review some books.
@@ -270,7 +270,7 @@ fn test_resize_policy() {
 /// }
 /// ```
 ///
-/// `HashMap` also implements an [`Entry API`](#method.entry), which allows
+/// [`HashMap`] also implements an [`Entry API`](#method.entry), which allows
 /// for more complex methods of getting, setting, updating and removing keys and
 /// their values:
 ///
@@ -278,7 +278,7 @@ fn test_resize_policy() {
 /// use std::collections::HashMap;
 ///
 /// // type inference lets us omit an explicit type signature (which
-/// // would be `HashMap<&str, u8>` in this example).
+/// // would be [`HashMap<&str, u8>`] in this example).
 /// let mut player_stats = HashMap::new();
 ///
 /// fn random_stat_buff() -> u8 {
@@ -299,8 +299,8 @@ fn test_resize_policy() {
 /// *stat += random_stat_buff();
 /// ```
 ///
-/// The easiest way to use `HashMap` with a custom type as key is to derive `Eq` and `Hash`.
-/// We must also derive `PartialEq`.
+/// The easiest way to use [`HashMap`] with a custom type as key is to derive [`Eq`] and [`Hash`].
+/// We must also derive [`PartialEq`].
 ///
 /// ```
 /// use std::collections::HashMap;
@@ -330,6 +330,15 @@ fn test_resize_policy() {
 ///     println!("{:?} has {} hp", viking, health);
 /// }
 /// ```
+///
+/// [`Cell`]: ../../../../std/cell/struct.Cell.html
+/// [`Eq`]: ../../../../std/cmp/trait.Eq.html
+/// [`Hash`]: ../../../../std/hash/trait.Hash.html
+/// [`HashMap`]: ../../../../std/collections/struct.HashMap.html
+/// [`HashMap<&str, &str>`]: ../../../../std/collections/struct.HashMap.html
+/// [`HashMap<&str, u8>`]: ../../../../std/collections/struct.HashMap.html
+/// [`PartialEq`]: ../../../../std/cmp/trait.PartialEq.html
+/// [`RefCell`]: ../../../../std/cell/struct.RefCell.html
 #[derive(Clone)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct HashMap<K, V, S = RandomState> {
@@ -1661,11 +1670,15 @@ impl<'a, K, V, S> Extend<(&'a K, &'a V)> for HashMap<K, V, S>
     }
 }
 
-/// `RandomState` is the default state for `HashMap` types.
+/// [`RandomState`] is the default state for [`HashMap`] types.
 ///
-/// A particular instance `RandomState` will create the same instances of
-/// `Hasher`, but the hashers created by two different `RandomState`
+/// A particular instance [`RandomState`] will create the same instances of
+/// [`Hasher`], but the hashers created by two different [`RandomState`]
 /// instances are unlikely to produce the same result for the same values.
+///
+/// [`HashMap`]: ../../../../std/collections/struct.HashMap.html
+/// [`Hasher`]: ../../../../std/hash/trait.Hasher.html
+/// [`RandomState`]: ../../../../std/collections/hash_map/struct.RandomState.html
 #[derive(Clone)]
 #[stable(feature = "hashmap_build_hasher", since = "1.7.0")]
 pub struct RandomState {

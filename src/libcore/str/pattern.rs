@@ -10,8 +10,13 @@
 
 //! The string Pattern API.
 //!
-//! For more details, see the traits `Pattern`, `Searcher`,
-//! `ReverseSearcher` and `DoubleEndedSearcher`.
+//! For more details, see the traits [`Pattern`], [`Searcher`],
+//! [`ReverseSearcher`] and [`DoubleEndedSearcher`].
+//!
+//! [`DoubleEndedSearcher`]: ../../../std/str/pattern/trait.DoubleEndedSearcher.html
+//! [`Pattern`]: ../../../std/str/pattern/trait.Pattern.html
+//! [`ReverseSearcher`]: ../../../std/str/pattern/trait.ReverseSearcher.html
+//! [`Searcher`]: ../../../collections/str/pattern/trait.Searcher.html
 
 #![unstable(feature = "pattern",
             reason = "API not fully fleshed out and ready to be stabilized",
@@ -27,15 +32,18 @@ use usize;
 
 /// A string pattern.
 ///
-/// A `Pattern<'a>` expresses that the implementing type
+/// A [`Pattern<'a>`] expresses that the implementing type
 /// can be used as a string pattern for searching in a `&'a str`.
 ///
 /// For example, both `'a'` and `"aa"` are patterns that
 /// would match at index `1` in the string `"baaaab"`.
 ///
 /// The trait itself acts as a builder for an associated
-/// `Searcher` type, which does the actual work of finding
+/// [`Searcher`] type, which does the actual work of finding
 /// occurrences of the pattern in a string.
+///
+/// [`Pattern<'a>`]: ../../../std/str/pattern/trait.Pattern.html
+/// [`Searcher`]: ../../../collections/str/pattern/trait.Searcher.html
 pub trait Pattern<'a>: Sized {
     /// Associated searcher for this pattern
     type Searcher: Searcher<'a>;
@@ -95,13 +103,16 @@ pub enum SearchStep {
 /// This trait provides methods for searching for non-overlapping
 /// matches of a pattern starting from the front (left) of a string.
 ///
-/// It will be implemented by associated `Searcher`
-/// types of the `Pattern` trait.
+/// It will be implemented by associated [`Searcher`]
+/// types of the [`Pattern`] trait.
 ///
 /// The trait is marked unsafe because the indices returned by the
 /// `next()` methods are required to lie on valid utf8 boundaries in
 /// the haystack. This enables consumers of this trait to
 /// slice the haystack without additional runtime checks.
+///
+/// [`Pattern`]: ../../../std/str/pattern/trait.Pattern.html
+/// [`Searcher`]: ../../../collections/str/pattern/trait.Searcher.html
 pub unsafe trait Searcher<'a> {
     /// Getter for the underlaying string to be searched in
     ///
@@ -158,15 +169,18 @@ pub unsafe trait Searcher<'a> {
 /// This trait provides methods for searching for non-overlapping
 /// matches of a pattern starting from the back (right) of a string.
 ///
-/// It will be implemented by associated `Searcher`
-/// types of the `Pattern` trait if the pattern supports searching
+/// It will be implemented by associated [`Searcher`]
+/// types of the [`Pattern`] trait if the pattern supports searching
 /// for it from the back.
 ///
 /// The index ranges returned by this trait are not required
 /// to exactly match those of the forward search in reverse.
 ///
 /// For the reason why this trait is marked unsafe, see them
-/// parent trait `Searcher`.
+/// parent trait [`Searcher`].
+///
+/// [`Pattern`]: ../../../std/str/pattern/trait.Pattern.html
+/// [`Searcher`]: ../../../collections/str/pattern/trait.Searcher.html
 pub unsafe trait ReverseSearcher<'a>: Searcher<'a> {
     /// Performs the next search step starting from the back.
     ///
@@ -213,10 +227,10 @@ pub unsafe trait ReverseSearcher<'a>: Searcher<'a> {
     }
 }
 
-/// A marker trait to express that a `ReverseSearcher`
-/// can be used for a `DoubleEndedIterator` implementation.
+/// A marker trait to express that a [`ReverseSearcher`]
+/// can be used for a [`DoubleEndedIterator`] implementation.
 ///
-/// For this, the impl of `Searcher` and `ReverseSearcher` need
+/// For this, the impl of [`Searcher`] and [`ReverseSearcher`] need
 /// to follow these conditions:
 ///
 /// - All results of `next()` need to be identical
@@ -227,13 +241,19 @@ pub unsafe trait ReverseSearcher<'a>: Searcher<'a> {
 ///
 /// # Examples
 ///
-/// `char::Searcher` is a `DoubleEndedSearcher` because searching for a
-/// `char` only requires looking at one at a time, which behaves the same
+/// `char::Searcher` is a [`DoubleEndedSearcher`] because searching for a
+/// [`char`] only requires looking at one at a time, which behaves the same
 /// from both ends.
 ///
-/// `(&str)::Searcher` is not a `DoubleEndedSearcher` because
+/// `(&str)::Searcher` is not a [`DoubleEndedSearcher`] because
 /// the pattern `"aa"` in the haystack `"aaa"` matches as either
 /// `"[aa]a"` or `"a[aa]"`, depending from which side it is searched.
+///
+/// [`DoubleEndedIterator`]: ../../../std/iter/trait.DoubleEndedIterator.html
+/// [`DoubleEndedSearcher`]: ../../../std/str/pattern/trait.DoubleEndedSearcher.html
+/// [`ReverseSearcher`]: ../../../std/str/pattern/trait.ReverseSearcher.html
+/// [`Searcher`]: ../../../collections/str/pattern/trait.Searcher.html
+/// [`char`]: ../../../std/primitive.char.html
 pub trait DoubleEndedSearcher<'a>: ReverseSearcher<'a> {}
 
 /////////////////////////////////////////////////////////////////////////////

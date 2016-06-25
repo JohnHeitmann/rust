@@ -8,11 +8,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Experimental extensions to `std` for Windows.
+//! Experimental extensions to [`std`] for Windows.
 //!
 //! For now, this module is limited to extracting handles, file
 //! descriptors, and sockets, but its functionality will grow over
 //! time.
+//!
+//! [`std`]: ../../../../../std/index.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 

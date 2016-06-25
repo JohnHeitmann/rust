@@ -12,13 +12,13 @@
 //!
 //! This module provides an implementation of OS-based thread local storage,
 //! using the native OS-provided facilities (think `TlsAlloc` or
-//! `pthread_setspecific`). The interface of this differs from the other types
+//! [`pthread_setspecific`]). The interface of this differs from the other types
 //! of thread-local-storage provided in this crate in that OS-based TLS can only
 //! get/set pointers,
 //!
 //! This module also provides two flavors of TLS. One is intended for static
-//! initialization, and does not contain a `Drop` implementation to deallocate
-//! the OS-TLS key. The other is a type which does implement `Drop` and hence
+//! initialization, and does not contain a [`Drop`] implementation to deallocate
+//! the OS-TLS key. The other is a type which does implement [`Drop`] and hence
 //! has a safe interface.
 //!
 //! # Usage
@@ -31,7 +31,7 @@
 //! # Examples
 //!
 //! Using a dynamically allocated TLS key. Note that this key can be shared
-//! among many threads via an `Arc`.
+//! among many threads via an [`Arc`].
 //!
 //! ```rust,ignore
 //! let key = Key::new(None);
@@ -53,6 +53,10 @@
 //!     KEY.set(1 as *mut u8);
 //! }
 //! ```
+//!
+//! [`Arc`]: ../../../../std/sync/struct.Arc.html
+//! [`Drop`]: ../../../../std/ops/trait.Drop.html
+//! [`pthread_setspecific`]: ../../../../libc/fn.pthread_setspecific.html
 
 #![allow(non_camel_case_types)]
 #![unstable(feature = "thread_local_internals", issue = "0")]

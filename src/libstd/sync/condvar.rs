@@ -77,7 +77,7 @@ pub struct Condvar { inner: Box<StaticCondvar> }
 
 /// Statically allocated condition variables.
 ///
-/// This structure is identical to `Condvar` except that it is suitable for use
+/// This structure is identical to [`Condvar`] except that it is suitable for use
 /// in static initializers for other structures.
 ///
 /// # Examples
@@ -89,6 +89,8 @@ pub struct Condvar { inner: Box<StaticCondvar> }
 ///
 /// static CVAR: StaticCondvar = CONDVAR_INIT;
 /// ```
+///
+/// [`Condvar`]: ../../../std/sync/struct.Condvar.html
 #[unstable(feature = "static_condvar",
            reason = "may be merged with Condvar in the future",
            issue = "27717")]

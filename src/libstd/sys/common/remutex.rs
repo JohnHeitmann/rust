@@ -39,10 +39,14 @@ unsafe impl<T: Send> Sync for ReentrantMutex<T> {}
 ///
 /// # Mutability
 ///
-/// Unlike `MutexGuard`, `ReentrantMutexGuard` does not implement `DerefMut`,
+/// Unlike [`MutexGuard`], `ReentrantMutexGuard` does not implement [`DerefMut`],
 /// because implementation of the trait would violate Rust’s reference aliasing
-/// rules. Use interior mutability (usually `RefCell`) in order to mutate the
+/// rules. Use interior mutability (usually [`RefCell`]) in order to mutate the
 /// guarded data.
+///
+/// [`DerefMut`]: ../../../../std/ops/trait.DerefMut.html
+/// [`MutexGuard`]: ../../../../std/sync/struct.MutexGuard.html
+/// [`RefCell`]: ../../../../std/cell/struct.RefCell.html
 #[must_use]
 pub struct ReentrantMutexGuard<'a, T: 'a> {
     // funny underscores due to how Deref currently works (it disregards field

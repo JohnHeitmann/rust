@@ -274,10 +274,13 @@ impl<'a> Arguments<'a> {
 /// safely be done so, so no constructors are given and the fields are private
 /// to prevent modification.
 ///
-/// The `format_args!` macro will safely create an instance of this structure
+/// The [`format_args!`] macro will safely create an instance of this structure
 /// and pass it to a function or closure, passed as the first argument. The
 /// macro validates the format string at compile-time so usage of the `write`
-/// and `format` functions can be safely performed.
+/// and [`format`] functions can be safely performed.
+///
+/// [`format`]: ../../../std/fmt/fn.format.html
+/// [`format_args!`]: ../../../std/macro.format_args!.html
 #[stable(feature = "rust1", since = "1.0.0")]
 #[derive(Copy, Clone)]
 pub struct Arguments<'a> {
@@ -308,9 +311,9 @@ impl<'a> Display for Arguments<'a> {
 
 /// Format trait for the `?` character.
 ///
-/// `Debug` should format the output in a programmer-facing, debugging context.
+/// [`Debug`] should format the output in a programmer-facing, debugging context.
 ///
-/// Generally speaking, you should just `derive` a `Debug` implementation.
+/// Generally speaking, you should just `derive` a [`Debug`] implementation.
 ///
 /// When used with the alternate format specifier `#?`, the output is pretty-printed.
 ///
@@ -318,11 +321,11 @@ impl<'a> Display for Arguments<'a> {
 ///
 /// [module]: ../../std/fmt/index.html
 ///
-/// This trait can be used with `#[derive]` if all fields implement `Debug`. When
+/// This trait can be used with `#[derive]` if all fields implement [`Debug`]. When
 /// `derive`d for structs, it will use the name of the `struct`, then `{`, then a
-/// comma-separated list of each field's name and `Debug` value, then `}`. For
+/// comma-separated list of each field's name and [`Debug`] value, then `}`. For
 /// `enum`s, it will use the name of the variant and, if applicable, `(`, then the
-/// `Debug` values of the fields, then `)`.
+/// [`Debug`] values of the fields, then `)`.
 ///
 /// # Examples
 ///
@@ -367,11 +370,11 @@ impl<'a> Display for Arguments<'a> {
 /// The origin is: Point { x: 0, y: 0 }
 /// ```
 ///
-/// There are a number of `debug_*` methods on `Formatter` to help you with manual
+/// There are a number of `debug_*` methods on [`Formatter`] to help you with manual
 /// implementations, such as [`debug_struct`][debug_struct].
 ///
-/// `Debug` implementations using either `derive` or the debug builder API
-/// on `Formatter` support pretty printing using the alternate flag: `{:#?}`.
+/// [`Debug`] implementations using either `derive` or the debug builder API
+/// on [`Formatter`] support pretty printing using the alternate flag: `{:#?}`.
 ///
 /// [debug_struct]: ../../std/fmt/struct.Formatter.html#method.debug_struct
 ///
@@ -397,6 +400,9 @@ impl<'a> Display for Arguments<'a> {
 ///     y: 0
 /// }
 /// ```
+///
+/// [`Debug`]: ../../../collections/fmt/trait.Debug.html
+/// [`Formatter`]: ../../../collections/fmt/struct.Formatter.html
 #[stable(feature = "rust1", since = "1.0.0")]
 #[rustc_on_unimplemented = "`{Self}` cannot be formatted using `:?`; if it is \
                             defined in your crate, add `#[derive(Debug)]` or \
@@ -453,7 +459,7 @@ pub trait Display {
 
 /// Format trait for the `o` character.
 ///
-/// The `Octal` trait should format its output as a number in base-8.
+/// The [`Octal`] trait should format its output as a number in base-8.
 ///
 /// The alternate flag, `#`, adds a `0o` in front of the output.
 ///
@@ -463,7 +469,7 @@ pub trait Display {
 ///
 /// # Examples
 ///
-/// Basic usage with `i32`:
+/// Basic usage with [`i32`]:
 ///
 /// ```
 /// let x = 42; // 42 is '52' in octal
@@ -472,7 +478,7 @@ pub trait Display {
 /// assert_eq!(format!("{:#o}", x), "0o52");
 /// ```
 ///
-/// Implementing `Octal` on a type:
+/// Implementing [`Octal`] on a type:
 ///
 /// ```
 /// use std::fmt;
@@ -491,6 +497,9 @@ pub trait Display {
 ///
 /// println!("l as octal is: {:o}", l);
 /// ```
+///
+/// [`Octal`]: ../../../std/fmt/trait.Octal.html
+/// [`i32`]: ../../../std/primitive.i32.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Octal {
     /// Formats the value using the given formatter.
@@ -500,7 +509,7 @@ pub trait Octal {
 
 /// Format trait for the `b` character.
 ///
-/// The `Binary` trait should format its output as a number in binary.
+/// The [`Binary`] trait should format its output as a number in binary.
 ///
 /// The alternate flag, `#`, adds a `0b` in front of the output.
 ///
@@ -510,7 +519,7 @@ pub trait Octal {
 ///
 /// # Examples
 ///
-/// Basic usage with `i32`:
+/// Basic usage with [`i32`]:
 ///
 /// ```
 /// let x = 42; // 42 is '101010' in binary
@@ -519,7 +528,7 @@ pub trait Octal {
 /// assert_eq!(format!("{:#b}", x), "0b101010");
 /// ```
 ///
-/// Implementing `Binary` on a type:
+/// Implementing [`Binary`] on a type:
 ///
 /// ```
 /// use std::fmt;
@@ -538,6 +547,9 @@ pub trait Octal {
 ///
 /// println!("l as binary is: {:b}", l);
 /// ```
+///
+/// [`Binary`]: ../../../std/fmt/trait.Binary.html
+/// [`i32`]: ../../../std/primitive.i32.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Binary {
     /// Formats the value using the given formatter.
@@ -547,7 +559,7 @@ pub trait Binary {
 
 /// Format trait for the `x` character.
 ///
-/// The `LowerHex` trait should format its output as a number in hexadecimal, with `a` through `f`
+/// The [`LowerHex`] trait should format its output as a number in hexadecimal, with `a` through `f`
 /// in lower case.
 ///
 /// The alternate flag, `#`, adds a `0x` in front of the output.
@@ -558,7 +570,7 @@ pub trait Binary {
 ///
 /// # Examples
 ///
-/// Basic usage with `i32`:
+/// Basic usage with [`i32`]:
 ///
 /// ```
 /// let x = 42; // 42 is '2a' in hex
@@ -567,7 +579,7 @@ pub trait Binary {
 /// assert_eq!(format!("{:#x}", x), "0x2a");
 /// ```
 ///
-/// Implementing `LowerHex` on a type:
+/// Implementing [`LowerHex`] on a type:
 ///
 /// ```
 /// use std::fmt;
@@ -586,6 +598,9 @@ pub trait Binary {
 ///
 /// println!("l as hex is: {:x}", l);
 /// ```
+///
+/// [`LowerHex`]: ../../../collections/fmt/trait.LowerHex.html
+/// [`i32`]: ../../../std/primitive.i32.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait LowerHex {
     /// Formats the value using the given formatter.
@@ -595,7 +610,7 @@ pub trait LowerHex {
 
 /// Format trait for the `X` character.
 ///
-/// The `UpperHex` trait should format its output as a number in hexadecimal, with `A` through `F`
+/// The [`UpperHex`] trait should format its output as a number in hexadecimal, with `A` through `F`
 /// in upper case.
 ///
 /// The alternate flag, `#`, adds a `0x` in front of the output.
@@ -606,7 +621,7 @@ pub trait LowerHex {
 ///
 /// # Examples
 ///
-/// Basic usage with `i32`:
+/// Basic usage with [`i32`]:
 ///
 /// ```
 /// let x = 42; // 42 is '2A' in hex
@@ -615,7 +630,7 @@ pub trait LowerHex {
 /// assert_eq!(format!("{:#X}", x), "0x2A");
 /// ```
 ///
-/// Implementing `UpperHex` on a type:
+/// Implementing [`UpperHex`] on a type:
 ///
 /// ```
 /// use std::fmt;
@@ -634,6 +649,9 @@ pub trait LowerHex {
 ///
 /// println!("l as hex is: {:X}", l);
 /// ```
+///
+/// [`UpperHex`]: ../../../std/fmt/trait.UpperHex.html
+/// [`i32`]: ../../../std/primitive.i32.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait UpperHex {
     /// Formats the value using the given formatter.
@@ -643,7 +661,7 @@ pub trait UpperHex {
 
 /// Format trait for the `p` character.
 ///
-/// The `Pointer` trait should format its output as a memory location. This is commonly presented
+/// The [`Pointer`] trait should format its output as a memory location. This is commonly presented
 /// as hexadecimal.
 ///
 /// For more information on formatters, see [the module-level documentation][module].
@@ -660,7 +678,7 @@ pub trait UpperHex {
 /// let address = format!("{:p}", x); // this produces something like '0x7f06092ac6d0'
 /// ```
 ///
-/// Implementing `Pointer` on a type:
+/// Implementing [`Pointer`] on a type:
 ///
 /// ```
 /// use std::fmt;
@@ -679,6 +697,8 @@ pub trait UpperHex {
 ///
 /// println!("l is in memory here: {:p}", l);
 /// ```
+///
+/// [`Pointer`]: ../../../collections/fmt/trait.Pointer.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Pointer {
     /// Formats the value using the given formatter.
@@ -688,7 +708,7 @@ pub trait Pointer {
 
 /// Format trait for the `e` character.
 ///
-/// The `LowerExp` trait should format its output in scientific notation with a lower-case `e`.
+/// The [`LowerExp`] trait should format its output in scientific notation with a lower-case `e`.
 ///
 /// For more information on formatters, see [the module-level documentation][module].
 ///
@@ -696,7 +716,7 @@ pub trait Pointer {
 ///
 /// # Examples
 ///
-/// Basic usage with `i32`:
+/// Basic usage with [`i32`]:
 ///
 /// ```
 /// let x = 42.0; // 42.0 is '4.2e1' in scientific notation
@@ -704,7 +724,7 @@ pub trait Pointer {
 /// assert_eq!(format!("{:e}", x), "4.2e1");
 /// ```
 ///
-/// Implementing `LowerExp` on a type:
+/// Implementing [`LowerExp`] on a type:
 ///
 /// ```
 /// use std::fmt;
@@ -722,6 +742,9 @@ pub trait Pointer {
 ///
 /// println!("l in scientific notation is: {:e}", l);
 /// ```
+///
+/// [`LowerExp`]: ../../../std/fmt/trait.LowerExp.html
+/// [`i32`]: ../../../std/primitive.i32.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait LowerExp {
     /// Formats the value using the given formatter.
@@ -731,7 +754,7 @@ pub trait LowerExp {
 
 /// Format trait for the `E` character.
 ///
-/// The `UpperExp` trait should format its output in scientific notation with an upper-case `E`.
+/// The [`UpperExp`] trait should format its output in scientific notation with an upper-case `E`.
 ///
 /// For more information on formatters, see [the module-level documentation][module].
 ///
@@ -739,7 +762,7 @@ pub trait LowerExp {
 ///
 /// # Examples
 ///
-/// Basic usage with `f32`:
+/// Basic usage with [`f32`]:
 ///
 /// ```
 /// let x = 42.0; // 42.0 is '4.2E1' in scientific notation
@@ -747,7 +770,7 @@ pub trait LowerExp {
 /// assert_eq!(format!("{:E}", x), "4.2E1");
 /// ```
 ///
-/// Implementing `UpperExp` on a type:
+/// Implementing [`UpperExp`] on a type:
 ///
 /// ```
 /// use std::fmt;
@@ -765,6 +788,9 @@ pub trait LowerExp {
 ///
 /// println!("l in scientific notation is: {:E}", l);
 /// ```
+///
+/// [`UpperExp`]: ../../../std/fmt/trait.UpperExp.html
+/// [`f32`]: ../../../std/primitive.f32.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait UpperExp {
     /// Formats the value using the given formatter.
@@ -779,7 +805,7 @@ pub trait UpperExp {
 /// # Arguments
 ///
 ///   * output - the buffer to write output to
-///   * args - the precompiled arguments generated by `format_args!`
+///   * args - the precompiled arguments generated by [`format_args!`]
 ///
 /// # Examples
 ///
@@ -806,6 +832,8 @@ pub trait UpperExp {
 /// ```
 ///
 /// [write_macro]: ../../std/macro.write!.html
+///
+/// [`format_args!`]: ../../../std/macro.format_args!.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn write(output: &mut Write, args: Arguments) -> Result {
     let mut formatter = Formatter {

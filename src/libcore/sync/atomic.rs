@@ -15,7 +15,7 @@
 //! types.
 //!
 //! This module defines atomic versions of a select number of primitive
-//! types, including `AtomicBool`, `AtomicIsize`, and `AtomicUsize`.
+//! types, including [`AtomicBool`], [`AtomicIsize`], and [`AtomicUsize`].
 //! Atomic types present operations that, when used correctly, synchronize
 //! updates between threads.
 //!
@@ -25,10 +25,10 @@
 //!
 //! [1]: http://llvm.org/docs/LangRef.html#memory-model-for-concurrent-operations
 //!
-//! Atomic variables are safe to share between threads (they implement `Sync`)
+//! Atomic variables are safe to share between threads (they implement [`Sync`])
 //! but they do not themselves provide the mechanism for sharing and follow the
 //! [threading model](../../../std/thread/index.html#the-threading-model) of rust.
-//! The most common way to share an atomic variable is to put it into an `Arc` (an
+//! The most common way to share an atomic variable is to put it into an [`Arc`] \(an
 //! atomically-reference-counted shared pointer).
 //!
 //! Most atomic types may be stored in static variables, initialized using
@@ -72,6 +72,12 @@
 //! let old_thread_count = GLOBAL_THREAD_COUNT.fetch_add(1, Ordering::SeqCst);
 //! println!("live threads: {}", old_thread_count + 1);
 //! ```
+//!
+//! [`Arc`]: ../../../std/sync/struct.Arc.html
+//! [`AtomicBool`]: ../../../std/sync/atomic/struct.AtomicBool.html
+//! [`AtomicIsize`]: ../../../std/sync/atomic/struct.AtomicIsize.html
+//! [`AtomicUsize`]: ../../../std/sync/atomic/struct.AtomicUsize.html
+//! [`Sync`]: ../../../std/marker/trait.Sync.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -166,7 +172,9 @@ pub enum Ordering {
     SeqCst,
 }
 
-/// An `AtomicBool` initialized to `false`.
+/// An [`AtomicBool`] initialized to `false`.
+///
+/// [`AtomicBool`]: ../../../std/sync/atomic/struct.AtomicBool.html
 #[cfg(target_has_atomic = "8")]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub const ATOMIC_BOOL_INIT: AtomicBool = AtomicBool::new(false);

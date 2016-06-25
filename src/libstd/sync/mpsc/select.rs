@@ -20,9 +20,9 @@
 //! to the set.
 //!
 //! Usage of this module is currently encouraged to go through the use of the
-//! `select!` macro. This macro allows naturally binding of variables to the
+//! [`select!`] macro. This macro allows naturally binding of variables to the
 //! received values of receivers in a much more natural syntax then usage of the
-//! `Select` structure directly.
+//! [`Select`] structure directly.
 //!
 //! # Examples
 //!
@@ -46,6 +46,9 @@
 //!     }
 //! }
 //! ```
+//!
+//! [`Select`]: ../../../../std/sync/mpsc/struct.Select.html
+//! [`select!`]: ../../../../std/macro.select!.html
 
 #![allow(dead_code)]
 #![unstable(feature = "mpsc_select",
@@ -82,9 +85,11 @@ struct SelectInner {
 
 impl !marker::Send for Select {}
 
-/// A handle to a receiver which is currently a member of a `Select` set of
+/// A handle to a receiver which is currently a member of a [`Select`] set of
 /// receivers.  This handle is used to keep the receiver in the set as well as
 /// interact with the underlying receiver.
+///
+/// [`Select`]: ../../../../std/sync/mpsc/struct.Select.html
 pub struct Handle<'rx, T:Send+'rx> {
     /// The ID of this handle, used to compare against the return value of
     /// `Select::wait()`

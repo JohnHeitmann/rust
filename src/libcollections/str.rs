@@ -10,7 +10,9 @@
 
 //! Unicode string slices.
 //!
-//! *[See also the `str` primitive type](../../std/primitive.str.html).*
+//! *[See also the [`str`] primitive type](../../std/primitive.str.html).*
+//!
+//! [`str`]: /std/primitive.str.html
 
 
 #![stable(feature = "rust1", since = "1.0.0")]
@@ -114,7 +116,9 @@ impl<S: Borrow<str>> SliceConcatExt<str> for [S] {
 
 /// External iterator for a string's UTF-16 code units.
 ///
-/// For use with the `std::iter` module.
+/// For use with the [`std::iter`] module.
+///
+/// [`std::iter`]: /std/iter/index.html
 #[derive(Clone)]
 #[stable(feature = "encode_utf16", since = "1.8.0")]
 pub struct EncodeUtf16<'a> {

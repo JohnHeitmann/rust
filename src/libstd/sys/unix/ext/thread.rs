@@ -8,7 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Unix-specific extensions to primitives in the `std::thread` module.
+//! Unix-specific extensions to primitives in the [`std::thread`] module.
+//!
+//! [`std::thread`]: ../../../../../std/thread/index.html
 
 #![stable(feature = "thread_extensions", since = "1.9.0")]
 
@@ -21,7 +23,9 @@ use thread::JoinHandle;
 #[allow(deprecated)]
 pub type RawPthread = pthread_t;
 
-/// Unix-specific extensions to `std::thread::JoinHandle`
+/// Unix-specific extensions to [`std::thread::JoinHandle`]
+///
+/// [`std::thread::JoinHandle`]: ../../../../../std/thread/struct.JoinHandle.html
 #[stable(feature = "thread_extensions", since = "1.9.0")]
 pub trait JoinHandleExt {
     /// Extracts the raw pthread_t without taking ownership

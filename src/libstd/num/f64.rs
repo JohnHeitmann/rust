@@ -10,7 +10,9 @@
 
 //! The 64-bit floating point type.
 //!
-//! *[See also the `f64` primitive type](../primitive.f64.html).*
+//! *[See also the [`f64`] primitive type](../primitive.f64.html).*
+//!
+//! [`f64`]: ../../../std/primitive.f64.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 #![allow(missing_docs)]

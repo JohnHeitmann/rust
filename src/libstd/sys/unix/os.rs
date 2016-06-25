@@ -8,7 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Implementation of `std::os` functionality for unix systems
+//! Implementation of [`std::os`] functionality for unix systems
+//!
+//! [`std::os`]: ../../../../std/os/index.html
 
 #![allow(unused_imports)] // lots of cfg code here
 

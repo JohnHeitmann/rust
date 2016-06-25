@@ -20,7 +20,7 @@
 //!
 //! This is a larger example that implements [Dijkstra's algorithm][dijkstra]
 //! to solve the [shortest path problem][sssp] on a [directed graph][dir_graph].
-//! It shows how to use `BinaryHeap` with custom types.
+//! It shows how to use [`BinaryHeap`] with custom types.
 //!
 //! [dijkstra]: http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 //! [sssp]: http://en.wikipedia.org/wiki/Shortest_path_problem
@@ -37,7 +37,7 @@
 //!     position: usize,
 //! }
 //!
-//! // The priority queue depends on `Ord`.
+//! // The priority queue depends on [`Ord`].
 //! // Explicitly implement the trait so the queue becomes a min-heap
 //! // instead of a max-heap.
 //! impl Ord for State {
@@ -47,14 +47,14 @@
 //!     }
 //! }
 //!
-//! // `PartialOrd` needs to be implemented as well.
+//! // [`PartialOrd`] needs to be implemented as well.
 //! impl PartialOrd for State {
 //!     fn partial_cmp(&self, other: &State) -> Option<Ordering> {
 //!         Some(self.cmp(other))
 //!     }
 //! }
 //!
-//! // Each node is represented as an `usize`, for a shorter implementation.
+//! // Each node is represented as an [`usize`], for a shorter implementation.
 //! struct Edge {
 //!     node: usize,
 //!     cost: usize,
@@ -147,6 +147,11 @@
 //!     assert_eq!(shortest_path(&graph, 4, 0), None);
 //! }
 //! ```
+//!
+//! [`BinaryHeap`]: /std/collections/binary_heap/struct.BinaryHeap.html
+//! [`Ord`]: /std/cmp/trait.Ord.html
+//! [`PartialOrd`]: /std/cmp/trait.PartialOrd.html
+//! [`usize`]: /std/primitive.usize.html
 
 #![allow(missing_docs)]
 #![stable(feature = "rust1", since = "1.0.0")]
@@ -168,9 +173,9 @@ use super::SpecExtend;
 /// This will be a max-heap.
 ///
 /// It is a logic error for an item to be modified in such a way that the
-/// item's ordering relative to any other item, as determined by the `Ord`
+/// item's ordering relative to any other item, as determined by the [`Ord`]
 /// trait, changes while it is in the heap. This is normally only possible
-/// through `Cell`, `RefCell`, global state, I/O, or unsafe code.
+/// through [`Cell`], [`RefCell`], global state, I/O, or unsafe code.
 ///
 /// # Examples
 ///
@@ -178,7 +183,7 @@ use super::SpecExtend;
 /// use std::collections::BinaryHeap;
 ///
 /// // Type inference lets us omit an explicit type signature (which
-/// // would be `BinaryHeap<i32>` in this example).
+/// // would be [`BinaryHeap<i32>`] in this example).
 /// let mut heap = BinaryHeap::new();
 ///
 /// // We can use peek to look at the next item in the heap. In this case,
@@ -214,15 +219,21 @@ use super::SpecExtend;
 /// // The heap should now be empty.
 /// assert!(heap.is_empty())
 /// ```
+///
+/// [`BinaryHeap<i32>`]: /std/collections/binary_heap/struct.BinaryHeap.html
+/// [`Cell`]: /std/cell/struct.Cell.html
+/// [`Ord`]: /std/cmp/trait.Ord.html
+/// [`RefCell`]: /std/cell/struct.RefCell.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct BinaryHeap<T> {
     data: Vec<T>,
 }
 
 /// A container object that represents the result of the [`peek_mut()`] method
-/// on `BinaryHeap`. See its documentation for details.
+/// on [`BinaryHeap`]. See its documentation for details.
 ///
 /// [`peek_mut()`]: struct.BinaryHeap.html#method.peek_mut
+/// [`BinaryHeap`]: /std/collections/binary_heap/struct.BinaryHeap.html
 #[unstable(feature = "binary_heap_peek_mut", issue = "34392")]
 pub struct PeekMut<'a, T: 'a + Ord> {
     heap: &'a mut BinaryHeap<T>
@@ -945,7 +956,9 @@ impl<'a, T> Drop for Hole<'a, T> {
     }
 }
 
-/// `BinaryHeap` iterator.
+/// [`BinaryHeap`] iterator.
+///
+/// [`BinaryHeap`]: /std/collections/binary_heap/struct.BinaryHeap.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct Iter<'a, T: 'a> {
     iter: slice::Iter<'a, T>,
@@ -985,7 +998,9 @@ impl<'a, T> DoubleEndedIterator for Iter<'a, T> {
 #[stable(feature = "rust1", since = "1.0.0")]
 impl<'a, T> ExactSizeIterator for Iter<'a, T> {}
 
-/// An iterator that moves out of a `BinaryHeap`.
+/// An iterator that moves out of a [`BinaryHeap`].
+///
+/// [`BinaryHeap`]: /std/collections/binary_heap/struct.BinaryHeap.html
 #[stable(feature = "rust1", since = "1.0.0")]
 #[derive(Clone)]
 pub struct IntoIter<T> {
@@ -1018,7 +1033,9 @@ impl<T> DoubleEndedIterator for IntoIter<T> {
 #[stable(feature = "rust1", since = "1.0.0")]
 impl<T> ExactSizeIterator for IntoIter<T> {}
 
-/// An iterator that drains a `BinaryHeap`.
+/// An iterator that drains a [`BinaryHeap`].
+///
+/// [`BinaryHeap`]: /std/collections/binary_heap/struct.BinaryHeap.html
 #[stable(feature = "drain", since = "1.6.0")]
 pub struct Drain<'a, T: 'a> {
     iter: vec::Drain<'a, T>,

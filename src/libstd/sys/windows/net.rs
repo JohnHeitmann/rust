@@ -71,7 +71,9 @@ pub fn cvt<T: One + PartialEq + Neg<Output=T>>(t: T) -> io::Result<T> {
     }
 }
 
-/// A variant of `cvt` for `getaddrinfo` which return 0 for a success.
+/// A variant of `cvt` for [`getaddrinfo`] which return 0 for a success.
+///
+/// [`getaddrinfo`]: ../../../../libc/fn.getaddrinfo.html
 pub fn cvt_gai(err: c_int) -> io::Result<()> {
     if err == 0 {
         Ok(())

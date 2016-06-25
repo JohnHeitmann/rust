@@ -27,14 +27,14 @@ use slice::SliceExt;
 
 /// Provides intentionally-wrapped arithmetic on `T`.
 ///
-/// Operations like `+` on `u32` values is intended to never overflow,
+/// Operations like `+` on [`u32`] values is intended to never overflow,
 /// and in some debug configurations overflow is detected and results
 /// in a panic. While most arithmetic falls into this category, some
 /// code explicitly expects and relies upon modular arithmetic (e.g.,
 /// hashing).
 ///
 /// Wrapping arithmetic can be achieved either through methods like
-/// `wrapping_add`, or through the `Wrapping<T>` type, which says that
+/// `wrapping_add`, or through the [`Wrapping<T>`] type, which says that
 /// all standard arithmetic operations on the underlying value are
 /// intended to have wrapping semantics.
 ///
@@ -48,6 +48,9 @@ use slice::SliceExt;
 ///
 /// assert_eq!(std::u32::MAX, (zero - one).0);
 /// ```
+///
+/// [`Wrapping<T>`]: ../../../std/num/struct.Wrapping.html
+/// [`u32`]: ../../../std/primitive.u32.html
 #[stable(feature = "rust1", since = "1.0.0")]
 #[derive(PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Default, Hash)]
 pub struct Wrapping<T>(#[stable(feature = "rust1", since = "1.0.0")] pub T);
@@ -104,8 +107,10 @@ pub mod diy_float;
 
 /// Types that have a "zero" value.
 ///
-/// This trait is intended for use in conjunction with `Add`, as an identity:
+/// This trait is intended for use in conjunction with [`Add`], as an identity:
 /// `x + T::zero() == x`.
+///
+/// [`Add`]: ../../../std/ops/trait.Add.html
 #[unstable(feature = "zero_one",
            reason = "unsure of placement, wants to use associated constants",
            issue = "27739")]
@@ -116,8 +121,10 @@ pub trait Zero: Sized {
 
 /// Types that have a "one" value.
 ///
-/// This trait is intended for use in conjunction with `Mul`, as an identity:
+/// This trait is intended for use in conjunction with [`Mul`], as an identity:
 /// `x * T::one() == x`.
+///
+/// [`Mul`]: ../../../std/ops/trait.Mul.html
 #[unstable(feature = "zero_one",
            reason = "unsure of placement, wants to use associated constants",
            issue = "27739")]

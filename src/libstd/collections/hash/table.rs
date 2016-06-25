@@ -27,7 +27,7 @@ const EMPTY_BUCKET: u64 = 0;
 /// optimized arrays of hashes, keys, and values.
 ///
 /// This design uses less memory and is a lot faster than the naive
-/// `Vec<Option<u64, K, V>>`, because we don't pay for the overhead of an
+/// [`Vec<Option<u64, K, V>>`], because we don't pay for the overhead of an
 /// option on every element, and we get a generally more cache-aware design.
 ///
 /// Essential invariants of this structure:
@@ -58,7 +58,9 @@ const EMPTY_BUCKET: u64 = 0;
 /// You can kind of think of this module/data structure as a safe wrapper
 /// around just the "table" part of the hashtable. It enforces some
 /// invariants at the type level and employs some performance trickery,
-/// but in general is just a tricked out `Vec<Option<u64, K, V>>`.
+/// but in general is just a tricked out [`Vec<Option<u64, K, V>>`].
+///
+/// [`Vec<Option<u64, K, V>>`]: ../../../../std/vec/struct.Vec.html
 #[unsafe_no_drop_flag]
 pub struct RawTable<K, V> {
     capacity: usize,

@@ -48,30 +48,36 @@ struct StderrRaw(stdio::Stderr);
 /// Constructs a new raw handle to the standard input of this process.
 ///
 /// The returned handle does not interact with any other handles created nor
-/// handles returned by `std::io::stdin`. Data buffered by the `std::io::stdin`
+/// handles returned by [`std::io::stdin`]. Data buffered by the [`std::io::stdin`]
 /// handles is **not** available to raw handles returned from this function.
 ///
 /// The returned handle has no external synchronization or buffering.
+///
+/// [`std::io::stdin`]: ../../../std/io/fn.stdin.html
 fn stdin_raw() -> io::Result<StdinRaw> { stdio::Stdin::new().map(StdinRaw) }
 
 /// Constructs a new raw handle to the standard output stream of this process.
 ///
 /// The returned handle does not interact with any other handles created nor
-/// handles returned by `std::io::stdout`. Note that data is buffered by the
-/// `std::io::stdout` handles so writes which happen via this raw handle may
+/// handles returned by [`std::io::stdout`]. Note that data is buffered by the
+/// [`std::io::stdout`] handles so writes which happen via this raw handle may
 /// appear before previous writes.
 ///
 /// The returned handle has no external synchronization or buffering layered on
 /// top.
+///
+/// [`std::io::stdout`]: ../../../std/io/fn.stdout.html
 fn stdout_raw() -> io::Result<StdoutRaw> { stdio::Stdout::new().map(StdoutRaw) }
 
 /// Constructs a new raw handle to the standard error stream of this process.
 ///
 /// The returned handle does not interact with any other handles created nor
-/// handles returned by `std::io::stderr`.
+/// handles returned by [`std::io::stderr`].
 ///
 /// The returned handle has no external synchronization or buffering layered on
 /// top.
+///
+/// [`std::io::stderr`]: ../../../std/io/fn.stderr.html
 fn stderr_raw() -> io::Result<StderrRaw> { stdio::Stderr::new().map(StderrRaw) }
 
 impl Read for StdinRaw {
@@ -144,19 +150,21 @@ fn handle_ebadf<T>(r: io::Result<T>, default: T) -> io::Result<T> {
 /// (e.g. `.lines()`). Reads to this handle are otherwise locked with respect
 /// to other reads.
 ///
-/// This handle implements the `Read` trait, but beware that concurrent reads
-/// of `Stdin` must be executed with care.
+/// This handle implements the [`Read`] trait, but beware that concurrent reads
+/// of [`Stdin`] must be executed with care.
 ///
 /// Created by the [`io::stdin`] method.
 ///
 /// [`io::stdin`]: fn.stdin.html
 /// [`BufRead`]: trait.BufRead.html
+/// [`Read`]: ../../../std/io/trait.Read.html
+/// [`Stdin`]: ../../../std/io/struct.Stdin.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct Stdin {
     inner: Arc<Mutex<BufReader<Maybe<StdinRaw>>>>,
 }
 
-/// A locked reference to the `Stdin` handle.
+/// A locked reference to the [`Stdin`] handle.
 ///
 /// This handle implements both the [`Read`] and [`BufRead`] traits, and
 /// is constructed via the [`Stdin::lock`] method.
@@ -164,6 +172,7 @@ pub struct Stdin {
 /// [`Read`]: trait.Read.html
 /// [`BufRead`]: trait.BufRead.html
 /// [`Stdin::lock`]: struct.Stdin.html#method.lock
+/// [`Stdin`]: ../../../std/io/struct.Stdin.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct StdinLock<'a> {
     inner: MutexGuard<'a, BufReader<Maybe<StdinRaw>>>,
@@ -328,13 +337,14 @@ pub struct Stdout {
     inner: Arc<ReentrantMutex<RefCell<LineWriter<Maybe<StdoutRaw>>>>>,
 }
 
-/// A locked reference to the `Stdout` handle.
+/// A locked reference to the [`Stdout`] handle.
 ///
 /// This handle implements the [`Write`] trait, and is constructed via
 /// the [`Stdout::lock`] method.
 ///
 /// [`Write`]: trait.Write.html
 /// [`Stdout::lock`]: struct.Stdout.html#method.lock
+/// [`Stdout`]: ../../../std/io/struct.Stdout.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct StdoutLock<'a> {
     inner: ReentrantMutexGuard<'a, RefCell<LineWriter<Maybe<StdoutRaw>>>>,
@@ -440,12 +450,13 @@ pub struct Stderr {
     inner: Arc<ReentrantMutex<RefCell<Maybe<StderrRaw>>>>,
 }
 
-/// A locked reference to the `Stderr` handle.
+/// A locked reference to the [`Stderr`] handle.
 ///
 /// This handle implements the `Write` trait and is constructed via
 /// the [`Stderr::lock`] method.
 ///
 /// [`Stderr::lock`]: struct.Stderr.html#method.lock
+/// [`Stderr`]: ../../../std/io/struct.Stderr.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct StderrLock<'a> {
     inner: ReentrantMutexGuard<'a, RefCell<Maybe<StderrRaw>>>,
@@ -563,11 +574,13 @@ pub fn set_panic(sink: Box<Write + Send>) -> Option<Box<Write + Send>> {
 /// Resets the thread-local stdout handle to the specified writer
 ///
 /// This will replace the current thread's stdout handle, returning the old
-/// handle. All future calls to `print!` and friends will emit their output to
+/// handle. All future calls to [`print!`] and friends will emit their output to
 /// this specified handle.
 ///
 /// Note that this does not need to be called for all new threads; the default
 /// output handle is to the process's stdout stream.
+///
+/// [`print!`]: ../../../std/macro.print!.html
 #[unstable(feature = "set_stdio",
            reason = "this function may disappear completely or be replaced \
                      with a more general mechanism",

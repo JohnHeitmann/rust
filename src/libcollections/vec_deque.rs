@@ -41,13 +41,15 @@ const MAXIMUM_ZST_CAPACITY: usize = 1 << (32 - 1); // Largest possible power of 
 #[cfg(target_pointer_width = "64")]
 const MAXIMUM_ZST_CAPACITY: usize = 1 << (64 - 1); // Largest possible power of two
 
-/// `VecDeque` is a growable ring buffer, which can be used as a double-ended
+/// [`VecDeque`] is a growable ring buffer, which can be used as a double-ended
 /// queue efficiently.
 ///
 /// The "default" usage of this type as a queue is to use `push_back` to add to
 /// the queue, and `pop_front` to remove from the queue. `extend` and `append`
-/// push onto the back in this manner, and iterating over `VecDeque` goes front
+/// push onto the back in this manner, and iterating over [`VecDeque`] goes front
 /// to back.
+///
+/// [`VecDeque`]: /std/collections/struct.VecDeque.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct VecDeque<T> {
     // tail and head are pointers into the buffer. Tail always points
@@ -1751,7 +1753,9 @@ fn count(tail: usize, head: usize, size: usize) -> usize {
     (head.wrapping_sub(tail)) & (size - 1)
 }
 
-/// `VecDeque` iterator.
+/// [`VecDeque`] iterator.
+///
+/// [`VecDeque`]: /std/collections/struct.VecDeque.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct Iter<'a, T: 'a> {
     ring: &'a [T],
@@ -1807,7 +1811,9 @@ impl<'a, T> DoubleEndedIterator for Iter<'a, T> {
 #[stable(feature = "rust1", since = "1.0.0")]
 impl<'a, T> ExactSizeIterator for Iter<'a, T> {}
 
-/// `VecDeque` mutable iterator.
+/// [`VecDeque`] mutable iterator.
+///
+/// [`VecDeque`]: /std/collections/struct.VecDeque.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct IterMut<'a, T: 'a> {
     ring: &'a mut [T],

@@ -130,10 +130,13 @@ impl<K, V> InternalNode<K, V> {
     }
 }
 
-/// An owned pointer to a node. This basically is either `Box<LeafNode<K, V>>` or
-/// `Box<InternalNode<K, V>>`. However, it contains no information as to which of the two types
+/// An owned pointer to a node. This basically is either [`Box<LeafNode<K, V>>`] or
+/// [`Box<InternalNode<K, V>>`]. However, it contains no information as to which of the two types
 /// of nodes is acutally behind the box, and, partially due to this lack of information, has no
 /// destructor.
+///
+/// [`Box<InternalNode<K, V>>`]: /collections/boxed/struct.Box.html
+/// [`Box<LeafNode<K, V>>`]: /collections/boxed/struct.Box.html
 struct BoxedNode<K, V> {
     ptr: Unique<LeafNode<K, V>>
 }
@@ -274,12 +277,14 @@ impl<K, V> Root<K, V> {
 /// - `BorrowType`: This can be `Immut<'a>` or `Mut<'a>` for some `'a` or `Owned`.
 ///    When this is `Immut<'a>`, the `NodeRef` acts roughly like `&'a Node`,
 ///    when this is `Mut<'a>`, the `NodeRef` acts roughly like `&'a mut Node`,
-///    and when this is `Owned`, the `NodeRef` acts roughly like `Box<Node>`.
+///    and when this is `Owned`, the `NodeRef` acts roughly like [`Box<Node>`].
 /// - `K` and `V`: These control what types of things are stored in the nodes.
 /// - `Type`: This can be `Leaf`, `Internal`, or `LeafOrInternal`. When this is
 ///   `Leaf`, the `NodeRef` points to a leaf node, when this is `Internal` the
 ///   `NodeRef` points to an internal node, and when this is `LeafOrInternal` the
 ///   `NodeRef` could be pointing to either type of node.
+///
+/// [`Box<Node>`]: /collections/boxed/struct.Box.html
 pub struct NodeRef<BorrowType, K, V, Type> {
     height: usize,
     node: NonZero<*const LeafNode<K, V>>,

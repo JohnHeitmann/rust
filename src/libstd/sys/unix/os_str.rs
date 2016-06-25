@@ -9,7 +9,9 @@
 // except according to those terms.
 
 /// The underlying OsString/OsStr implementation on Unix systems: just
-/// a `Vec<u8>`/`[u8]`.
+/// a [`Vec<u8>`]/`[u8]`.
+///
+/// [`Vec<u8>`]: ../../../../std/vec/struct.Vec.html
 
 use borrow::Cow;
 use fmt::{self, Debug};

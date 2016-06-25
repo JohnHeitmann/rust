@@ -8,12 +8,12 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-/// Creates a `Vec` containing the arguments.
+/// Creates a [`Vec`] containing the arguments.
 ///
-/// `vec!` allows `Vec`s to be defined with the same syntax as array expressions.
+/// `vec!` allows [`Vec`]s to be defined with the same syntax as array expressions.
 /// There are two forms of this macro:
 ///
-/// - Create a `Vec` containing a given list of elements:
+/// - Create a [`Vec`] containing a given list of elements:
 ///
 /// ```
 /// let v = vec![1, 2, 3];
@@ -22,7 +22,7 @@
 /// assert_eq!(v[2], 3);
 /// ```
 ///
-/// - Create a `Vec` from a given element and size:
+/// - Create a [`Vec`] from a given element and size:
 ///
 /// ```
 /// let v = vec![1; 3];
@@ -30,14 +30,17 @@
 /// ```
 ///
 /// Note that unlike array expressions this syntax supports all elements
-/// which implement `Clone` and the number of elements doesn't have to be
+/// which implement [`Clone`] and the number of elements doesn't have to be
 /// a constant.
 ///
 /// This will use `clone()` to duplicate an expression, so one should be careful
-/// using this with types having a nonstandard `Clone` implementation. For
+/// using this with types having a nonstandard [`Clone`] implementation. For
 /// example, `vec![Rc::new(1); 5]` will create a vector of five references
 /// to the same boxed integer value, not five references pointing to independently
 /// boxed integers.
+///
+/// [`Clone`]: /std/clone/trait.Clone.html
+/// [`Vec`]: /std/vec/struct.Vec.html
 #[cfg(not(test))]
 #[macro_export]
 #[stable(feature = "rust1", since = "1.0.0")]
@@ -67,8 +70,8 @@ macro_rules! vec {
     ($($x:expr,)*) => (vec![$($x),*])
 }
 
-/// Use the syntax described in `std::fmt` to create a value of type `String`.
-/// See `std::fmt` for more information.
+/// Use the syntax described in [`std::fmt`] to create a value of type [`String`].
+/// See [`std::fmt`] for more information.
 ///
 /// # Examples
 ///
@@ -77,6 +80,9 @@ macro_rules! vec {
 /// format!("hello {}", "world!");
 /// format!("x = {}, y = {y}", 10, y = 30);
 /// ```
+///
+/// [`String`]: /std/string/struct.String.html
+/// [`std::fmt`]: /std/fmt/index.html
 #[macro_export]
 #[stable(feature = "rust1", since = "1.0.0")]
 macro_rules! format {

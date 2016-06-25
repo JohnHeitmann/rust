@@ -20,13 +20,15 @@
 //! ```
 //!
 //! This definition allows for panicking with any general message, but it does not
-//! allow for failing with a `Box<Any>` value. The reason for this is that libcore
+//! allow for failing with a [`Box<Any>`] value. The reason for this is that libcore
 //! is not allowed to allocate.
 //!
 //! This module contains a few other panicking functions, but these are just the
 //! necessary lang items for the compiler. All panics are funneled through this
 //! one function. Currently, the actual symbol is declared in the standard
 //! library, but the location of this may change over time.
+//!
+//! [`Box<Any>`]: ../../std/boxed/struct.Box.html
 
 #![allow(dead_code, missing_docs)]
 #![unstable(feature = "core_panic",

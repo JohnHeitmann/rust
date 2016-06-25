@@ -526,8 +526,10 @@ pub fn to_shortest_exp_str<'a, T, F>(mut format_shortest: F, v: T,
 /// the number of digits requested is ridiculously large (say, 30,000 digits).
 /// The vast majority of buffer will be filled with zeroes, so we don't want to
 /// allocate all the buffer beforehand. Consequently, for any given arguments,
-/// 826 bytes of buffer should be sufficient for `f64`. Compare this with
+/// 826 bytes of buffer should be sufficient for [`f64`]. Compare this with
 /// the actual number for the worst case: 770 bytes (when `exp = -1074`).
+///
+/// [`f64`]: ../../../../std/primitive.f64.html
 fn estimate_max_buf_len(exp: i16) -> usize {
     21 + ((if exp < 0 { -12 } else { 5 } * exp as i32) as usize >> 4)
 }
@@ -544,9 +546,11 @@ fn estimate_max_buf_len(exp: i16) -> usize {
 ///
 /// The byte buffer should be at least `ndigits` bytes long unless `ndigits` is
 /// so large that only the fixed number of digits will be ever written.
-/// (The tipping point for `f64` is about 800, so 1000 bytes should be enough.)
+/// (The tipping point for [`f64`] is about 800, so 1000 bytes should be enough.)
 /// There should be at least 7 parts available, due to the worst case like
 /// `[+][1][.][2345][e][-][67]`.
+///
+/// [`f64`]: ../../../../std/primitive.f64.html
 pub fn to_exact_exp_str<'a, T, F>(mut format_exact: F, v: T,
                                   sign: Sign, ndigits: usize, upper: bool,
                                   buf: &'a mut [u8], parts: &'a mut [Part<'a>]) -> Formatted<'a>
@@ -600,9 +604,11 @@ pub fn to_exact_exp_str<'a, T, F>(mut format_exact: F, v: T,
 ///
 /// The byte buffer should be enough for the output unless `frac_digits` is
 /// so large that only the fixed number of digits will be ever written.
-/// (The tipping point for `f64` is about 800, and 1000 bytes should be enough.)
+/// (The tipping point for [`f64`] is about 800, and 1000 bytes should be enough.)
 /// There should be at least 5 parts available, due to the worst case like
 /// `[+][0.][0000][45][0000]` with `frac_digits = 10`.
+///
+/// [`f64`]: ../../../../std/primitive.f64.html
 pub fn to_exact_fixed_str<'a, T, F>(mut format_exact: F, v: T,
                                     sign: Sign, frac_digits: usize, _upper: bool,
                                     buf: &'a mut [u8], parts: &'a mut [Part<'a>]) -> Formatted<'a>

@@ -13,11 +13,13 @@
 //! This is designed to avoid the heap allocation at expense of stack memory.
 //! The most used bignum type, `Big32x40`, is limited by 32 × 40 = 1,280 bits
 //! and will take at most 160 bytes of stack memory. This is more than enough
-//! for round-tripping all possible finite `f64` values.
+//! for round-tripping all possible finite [`f64`] values.
 //!
 //! In principle it is possible to have multiple bignum types for different
 //! inputs, but we don't do so to avoid the code bloat. Each bignum is still
 //! tracked for the actual usages, so it normally doesn't matter.
+//!
+//! [`f64`]: ../../../std/primitive.f64.html
 
 // This module is only for dec2flt and flt2dec, and only public because of libcoretest.
 // It is not intended to ever be stabilized.

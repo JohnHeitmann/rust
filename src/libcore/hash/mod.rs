@@ -38,7 +38,7 @@
 //! ```
 //!
 //! If you need more control over how a value is hashed, you need to implement
-//! the `Hash` trait:
+//! the [`Hash`] trait:
 //!
 //! ```rust
 //! use std::hash::{Hash, Hasher, SipHasher};
@@ -68,6 +68,8 @@
 //!     s.finish()
 //! }
 //! ```
+//!
+//! [`Hash`]: ../../../std/hash/trait.Hash.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -84,10 +86,10 @@ mod sip;
 
 /// A hashable type.
 ///
-/// The `H` type parameter is an abstract hash state that is used by the `Hash`
+/// The `H` type parameter is an abstract hash state that is used by the [`Hash`]
 /// to compute the hash.
 ///
-/// If you are also implementing `Eq`, there is an additional property that
+/// If you are also implementing [`Eq`], there is an additional property that
 /// is important:
 ///
 /// ```text
@@ -95,18 +97,18 @@ mod sip;
 /// ```
 ///
 /// In other words, if two keys are equal, their hashes should also be equal.
-/// `HashMap` and `HashSet` both rely on this behavior.
+/// [`HashMap`] and [`HashSet`] both rely on this behavior.
 ///
 /// ## Derivable
 ///
-/// This trait can be used with `#[derive]` if all fields implement `Hash`.
+/// This trait can be used with `#[derive]` if all fields implement [`Hash`].
 /// When `derive`d, the resulting hash will be the combination of the values
 /// from calling `.hash()` on each field.
 ///
-/// ## How can I implement `Hash`?
+/// ## How can I implement [`Hash`]?
 ///
 /// If you need more control over how a value is hashed, you need to implement
-/// the `Hash` trait:
+/// the [`Hash`] trait:
 ///
 /// ```
 /// use std::hash::{Hash, Hasher};
@@ -124,6 +126,11 @@ mod sip;
 ///     }
 /// }
 /// ```
+///
+/// [`Eq`]: ../../../std/cmp/trait.Eq.html
+/// [`Hash`]: ../../../std/hash/trait.Hash.html
+/// [`HashMap`]: ../../../std/collections/hash_map/struct.HashMap.html
+/// [`HashSet`]: ../../../std/collections/hash_set/struct.HashSet.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Hash {
     /// Feeds this value into the state given, updating the hasher as necessary.
@@ -218,12 +225,16 @@ pub trait Hasher {
     }
 }
 
-/// A `BuildHasher` is typically used as a factory for instances of `Hasher`
-/// which a `HashMap` can then use to hash keys independently.
+/// A [`BuildHasher`] is typically used as a factory for instances of [`Hasher`]
+/// which a [`HashMap`] can then use to hash keys independently.
 ///
-/// Note that for each instance of `BuildHasher`, the created hashers should be
+/// Note that for each instance of [`BuildHasher`], the created hashers should be
 /// identical. That is, if the same stream of bytes is fed into each hasher, the
 /// same output will also be generated.
+///
+/// [`BuildHasher`]: ../../../std/hash/trait.BuildHasher.html
+/// [`HashMap`]: ../../../std/collections/hash_map/struct.HashMap.html
+/// [`Hasher`]: ../../../std/hash/trait.Hasher.html
 #[stable(since = "1.7.0", feature = "build_hasher")]
 pub trait BuildHasher {
     /// Type of the hasher that will be created.
@@ -235,10 +246,14 @@ pub trait BuildHasher {
     fn build_hasher(&self) -> Self::Hasher;
 }
 
-/// A structure which implements `BuildHasher` for all `Hasher` types which also
-/// implement `Default`.
+/// A structure which implements [`BuildHasher`] for all [`Hasher`] types which also
+/// implement [`Default`].
 ///
 /// This struct is 0-sized and does not need construction.
+///
+/// [`BuildHasher`]: ../../../std/hash/trait.BuildHasher.html
+/// [`Default`]: ../../../std/default/trait.Default.html
+/// [`Hasher`]: ../../../std/hash/trait.Hasher.html
 #[stable(since = "1.7.0", feature = "build_hasher")]
 pub struct BuildHasherDefault<H>(marker::PhantomData<H>);
 

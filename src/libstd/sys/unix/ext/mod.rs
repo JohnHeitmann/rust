@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Experimental extensions to `std` for Unix platforms.
+//! Experimental extensions to [`std`] for Unix platforms.
 //!
 //! For now, this module is limited to extracting file descriptors,
 //! but its functionality will grow over time.
@@ -26,6 +26,8 @@
 //!     // use fd with native unix bindings
 //! }
 //! ```
+//!
+//! [`std`]: ../../../../../std/index.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 

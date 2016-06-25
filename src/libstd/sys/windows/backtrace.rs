@@ -14,13 +14,15 @@
 //! If you google around, you'll find a fair bit of references to built-in
 //! functions to get backtraces on windows. It turns out that most of these are
 //! in an external library called dbghelp. I was unable to find this library
-//! via `-ldbghelp`, but it is apparently normal to do the `dlopen` equivalent
+//! via `-ldbghelp`, but it is apparently normal to do the [`dlopen`] equivalent
 //! of it.
 //!
 //! You'll also find that there's a function called CaptureStackBackTrace
 //! mentioned frequently (which is also easy to use), but sadly I didn't have a
 //! copy of that function in my mingw install (maybe it was broken?). Instead,
 //! this takes the route of using StackWalk64 in order to walk the stack.
+//!
+//! [`dlopen`]: ../../../../libc/fn.dlopen.html
 
 #![allow(deprecated)] // dynamic_lib
 

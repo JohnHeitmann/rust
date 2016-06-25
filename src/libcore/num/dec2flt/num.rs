@@ -38,15 +38,19 @@ pub fn compare_with_half_ulp(f: &Big, ones_place: usize) -> Ordering {
     Equal
 }
 
-/// Convert an ASCII string containing only decimal digits to a `u64`.
+/// Convert an ASCII string containing only decimal digits to a [`u64`].
 ///
 /// Does not perform checks for overflow or invalid characters, so if the caller is not careful,
 /// the result is bogus and can panic (though it won't be `unsafe`). Additionally, empty strings
 /// are treated as zero. This function exists because
 ///
-/// 1. using `FromStr` on `&[u8]` requires `from_utf8_unchecked`, which is bad, and
+/// 1. using [`FromStr`] on `&[u8]` requires [`from_utf8_unchecked`], which is bad, and
 /// 2. piecing together the results of `integral.parse()` and `fractional.parse()` is
 ///    more complicated than this entire function.
+///
+/// [`FromStr`]: ../../../../collections/str/trait.FromStr.html
+/// [`from_utf8_unchecked`]: ../../../../std/str/fn.from_utf8_unchecked.html
+/// [`u64`]: ../../../../std/primitive.u64.html
 pub fn from_str_unchecked<'a, T>(bytes: T) -> u64 where T : IntoIterator<Item=&'a u8> {
     let mut result = 0;
     for &c in bytes {

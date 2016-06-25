@@ -24,7 +24,7 @@
 //! ```
 //!
 //! Functions return `Result` whenever errors are expected and
-//! recoverable. In the `std` crate `Result` is most prominently used
+//! recoverable. In the [`std`] crate `Result` is most prominently used
 //! for [I/O](../../std/io/index.html).
 //!
 //! A simple function returning `Result` might be
@@ -230,6 +230,8 @@
 //! `try!` is imported by the prelude and is available everywhere, but it can only
 //! be used in functions that return `Result` because of the early return of
 //! `Err` that it provides.
+//!
+//! [`std`]: ../../std/index.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 

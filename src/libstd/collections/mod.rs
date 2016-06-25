@@ -15,20 +15,20 @@
 //! standard implementations, it should be possible for two libraries to
 //! communicate without significant data conversion.
 //!
-//! To get this out of the way: you should probably just use `Vec` or `HashMap`.
+//! To get this out of the way: you should probably just use [`Vec`] or [`HashMap`].
 //! These two collections cover most use cases for generic data storage and
 //! processing. They are exceptionally good at doing what they do. All the other
 //! collections in the standard library have specific use cases where they are
 //! the optimal choice, but these cases are borderline *niche* in comparison.
-//! Even when `Vec` and `HashMap` are technically suboptimal, they're probably a
+//! Even when [`Vec`] and [`HashMap`] are technically suboptimal, they're probably a
 //! good enough choice to get started.
 //!
 //! Rust's collections can be grouped into four major categories:
 //!
-//! * Sequences: `Vec`, `VecDeque`, `LinkedList`
-//! * Maps: `HashMap`, `BTreeMap`
-//! * Sets: `HashSet`, `BTreeSet`
-//! * Misc: `BinaryHeap`
+//! * Sequences: [`Vec`], [`VecDeque`], [`LinkedList`]
+//! * Maps: [`HashMap`], [`BTreeMap`]
+//! * Sets: [`HashSet`], [`BTreeSet`]
+//! * Misc: [`BinaryHeap`]
 //!
 //! # When Should You Use Which Collection?
 //!
@@ -36,7 +36,7 @@
 //! should be considered. Detailed discussions of strengths and weaknesses of
 //! individual collections can be found on their own documentation pages.
 //!
-//! ### Use a `Vec` when:
+//! ### Use a [`Vec`] when:
 //! * You want to collect items up to be processed or sent elsewhere later, and
 //!   don't care about any properties of the actual values being stored.
 //! * You want a sequence of elements in a particular order, and will only be
@@ -45,37 +45,37 @@
 //! * You want a resizable array.
 //! * You want a heap-allocated array.
 //!
-//! ### Use a `VecDeque` when:
-//! * You want a `Vec` that supports efficient insertion at both ends of the
+//! ### Use a [`VecDeque`] when:
+//! * You want a [`Vec`] that supports efficient insertion at both ends of the
 //!   sequence.
 //! * You want a queue.
 //! * You want a double-ended queue (deque).
 //!
-//! ### Use a `LinkedList` when:
-//! * You want a `Vec` or `VecDeque` of unknown size, and can't tolerate
+//! ### Use a [`LinkedList`] when:
+//! * You want a [`Vec`] or [`VecDeque`] of unknown size, and can't tolerate
 //!   amortization.
 //! * You want to efficiently split and append lists.
 //! * You are *absolutely* certain you *really*, *truly*, want a doubly linked
 //!   list.
 //!
-//! ### Use a `HashMap` when:
+//! ### Use a [`HashMap`] when:
 //! * You want to associate arbitrary keys with an arbitrary value.
 //! * You want a cache.
 //! * You want a map, with no extra functionality.
 //!
-//! ### Use a `BTreeMap` when:
+//! ### Use a [`BTreeMap`] when:
 //! * You're interested in what the smallest or largest key-value pair is.
 //! * You want to find the largest or smallest key that is smaller or larger
 //!   than something.
 //! * You want to be able to get all of the entries in order on-demand.
 //! * You want a sorted map.
 //!
-//! ### Use the `Set` variant of any of these `Map`s when:
+//! ### Use the `Set` variant of any of these [`Map`]s when:
 //! * You just want to remember which keys you've seen.
 //! * There is no meaningful value to associate with your keys.
 //! * You just want a set.
 //!
-//! ### Use a `BinaryHeap` when:
+//! ### Use a [`BinaryHeap`] when:
 //!
 //! * You want to store a bunch of elements, but only ever want to process the
 //!   "biggest" or "most important" one at any given time.
@@ -160,7 +160,7 @@
 //! Any `with_capacity` constructor will instruct the collection to allocate
 //! enough space for the specified number of elements. Ideally this will be for
 //! exactly that many elements, but some implementation details may prevent
-//! this. `Vec` and `VecDeque` can be relied on to allocate exactly the
+//! this. [`Vec`] and [`VecDeque`] can be relied on to allocate exactly the
 //! requested amount, though. Use `with_capacity` when you know exactly how many
 //! elements will be inserted, or at least have a reasonable upper-bound on that
 //! number.
@@ -199,10 +199,10 @@
 //! unreasonable to provide them.
 //!
 //! `iter` provides an iterator of immutable references to all the contents of a
-//! collection in the most "natural" order. For sequence collections like `Vec`,
+//! collection in the most "natural" order. For sequence collections like [`Vec`],
 //! this means the items will be yielded in increasing order of index starting
-//! at 0. For ordered collections like `BTreeMap`, this means that the items
-//! will be yielded in sorted order.  For unordered collections like `HashMap`,
+//! at 0. For ordered collections like [`BTreeMap`], this means that the items
+//! will be yielded in sorted order.  For unordered collections like [`HashMap`],
 //! the items will be yielded in whatever order the internal representation made
 //! most convenient. This is great for reading through all the contents of the
 //! collection.
@@ -291,7 +291,7 @@
 //! just inserted.
 //!
 //! If an `Occupied(entry)` is yielded, then the key *was* found. In this case,
-//! the user has several options: they can `get`, `insert`, or `remove` the
+//! the user has several options: they can `get`, `insert`, or [`remove`] the
 //! value of the occupied entry. Additionally, they can convert the occupied
 //! entry into a mutable reference to its value, providing symmetry to the
 //! vacant `insert` case.
@@ -406,6 +406,17 @@
 //! // ...but the key hasn't changed. b is still "baz", not "xyz".
 //! assert_eq!(map.keys().next().unwrap().b, "baz");
 //! ```
+//!
+//! [`BTreeMap`]: ../../../std/collections/btree_map/struct.BTreeMap.html
+//! [`BTreeSet`]: ../../../std/collections/struct.BTreeSet.html
+//! [`BinaryHeap`]: ../../../std/collections/binary_heap/struct.BinaryHeap.html
+//! [`HashMap`]: ../../../std/collections/struct.HashMap.html
+//! [`HashSet`]: ../../../std/collections/hash_set/struct.HashSet.html
+//! [`LinkedList`]: ../../../std/collections/linked_list/struct.LinkedList.html
+//! [`Map`]: ../../../std/iter/struct.Map.html
+//! [`Vec`]: ../../../std/vec/struct.Vec.html
+//! [`VecDeque`]: ../../../std/collections/vec_deque/struct.VecDeque.html
+//! [`remove`]: ../../../libc/fn.remove.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 

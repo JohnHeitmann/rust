@@ -299,14 +299,16 @@ impl AsciiExt for char {
 }
 
 /// An iterator over the escaped version of a byte, constructed via
-/// `std::ascii::escape_default`.
+/// [`std::ascii::escape_default`].
+///
+/// [`std::ascii::escape_default`]: ../../std/ascii/fn.escape_default.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct EscapeDefault {
     range: Range<usize>,
     data: [u8; 4],
 }
 
-/// Returns an iterator that produces an escaped version of a `u8`.
+/// Returns an iterator that produces an escaped version of a [`u8`].
 ///
 /// The default is chosen with a bias toward producing literals that are
 /// legal in a variety of languages, including C++11 and similar C-family
@@ -331,6 +333,8 @@ pub struct EscapeDefault {
 /// assert_eq!(b'\\', escaped.next().unwrap());
 /// assert_eq!(b't', escaped.next().unwrap());
 /// ```
+///
+/// [`u8`]: ../../std/primitive.u8.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn escape_default(c: u8) -> EscapeDefault {
     let (data, len) = match c {

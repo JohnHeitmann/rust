@@ -8,7 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Extensions to `std::thread` for Windows.
+//! Extensions to [`std::thread`] for Windows.
+//!
+//! [`std::thread`]: ../../../../../std/thread/index.html
 
 #![stable(feature = "thread_extensions", since = "1.9.0")]
 

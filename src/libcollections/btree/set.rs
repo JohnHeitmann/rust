@@ -45,7 +45,7 @@ use Bound;
 /// use std::collections::BTreeSet;
 ///
 /// // Type inference lets us omit an explicit type signature (which
-/// // would be `BTreeSet<&str>` in this example).
+/// // would be [`BTreeSet<&str>`] in this example).
 /// let mut books = BTreeSet::new();
 ///
 /// // Add some books.
@@ -68,6 +68,8 @@ use Bound;
 ///     println!("{}", book);
 /// }
 /// ```
+///
+/// [`BTreeSet<&str>`]: /std/collections/btree_set/struct.BTreeSet.html
 #[derive(Clone, Hash, PartialEq, Eq, Ord, PartialOrd)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct BTreeSet<T> {

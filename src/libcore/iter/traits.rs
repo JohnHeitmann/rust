@@ -13,13 +13,13 @@ use marker::Sized;
 
 use super::Iterator;
 
-/// Conversion from an `Iterator`.
+/// Conversion from an [`Iterator`].
 ///
-/// By implementing `FromIterator` for a type, you define how it will be
+/// By implementing [`FromIterator`] for a type, you define how it will be
 /// created from an iterator. This is common for types which describe a
 /// collection of some kind.
 ///
-/// `FromIterator`'s [`from_iter()`] is rarely called explicitly, and is instead
+/// [`FromIterator`]'s [`from_iter()`] is rarely called explicitly, and is instead
 /// used through [`Iterator`]'s [`collect()`] method. See [`collect()`]'s
 /// documentation for more examples.
 ///
@@ -55,7 +55,7 @@ use super::Iterator;
 /// assert_eq!(v, vec![5, 5, 5, 5, 5]);
 /// ```
 ///
-/// Implementing `FromIterator` for your type:
+/// Implementing [`FromIterator`] for your type:
 ///
 /// ```
 /// use std::iter::FromIterator;
@@ -104,6 +104,9 @@ use super::Iterator;
 ///
 /// assert_eq!(c.0, vec![0, 1, 2, 3, 4]);
 /// ```
+///
+/// [`FromIterator`]: ../../../std/iter/trait.FromIterator.html
+/// [`Iterator`]: ../../../std/iter/trait.Iterator.html
 #[stable(feature = "rust1", since = "1.0.0")]
 #[rustc_on_unimplemented="a collection of type `{Self}` cannot be \
                           built from an iterator over elements of type `{A}`"]
@@ -131,13 +134,13 @@ pub trait FromIterator<A>: Sized {
     fn from_iter<T: IntoIterator<Item=A>>(iter: T) -> Self;
 }
 
-/// Conversion into an `Iterator`.
+/// Conversion into an [`Iterator`].
 ///
-/// By implementing `IntoIterator` for a type, you define how it will be
+/// By implementing [`IntoIterator`] for a type, you define how it will be
 /// converted to an iterator. This is common for types which describe a
 /// collection of some kind.
 ///
-/// One benefit of implementing `IntoIterator` is that your type will [work
+/// One benefit of implementing [`IntoIterator`] is that your type will [work
 /// with Rust's `for` loop syntax](index.html#for-loops-and-intoiterator).
 ///
 /// See also: [`FromIterator`].
@@ -166,7 +169,7 @@ pub trait FromIterator<A>: Sized {
 /// assert_eq!(None, n);
 /// ```
 ///
-/// Implementing `IntoIterator` for your type:
+/// Implementing [`IntoIterator`] for your type:
 ///
 /// ```
 /// // A sample collection, that's just a wrapper over Vec<T>
@@ -208,6 +211,9 @@ pub trait FromIterator<A>: Sized {
 ///     assert_eq!(i as i32, n);
 /// }
 /// ```
+///
+/// [`IntoIterator`]: ../../../std/iter/trait.IntoIterator.html
+/// [`Iterator`]: ../../../std/iter/trait.Iterator.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait IntoIterator {
     /// The type of the elements being iterated over.
@@ -262,7 +268,7 @@ impl<I: Iterator> IntoIterator for I {
 /// Extend a collection with the contents of an iterator.
 ///
 /// Iterators produce a series of values, and collections can also be thought
-/// of as a series of values. The `Extend` trait bridges this gap, allowing you
+/// of as a series of values. The [`Extend`] trait bridges this gap, allowing you
 /// to extend a collection by including the contents of that iterator.
 ///
 /// # Examples
@@ -278,7 +284,7 @@ impl<I: Iterator> IntoIterator for I {
 /// assert_eq!("abc", &message[29..32]);
 /// ```
 ///
-/// Implementing `Extend`:
+/// Implementing [`Extend`]:
 ///
 /// ```
 /// // A sample collection, that's just a wrapper over Vec<T>
@@ -325,6 +331,8 @@ impl<I: Iterator> IntoIterator for I {
 /// // we've added these elements onto the end
 /// assert_eq!("MyCollection([5, 6, 7, 1, 2, 3])", format!("{:?}", c));
 /// ```
+///
+/// [`Extend`]: ../../../std/iter/trait.Extend.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Extend<A> {
     /// Extends a collection with the contents of an iterator.
@@ -352,7 +360,7 @@ pub trait Extend<A> {
 
 /// An iterator able to yield elements from both ends.
 ///
-/// Something that implements `DoubleEndedIterator` has one extra capability
+/// Something that implements [`DoubleEndedIterator`] has one extra capability
 /// over something that implements [`Iterator`]: the ability to also take
 /// `Item`s from the back, as well as the front.
 ///
@@ -360,7 +368,7 @@ pub trait Extend<A> {
 /// and do not cross: iteration is over when they meet in the middle.
 ///
 /// In a similar fashion to the [`Iterator`] protocol, once a
-/// `DoubleEndedIterator` returns `None` from a `next_back()`, calling it again
+/// [`DoubleEndedIterator`] returns `None` from a `next_back()`, calling it again
 /// may or may not ever return `Some` again. `next()` and `next_back()` are
 /// interchangable for this purpose.
 ///
@@ -381,6 +389,8 @@ pub trait Extend<A> {
 /// assert_eq!(None, iter.next());
 /// assert_eq!(None, iter.next_back());
 /// ```
+///
+/// [`DoubleEndedIterator`]: ../../../std/iter/trait.DoubleEndedIterator.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait DoubleEndedIterator: Iterator {
     /// An iterator able to yield elements from both ends.
@@ -421,7 +431,7 @@ impl<'a, I: DoubleEndedIterator + ?Sized> DoubleEndedIterator for &'a mut I {
 /// that information can be useful. For example, if you want to iterate
 /// backwards, a good start is to know where the end is.
 ///
-/// When implementing an `ExactSizeIterator`, You must also implement
+/// When implementing an [`ExactSizeIterator`], You must also implement
 /// [`Iterator`]. When doing so, the implementation of [`size_hint()`] *must*
 /// return the exact size of the iterator.
 ///
@@ -446,7 +456,7 @@ impl<'a, I: DoubleEndedIterator + ?Sized> DoubleEndedIterator for &'a mut I {
 /// ```
 ///
 /// In the [module level docs][moddocs], we implemented an [`Iterator`],
-/// `Counter`. Let's implement `ExactSizeIterator` for it as well:
+/// `Counter`. Let's implement [`ExactSizeIterator`] for it as well:
 ///
 /// [moddocs]: index.html
 ///
@@ -483,6 +493,8 @@ impl<'a, I: DoubleEndedIterator + ?Sized> DoubleEndedIterator for &'a mut I {
 ///
 /// assert_eq!(0, counter.len());
 /// ```
+///
+/// [`ExactSizeIterator`]: ../../../std/iter/trait.ExactSizeIterator.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait ExactSizeIterator: Iterator {
     #[inline]

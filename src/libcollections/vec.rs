@@ -9,14 +9,14 @@
 // except according to those terms.
 
 //! A contiguous growable array type with heap-allocated contents, written
-//! `Vec<T>` but pronounced 'vector.'
+//! [`Vec<T>`] but pronounced 'vector.'
 //!
 //! Vectors have `O(1)` indexing, amortized `O(1)` push (to the end) and
 //! `O(1)` pop (from the end).
 //!
 //! # Examples
 //!
-//! You can explicitly create a `Vec<T>` with `new()`:
+//! You can explicitly create a [`Vec<T>`] with `new()`:
 //!
 //! ```
 //! let v: Vec<i32> = Vec::new();
@@ -49,13 +49,17 @@
 //! let two = v.pop();
 //! ```
 //!
-//! Vectors also support indexing (through the `Index` and `IndexMut` traits):
+//! Vectors also support indexing (through the [`Index`] and [`IndexMut`] traits):
 //!
 //! ```
 //! let mut v = vec![1, 2, 3];
 //! let three = v[2];
 //! v[1] = v[1] + 5;
 //! ```
+//!
+//! [`Index`]: /std/ops/trait.Index.html
+//! [`IndexMut`]: /std/ops/trait.IndexMut.html
+//! [`Vec<T>`]: /std/vec/struct.Vec.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -78,7 +82,7 @@ use core::slice;
 use super::SpecExtend;
 use super::range::RangeArgument;
 
-/// A contiguous growable array type, written `Vec<T>` but pronounced 'vector.'
+/// A contiguous growable array type, written [`Vec<T>`] but pronounced 'vector.'
 ///
 /// # Examples
 ///
@@ -112,14 +116,14 @@ use super::range::RangeArgument;
 /// assert_eq!(vec, [1, 2, 3, 4]);
 /// ```
 ///
-/// It can also initialize each element of a `Vec<T>` with a given value:
+/// It can also initialize each element of a [`Vec<T>`] with a given value:
 ///
 /// ```
 /// let vec = vec![0; 5];
 /// assert_eq!(vec, [0, 0, 0, 0, 0]);
 /// ```
 ///
-/// Use a `Vec<T>` as an efficient stack:
+/// Use a [`Vec<T>`] as an efficient stack:
 ///
 /// ```
 /// let mut stack = Vec::new();
@@ -137,7 +141,7 @@ use super::range::RangeArgument;
 /// # Indexing
 ///
 /// The Vec type allows to access values by index, because it implements the
-/// `Index` trait. An example will be more explicit:
+/// [`Index`] trait. An example will be more explicit:
 ///
 /// ```
 /// let v = vec!(0, 2, 4, 6);
@@ -198,7 +202,7 @@ use super::range::RangeArgument;
 /// Due to its incredibly fundamental nature, Vec makes a lot of guarantees
 /// about its design. This ensures that it's as low-overhead as possible in
 /// the general case, and can be correctly manipulated in primitive ways
-/// by unsafe code. Note that these guarantees refer to an unqualified `Vec<T>`.
+/// by unsafe code. Note that these guarantees refer to an unqualified [`Vec<T>`].
 /// If additional type parameters are added (e.g. to support custom allocators),
 /// overriding their defaults may change the behavior.
 ///
@@ -252,8 +256,8 @@ use super::range::RangeArgument;
 ///
 /// `vec![x; n]`, `vec![a, b, c, d]`, and `Vec::with_capacity(n)`, will all
 /// produce a Vec with exactly the requested capacity. If `len() == capacity()`,
-/// (as is the case for the `vec!` macro), then a `Vec<T>` can be converted
-/// to and from a `Box<[T]>` without reallocating or moving the elements.
+/// (as is the case for the `vec!` macro), then a [`Vec<T>`] can be converted
+/// to and from a [`Box<[T]>`] without reallocating or moving the elements.
 ///
 /// Vec will not specifically overwrite any data that is removed from it,
 /// but also won't specifically preserve it. Its uninitialized memory is
@@ -267,6 +271,10 @@ use super::range::RangeArgument;
 /// Vec does not currently guarantee the order in which elements are dropped
 /// (the order has changed in the past, and may change again).
 ///
+///
+/// [`Box<[T]>`]: /collections/boxed/struct.Box.html
+/// [`Index`]: /std/ops/trait.Index.html
+/// [`Vec<T>`]: /std/vec/struct.Vec.html
 #[unsafe_no_drop_flag]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct Vec<T> {
@@ -1709,7 +1717,9 @@ impl<T> Drop for IntoIter<T> {
     }
 }
 
-/// A draining iterator for `Vec<T>`.
+/// A draining iterator for [`Vec<T>`].
+///
+/// [`Vec<T>`]: /std/vec/struct.Vec.html
 #[stable(feature = "drain", since = "1.6.0")]
 pub struct Drain<'a, T: 'a> {
     /// Index of tail to preserve

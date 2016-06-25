@@ -17,10 +17,10 @@
 //! primitives](#primitives), [standard macros](#macros), [I/O] and
 //! [multithreading], among [many other things][other].
 //!
-//! `std` is available to all Rust crates by default, just as if each one
+//! [`std`] is available to all Rust crates by default, just as if each one
 //! contained an `extern crate std;` import at the [crate root]. Therefore the
 //! standard library can be accessed in [`use`] statements through the path
-//! `std`, as in [`use std::env`], or in expressions through the absolute path
+//! [`std`], as in [`use std::env`], or in expressions through the absolute path
 //! `::std`, as in [`::std::env::args()`].
 //!
 //! # How to read this documentation
@@ -197,6 +197,8 @@
 //! [multithreading]: thread/index.html
 //! [other]: #what-is-in-the-standard-library-documentation
 //! [primitive types]: ../book/primitive-types.html
+//!
+//! [`std`]: ../../std/index.html
 
 #![crate_name = "std"]
 #![stable(feature = "rust1", since = "1.0.0")]

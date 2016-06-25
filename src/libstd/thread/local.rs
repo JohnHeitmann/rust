@@ -18,7 +18,7 @@ use mem;
 /// A thread local storage key which owns its contents.
 ///
 /// This key uses the fastest possible implementation available to it for the
-/// target platform. It is instantiated with the `thread_local!` macro and the
+/// target platform. It is instantiated with the [`thread_local!`] macro and the
 /// primary method is the `with` method.
 ///
 /// The `with` method yields a reference to the contained value which cannot be
@@ -76,6 +76,8 @@ use mem;
 /// 3. On OSX, initializing TLS during destruction of other TLS slots can
 ///    sometimes cancel *all* destructors for the current thread, whether or not
 ///    the slots have already had their destructors run or not.
+///
+/// [`thread_local!`]: ../../../std/macro.thread_local!.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct LocalKey<T: 'static> {
     // This outer `LocalKey<T>` type is what's going to be stored in statics,
@@ -98,7 +100,7 @@ pub struct LocalKey<T: 'static> {
     init: fn() -> T,
 }
 
-/// Declare a new thread local storage key of type `std::thread::LocalKey`.
+/// Declare a new thread local storage key of type [`std::thread::LocalKey`].
 ///
 /// # Syntax
 ///
@@ -118,6 +120,8 @@ pub struct LocalKey<T: 'static> {
 ///
 /// See [LocalKey documentation](thread/struct.LocalKey.html) for more
 /// information.
+///
+/// [`std::thread::LocalKey`]: ../../../std/thread/struct.LocalKey.html
 #[macro_export]
 #[stable(feature = "rust1", since = "1.0.0")]
 #[allow_internal_unstable]

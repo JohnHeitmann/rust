@@ -13,7 +13,7 @@
 
 
 
-/// A safe interface to `memchr`.
+/// A safe interface to [`memchr`].
 ///
 /// Returns the index corresponding to the first occurrence of `needle` in
 /// `haystack`, or `None` if one is not found.
@@ -32,6 +32,8 @@
 /// let haystack = b"the quick brown fox";
 /// assert_eq!(memchr(b'k', haystack), Some(8));
 /// ```
+///
+/// [`memchr`]: ../../libc/fn.memchr.html
 pub fn memchr(needle: u8, haystack: &[u8]) -> Option<usize> {
     // libc memchr
     #[cfg(not(target_os = "windows"))]

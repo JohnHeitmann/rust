@@ -104,7 +104,7 @@
 //!     }
 //! }
 //!
-//! // Then, we implement `Iterator` for our `Counter`:
+//! // Then, we implement [`Iterator`] for our `Counter`:
 //!
 //! impl Iterator for Counter {
 //!     // we will be counting with usize
@@ -296,6 +296,7 @@
 //! This will print the numbers `0` through `4`, each on their own line.
 //!
 //! [`take()`]: trait.Iterator.html#method.take
+//! [`Iterator`]: ../../../std/iter/trait.Iterator.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 

@@ -34,7 +34,7 @@ pub use self::duration::Duration;
 mod duration;
 
 /// A measurement of a monotonically increasing clock.
-///  Opaque and useful only with `Duration`.
+///  Opaque and useful only with [`Duration`].
 ///
 /// Instants are always guaranteed to be greater than any previously measured
 /// instant when created, and are often useful for tasks such as measuring
@@ -66,6 +66,8 @@ mod duration;
 ///    println!("{}", now.elapsed().as_secs());
 /// }
 /// ```
+///
+/// [`Duration`]: ../../../std/time/struct.Duration.html
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[stable(feature = "time2", since = "1.8.0")]
 pub struct Instant(time::Instant);
@@ -73,21 +75,21 @@ pub struct Instant(time::Instant);
 /// A measurement of the system clock, useful for talking to
 /// external entities like the file system or other processes.
 ///
-/// Distinct from the `Instant` type, this time measurement **is not
+/// Distinct from the [`Instant`] type, this time measurement **is not
 /// monotonic**. This means that you can save a file to the file system, then
 /// save another file to the file system, **and the second file has a
-/// `SystemTime` measurement earlier than the first**. In other words, an
+/// [`SystemTime`] measurement earlier than the first**. In other words, an
 /// operation that happens after another operation in real time may have an
-/// earlier `SystemTime`!
+/// earlier [`SystemTime`]!
 ///
-/// Consequently, comparing two `SystemTime` instances to learn about the
-/// duration between them returns a `Result` instead of an infallible `Duration`
+/// Consequently, comparing two [`SystemTime`] instances to learn about the
+/// duration between them returns a `Result` instead of an infallible [`Duration`]
 /// to indicate that this sort of time drift may happen and needs to be handled.
 ///
-/// Although a `SystemTime` cannot be directly inspected, the `UNIX_EPOCH`
+/// Although a [`SystemTime`] cannot be directly inspected, the [`UNIX_EPOCH`]
 /// constant is provided in this module as an anchor in time to learn
-/// information about a `SystemTime`. By calculating the duration from this
-/// fixed point in time, a `SystemTime` can be converted to a human-readable time,
+/// information about a [`SystemTime`]. By calculating the duration from this
+/// fixed point in time, a [`SystemTime`] can be converted to a human-readable time,
 /// or perhaps some other string representation.
 ///
 /// Example:
@@ -113,12 +115,19 @@ pub struct Instant(time::Instant);
 ///    }
 /// }
 /// ```
+///
+/// [`Duration`]: ../../../std/time/struct.Duration.html
+/// [`Instant`]: ../../../std/time/struct.Instant.html
+/// [`SystemTime`]: ../../../std/time/struct.SystemTime.html
+/// [`UNIX_EPOCH`]: ../../../std/time/constant.UNIX_EPOCH.html
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[stable(feature = "time2", since = "1.8.0")]
 pub struct SystemTime(time::SystemTime);
 
-/// An error returned from the `duration_since` method on `SystemTime`,
+/// An error returned from the `duration_since` method on [`SystemTime`],
 /// used to learn about why how far in the opposite direction a timestamp lies.
+///
+/// [`SystemTime`]: ../../../std/time/struct.SystemTime.html
 #[derive(Clone, Debug)]
 #[stable(feature = "time2", since = "1.8.0")]
 pub struct SystemTimeError(Duration);
@@ -283,14 +292,16 @@ impl fmt::Debug for SystemTime {
     }
 }
 
-/// An anchor in time which can be used to create new `SystemTime` instances or
-/// learn about where in time a `SystemTime` lies.
+/// An anchor in time which can be used to create new [`SystemTime`] instances or
+/// learn about where in time a [`SystemTime`] lies.
 ///
 /// This constant is defined to be "1970-01-01 00:00:00 UTC" on all systems with
 /// respect to the system clock. Using `duration_since` on an existing
-/// `SystemTime` instance can tell how far away from this point in time a
+/// [`SystemTime`] instance can tell how far away from this point in time a
 /// measurement lies, and using `UNIX_EPOCH + duration` can be used to create a
-/// `SystemTime` instance to represent another fixed point in time.
+/// [`SystemTime`] instance to represent another fixed point in time.
+///
+/// [`SystemTime`]: ../../../std/time/struct.SystemTime.html
 #[stable(feature = "time2", since = "1.8.0")]
 pub const UNIX_EPOCH: SystemTime = SystemTime(time::UNIX_EPOCH);
 

@@ -10,8 +10,10 @@
 
 //! A private parser implementation of IPv4, IPv6, and socket addresses.
 //!
-//! This module is "publicly exported" through the `FromStr` implementations
+//! This module is "publicly exported" through the [`FromStr`] implementations
 //! below.
+//!
+//! [`FromStr`]: ../../../std/str/trait.FromStr.html
 
 use prelude::v1::*;
 

@@ -18,25 +18,36 @@
 //! support arguments of multiple types.
 //!
 //! - Impl the `As*` traits for reference-to-reference conversions
-//! - Impl the `Into` trait when you want to consume the value in the conversion
-//! - The `From` trait is the most flexible, useful for value _and_ reference conversions
-//! - The `TryFrom` and `TryInto` traits behave like `From` and `Into`, but allow for the
+//! - Impl the [`Into`] trait when you want to consume the value in the conversion
+//! - The [`From`] trait is the most flexible, useful for value _and_ reference conversions
+//! - The [`TryFrom`] and [`TryInto`] traits behave like [`From`] and [`Into`], but allow for the
 //!   conversion to fail
 //!
-//! As a library author, you should prefer implementing `From<T>` or `TryFrom<T>` rather than
-//! `Into<U>` or `TryInto<U>`, as `From` and `TryFrom` provide greater flexibility and offer
-//! equivalent `Into` or `TryInto` implementations for free, thanks to a blanket implementation
+//! As a library author, you should prefer implementing [`From<T>`] or [`TryFrom<T>`] rather than
+//! [`Into<U>`] or [`TryInto<U>`], as [`From`] and [`TryFrom`] provide greater flexibility and offer
+//! equivalent [`Into`] or [`TryInto`] implementations for free, thanks to a blanket implementation
 //! in the standard library.
 //!
 //! # Generic impl
 //!
-//! - `AsRef` and `AsMut` auto-dereference if the inner type is a reference
+//! - [`AsRef`] and [`AsMut`] auto-dereference if the inner type is a reference
 //! - `From<U> for T` implies `Into<T> for U`
 //! - `TryFrom<U> for T` implies `TryInto<T> for U`
-//! - `From` and `Into` are reflexive, which means that all types can `into()`
+//! - [`From`] and [`Into`] are reflexive, which means that all types can `into()`
 //!   themselves and `from()` themselves
 //!
 //! See each trait for usage examples.
+//!
+//! [`AsMut`]: ../../std/convert/trait.AsMut.html
+//! [`AsRef`]: ../../std/convert/trait.AsRef.html
+//! [`From`]: ../../std/convert/trait.From.html
+//! [`From<T>`]: ../../std/convert/trait.From.html
+//! [`Into`]: ../../std/convert/trait.Into.html
+//! [`Into<U>`]: ../../std/convert/trait.Into.html
+//! [`TryFrom`]: ../../std/convert/trait.TryFrom.html
+//! [`TryFrom<T>`]: ../../std/convert/trait.TryFrom.html
+//! [`TryInto`]: ../../std/convert/trait.TryInto.html
+//! [`TryInto<U>`]: ../../std/convert/trait.TryInto.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -45,17 +56,17 @@ use result::Result;
 
 /// A cheap, reference-to-reference conversion.
 ///
-/// `AsRef` is very similar to, but different than, `Borrow`. See
+/// [`AsRef`] is very similar to, but different than, [`Borrow`]. See
 /// [the book][book] for more.
 ///
 /// [book]: ../../book/borrow-and-asref.html
 ///
 /// **Note: this trait must not fail**. If the conversion can fail, use a dedicated method which
-/// returns an `Option<T>` or a `Result<T, E>`.
+/// returns an [`Option<T>`] or a `Result<T, E>`.
 ///
 /// # Examples
 ///
-/// Both `String` and `&str` implement `AsRef<str>`:
+/// Both [`String`] and `&str` implement [`AsRef<str>`]:
 ///
 /// ```
 /// fn is_hello<T: AsRef<str>>(s: T) {
@@ -71,9 +82,15 @@ use result::Result;
 ///
 /// # Generic Impls
 ///
-/// - `AsRef` auto-dereference if the inner type is a reference or a mutable
+/// - [`AsRef`] auto-dereference if the inner type is a reference or a mutable
 /// reference (eg: `foo.as_ref()` will work the same if `foo` has type `&mut Foo` or `&&mut Foo`)
 ///
+///
+/// [`AsRef`]: ../../std/convert/trait.AsRef.html
+/// [`AsRef<str>`]: ../../std/convert/trait.AsRef.html
+/// [`Borrow`]: ../../collections/borrow/trait.Borrow.html
+/// [`Option<T>`]: ../../std/option/enum.Option.html
+/// [`String`]: ../../std/string/struct.String.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait AsRef<T: ?Sized> {
     /// Performs the conversion.
@@ -84,13 +101,16 @@ pub trait AsRef<T: ?Sized> {
 /// A cheap, mutable reference-to-mutable reference conversion.
 ///
 /// **Note: this trait must not fail**. If the conversion can fail, use a dedicated method which
-/// returns an `Option<T>` or a `Result<T, E>`.
+/// returns an [`Option<T>`] or a `Result<T, E>`.
 ///
 /// # Generic Impls
 ///
-/// - `AsMut` auto-dereference if the inner type is a reference or a mutable
+/// - [`AsMut`] auto-dereference if the inner type is a reference or a mutable
 /// reference (eg: `foo.as_ref()` will work the same if `foo` has type `&mut Foo` or `&&mut Foo`)
 ///
+///
+/// [`AsMut`]: ../../std/convert/trait.AsMut.html
+/// [`Option<T>`]: ../../std/option/enum.Option.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait AsMut<T: ?Sized> {
     /// Performs the conversion.
@@ -100,16 +120,16 @@ pub trait AsMut<T: ?Sized> {
 
 /// A conversion that consumes `self`, which may or may not be expensive.
 ///
-/// **Note: this trait must not fail**. If the conversion can fail, use `TryInto` or a dedicated
-/// method which returns an `Option<T>` or a `Result<T, E>`.
+/// **Note: this trait must not fail**. If the conversion can fail, use [`TryInto`] or a dedicated
+/// method which returns an [`Option<T>`] or a `Result<T, E>`.
 ///
 /// Library authors should not directly implement this trait, but should prefer implementing
-/// the `From` trait, which offers greater flexibility and provides an equivalent `Into`
+/// the [`From`] trait, which offers greater flexibility and provides an equivalent [`Into`]
 /// implementation for free, thanks to a blanket implementation in the standard library.
 ///
 /// # Examples
 ///
-/// `String` implements `Into<Vec<u8>>`:
+/// [`String`] implements [`Into<Vec<u8>>`]:
 ///
 /// ```
 /// fn is_hello<T: Into<Vec<u8>>>(s: T) {
@@ -126,6 +146,13 @@ pub trait AsMut<T: ?Sized> {
 /// - `From<T> for U` implies `Into<U> for T`
 /// - `into()` is reflexive, which means that `Into<T> for T` is implemented
 ///
+///
+/// [`From`]: ../../std/convert/trait.From.html
+/// [`Into`]: ../../std/convert/trait.Into.html
+/// [`Into<Vec<u8>>`]: ../../std/convert/trait.Into.html
+/// [`Option<T>`]: ../../std/option/enum.Option.html
+/// [`String`]: ../../std/string/struct.String.html
+/// [`TryInto`]: ../../std/convert/trait.TryInto.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Into<T>: Sized {
     /// Performs the conversion.
@@ -135,12 +162,12 @@ pub trait Into<T>: Sized {
 
 /// Construct `Self` via a conversion.
 ///
-/// **Note: this trait must not fail**. If the conversion can fail, use `TryFrom` or a dedicated
-/// method which returns an `Option<T>` or a `Result<T, E>`.
+/// **Note: this trait must not fail**. If the conversion can fail, use [`TryFrom`] or a dedicated
+/// method which returns an [`Option<T>`] or a `Result<T, E>`.
 ///
 /// # Examples
 ///
-/// `String` implements `From<&str>`:
+/// [`String`] implements [`From<&str>`]:
 ///
 /// ```
 /// let string = "hello".to_string();
@@ -153,6 +180,11 @@ pub trait Into<T>: Sized {
 /// - `From<T> for U` implies `Into<U> for T`
 /// - `from()` is reflexive, which means that `From<T> for T` is implemented
 ///
+///
+/// [`From<&str>`]: ../../std/convert/trait.From.html
+/// [`Option<T>`]: ../../std/option/enum.Option.html
+/// [`String`]: ../../std/string/struct.String.html
+/// [`TryFrom`]: ../../std/convert/trait.TryFrom.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait From<T>: Sized {
     /// Performs the conversion.
@@ -163,8 +195,11 @@ pub trait From<T>: Sized {
 /// An attempted conversion that consumes `self`, which may or may not be expensive.
 ///
 /// Library authors should not directly implement this trait, but should prefer implementing
-/// the `TryFrom` trait, which offers greater flexibility and provides an equivalent `TryInto`
+/// the [`TryFrom`] trait, which offers greater flexibility and provides an equivalent [`TryInto`]
 /// implementation for free, thanks to a blanket implementation in the standard library.
+///
+/// [`TryFrom`]: ../../std/convert/trait.TryFrom.html
+/// [`TryInto`]: ../../std/convert/trait.TryInto.html
 #[unstable(feature = "try_from", issue = "33417")]
 pub trait TryInto<T>: Sized {
     /// The type returned in the event of a conversion error.

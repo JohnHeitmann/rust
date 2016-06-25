@@ -20,7 +20,7 @@ use sys;
 /// A specialized [`Result`](../result/enum.Result.html) type for I/O
 /// operations.
 ///
-/// This type is broadly used across `std::io` for any operation which may
+/// This type is broadly used across [`std::io`] for any operation which may
 /// produce an error.
 ///
 /// This typedef is generally used to avoid writing out `io::Error` directly and
@@ -28,9 +28,9 @@ use sys;
 ///
 /// While usual Rust style is to import types directly, aliases of `Result`
 /// often are not, to make it easier to distinguish between them. `Result` is
-/// generally assumed to be `std::result::Result`, and so users of this alias
+/// generally assumed to be [`std::result::Result`], and so users of this alias
 /// will generally use `io::Result` instead of shadowing the prelude's import
-/// of `std::result::Result`.
+/// of [`std::result::Result`].
 ///
 /// # Examples
 ///
@@ -47,15 +47,22 @@ use sys;
 ///     Ok(buffer)
 /// }
 /// ```
+///
+/// [`std::io`]: ../../../std/io/index.html
+/// [`std::result::Result`]: ../../../std/result/enum.Result.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub type Result<T> = result::Result<T, Error>;
 
-/// The error type for I/O operations of the `Read`, `Write`, `Seek`, and
+/// The error type for I/O operations of the [`Read`], `Write`, [`Seek`], and
 /// associated traits.
 ///
 /// Errors mostly originate from the underlying OS, but custom instances of
 /// `Error` can be created with crafted error messages and a particular value of
-/// `ErrorKind`.
+/// [`ErrorKind`].
+///
+/// [`ErrorKind`]: ../../../std/io/enum.ErrorKind.html
+/// [`Read`]: ../../../std/io/trait.Read.html
+/// [`Seek`]: ../../../std/io/trait.Seek.html
 #[derive(Debug)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct Error {

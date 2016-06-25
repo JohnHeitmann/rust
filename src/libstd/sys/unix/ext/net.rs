@@ -515,9 +515,11 @@ impl<'a> IntoIterator for &'a UnixListener {
     }
 }
 
-/// An iterator over incoming connections to a `UnixListener`.
+/// An iterator over incoming connections to a [`UnixListener`].
 ///
 /// It will never return `None`.
+///
+/// [`UnixListener`]: ../../../../../std/os/unix/net/struct.UnixListener.html
 #[derive(Debug)]
 #[stable(feature = "unix_socket", since = "1.10.0")]
 pub struct Incoming<'a> {

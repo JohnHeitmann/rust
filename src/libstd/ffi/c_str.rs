@@ -36,11 +36,11 @@ use vec::Vec;
 /// type is a static guarantee that the underlying bytes contain no interior 0
 /// bytes and the final byte is 0.
 ///
-/// A `CString` is created from either a byte slice or a byte vector. After
-/// being created, a `CString` predominately inherits all of its methods from
-/// the `Deref` implementation to `[c_char]`. Note that the underlying array
-/// is represented as an array of `c_char` as opposed to `u8`. A `u8` slice
-/// can be obtained with the `as_bytes` method.  Slices produced from a `CString`
+/// A [`CString`] is created from either a byte slice or a byte vector. After
+/// being created, a [`CString`] predominately inherits all of its methods from
+/// the [`Deref`] implementation to `[c_char]`. Note that the underlying array
+/// is represented as an array of `c_char` as opposed to [`u8`]. A [`u8`] slice
+/// can be obtained with the `as_bytes` method.  Slices produced from a [`CString`]
 /// do *not* contain the trailing nul terminator unless otherwise specified.
 ///
 /// # Examples
@@ -63,14 +63,18 @@ use vec::Vec;
 ///
 /// # Safety
 ///
-/// `CString` is intended for working with traditional C-style strings
+/// [`CString`] is intended for working with traditional C-style strings
 /// (a sequence of non-null bytes terminated by a single null byte); the
 /// primary use case for these kinds of strings is interoperating with C-like
 /// code. Often you will need to transfer ownership to/from that external
 /// code. It is strongly recommended that you thoroughly read through the
-/// documentation of `CString` before use, as improper ownership management
-/// of `CString` instances can lead to invalid memory accesses, memory leaks,
+/// documentation of [`CString`] before use, as improper ownership management
+/// of [`CString`] instances can lead to invalid memory accesses, memory leaks,
 /// and other memory errors.
+///
+/// [`CString`]: ../../../std/ffi/struct.CString.html
+/// [`Deref`]: ../../../std/ops/trait.Deref.html
+/// [`u8`]: ../../../std/primitive.u8.html
 
 #[derive(PartialEq, PartialOrd, Eq, Ord, Hash, Clone)]
 #[stable(feature = "rust1", since = "1.0.0")]
@@ -81,7 +85,7 @@ pub struct CString {
 /// Representation of a borrowed C string.
 ///
 /// This dynamically sized type is only safely constructed via a borrowed
-/// version of an instance of `CString`. This type can be constructed from a raw
+/// version of an instance of [`CString`]. This type can be constructed from a raw
 /// C string as well and represents a C string borrowed from another location.
 ///
 /// Note that this structure is **not** `repr(C)` and is not recommended to be
@@ -125,7 +129,7 @@ pub struct CString {
 /// }
 /// ```
 ///
-/// Converting a foreign C string into a Rust `String`
+/// Converting a foreign C string into a Rust [`String`]
 ///
 /// ```no_run
 /// use std::ffi::CStr;
@@ -143,6 +147,9 @@ pub struct CString {
 ///     println!("string: {}", my_string_safe());
 /// }
 /// ```
+///
+/// [`CString`]: ../../../std/ffi/struct.CString.html
+/// [`String`]: ../../../std/string/struct.String.html
 #[derive(Hash)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct CStr {

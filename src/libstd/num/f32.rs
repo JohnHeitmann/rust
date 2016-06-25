@@ -10,7 +10,9 @@
 
 //! The 32-bit floating point type.
 //!
-//! *[See also the `f32` primitive type](../primitive.f32.html).*
+//! *[See also the [`f32`] primitive type](../primitive.f32.html).*
+//!
+//! [`f32`]: ../../../std/primitive.f32.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 #![allow(missing_docs)]

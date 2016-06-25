@@ -44,13 +44,13 @@
 //! There are several implementations of common traits for slices. Some examples
 //! include:
 //!
-//! * `Clone`
-//! * `Eq`, `Ord` - for slices whose element type are `Eq` or `Ord`.
-//! * `Hash` - for slices whose element type is `Hash`
+//! * [`Clone`]
+//! * [`Eq`], [`Ord`] - for slices whose element type are [`Eq`] or [`Ord`].
+//! * [`Hash`] - for slices whose element type is [`Hash`]
 //!
 //! ## Iteration
 //!
-//! The slices implement `IntoIterator`. The iterator yields references to the
+//! The slices implement [`IntoIterator`]. The iterator yields references to the
 //! slice elements.
 //!
 //! ```
@@ -70,7 +70,7 @@
 //! ```
 //!
 //! This iterator yields mutable references to the slice's elements, so while
-//! the element type of the slice is `i32`, the element type of the iterator is
+//! the element type of the slice is [`i32`], the element type of the iterator is
 //! `&mut i32`.
 //!
 //! * `.iter()` and `.iter_mut()` are the explicit methods to return the default
@@ -79,6 +79,13 @@
 //!   `.chunks()`, `.windows()` and more.
 //!
 //! *[See also the slice primitive type](../../std/primitive.slice.html).*
+//!
+//! [`Clone`]: /std/clone/trait.Clone.html
+//! [`Eq`]: /std/cmp/trait.Eq.html
+//! [`Hash`]: /std/hash/trait.Hash.html
+//! [`IntoIterator`]: /std/iter/trait.IntoIterator.html
+//! [`Ord`]: /std/cmp/trait.Ord.html
+//! [`i32`]: /std/primitive.i32.html
 #![stable(feature = "rust1", since = "1.0.0")]
 
 // Many of the usings in this module are only used in the test configuration.

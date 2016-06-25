@@ -75,10 +75,12 @@ macro_rules! u8to64_le {
 }
 
 /// Load a full u64 word from a byte stream, in LE order. Use
-/// `copy_nonoverlapping` to let the compiler generate the most efficient way
+/// [`copy_nonoverlapping`] to let the compiler generate the most efficient way
 /// to load u64 from a possibly unaligned address.
 ///
 /// Unsafe because: unchecked indexing at i..i+8
+///
+/// [`copy_nonoverlapping`]: ../../../std/intrinsics/fn.copy_nonoverlapping.html
 #[inline]
 unsafe fn load_u64_le(buf: &[u8], i: usize) -> u64 {
     debug_assert!(i + 8 <= buf.len());

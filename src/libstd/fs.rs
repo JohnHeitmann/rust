@@ -28,8 +28,8 @@ use time::SystemTime;
 
 /// A reference to an open file on the filesystem.
 ///
-/// An instance of a `File` can be read and/or written depending on what options
-/// it was opened with. Files also implement `Seek` to alter the logical cursor
+/// An instance of a [`File`] can be read and/or written depending on what options
+/// it was opened with. Files also implement [`Seek`] to alter the logical cursor
 /// that the file contains internally.
 ///
 /// Files are automatically closed when they go out of scope.
@@ -51,6 +51,9 @@ use time::SystemTime;
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`File`]: ../../std/fs/struct.File.html
+/// [`Seek`]: ../../std/io/trait.Seek.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct File {
     inner: fs_imp::File,
@@ -58,17 +61,19 @@ pub struct File {
 
 /// Metadata information about a file.
 ///
-/// This structure is returned from the `metadata` function or method and
+/// This structure is returned from the [`metadata`] function or method and
 /// represents known metadata about a file such as its permissions, size,
 /// modification times, etc.
+///
+/// [`metadata`]: ../../std/fs/fn.metadata.html
 #[stable(feature = "rust1", since = "1.0.0")]
 #[derive(Clone)]
 pub struct Metadata(fs_imp::FileAttr);
 
 /// Iterator over the entries in a directory.
 ///
-/// This iterator is returned from the `read_dir` function of this module and
-/// will yield instances of `io::Result<DirEntry>`. Through a `DirEntry`
+/// This iterator is returned from the [`read_dir`] function of this module and
+/// will yield instances of `io::Result<DirEntry>`. Through a [`DirEntry`]
 /// information like the entry's path and possibly other metadata can be
 /// learned.
 ///
@@ -76,25 +81,31 @@ pub struct Metadata(fs_imp::FileAttr);
 ///
 /// This `io::Result` will be an `Err` if there's some sort of intermittent
 /// IO error during iteration.
+///
+/// [`DirEntry`]: ../../std/fs/struct.DirEntry.html
+/// [`read_dir`]: ../../std/fs/fn.read_dir.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct ReadDir(fs_imp::ReadDir);
 
-/// Entries returned by the `ReadDir` iterator.
+/// Entries returned by the [`ReadDir`] iterator.
 ///
-/// An instance of `DirEntry` represents an entry inside of a directory on the
+/// An instance of [`DirEntry`] represents an entry inside of a directory on the
 /// filesystem. Each entry can be inspected via methods to learn about the full
 /// path or possibly other metadata through per-platform extension traits.
+///
+/// [`DirEntry`]: ../../std/fs/struct.DirEntry.html
+/// [`ReadDir`]: ../../std/fs/struct.ReadDir.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct DirEntry(fs_imp::DirEntry);
 
 /// Options and flags which can be used to configure how a file is opened.
 ///
-/// This builder exposes the ability to configure how a `File` is opened and
+/// This builder exposes the ability to configure how a [`File`] is opened and
 /// what operations are permitted on the open file. The `File::open` and
 /// `File::create` methods are aliases for commonly used options using this
 /// builder.
 ///
-/// Generally speaking, when using `OpenOptions`, you'll first call `new()`,
+/// Generally speaking, when using [`OpenOptions`], you'll first call `new()`,
 /// then chain calls to methods to set each option, then call `open()`, passing
 /// the path of the file you're trying to open. This will give you a
 /// [`io::Result`][result] with a [`File`][file] inside that you can further
@@ -125,6 +136,9 @@ pub struct DirEntry(fs_imp::DirEntry);
 ///             .create(true)
 ///             .open("foo.txt");
 /// ```
+///
+/// [`File`]: ../../std/fs/struct.File.html
+/// [`OpenOptions`]: ../../std/fs/struct.OpenOptions.html
 #[derive(Clone)]
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct OpenOptions(fs_imp::OpenOptions);
@@ -869,7 +883,7 @@ impl AsInner<fs_imp::DirEntry> for DirEntry {
 ///
 /// # Platform-specific behavior
 ///
-/// This function currently corresponds to the `unlink` function on Unix
+/// This function currently corresponds to the [`unlink`] function on Unix
 /// and the `DeleteFile` function on Windows.
 /// Note that, this [may change in the future][changes].
 /// [changes]: ../io/index.html#platform-specific-behavior
@@ -892,6 +906,8 @@ impl AsInner<fs_imp::DirEntry> for DirEntry {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`unlink`]: ../../libc/fn.unlink.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn remove_file<P: AsRef<Path>>(path: P) -> io::Result<()> {
     fs_imp::unlink(path.as_ref())
@@ -915,7 +931,7 @@ pub fn remove_file<P: AsRef<Path>>(path: P) -> io::Result<()> {
 /// This function will return an error in the following situations, but is not
 /// limited to just these cases:
 ///
-/// * The user lacks permissions to perform `metadata` call on `path`.
+/// * The user lacks permissions to perform [`metadata`] call on `path`.
 /// * `path` does not exist.
 ///
 /// # Examples
@@ -929,6 +945,8 @@ pub fn remove_file<P: AsRef<Path>>(path: P) -> io::Result<()> {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`metadata`]: ../../std/fs/fn.metadata.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn metadata<P: AsRef<Path>>(path: P) -> io::Result<Metadata> {
     fs_imp::stat(path.as_ref()).map(Metadata)
@@ -938,7 +956,7 @@ pub fn metadata<P: AsRef<Path>>(path: P) -> io::Result<Metadata> {
 ///
 /// # Platform-specific behavior
 ///
-/// This function currently corresponds to the `lstat` function on Unix
+/// This function currently corresponds to the [`lstat`] function on Unix
 /// and the `GetFileAttributesEx` function on Windows.
 /// Note that, this [may change in the future][changes].
 /// [changes]: ../io/index.html#platform-specific-behavior
@@ -948,7 +966,7 @@ pub fn metadata<P: AsRef<Path>>(path: P) -> io::Result<Metadata> {
 /// This function will return an error in the following situations, but is not
 /// limited to just these cases:
 ///
-/// * The user lacks permissions to perform `metadata` call on `path`.
+/// * The user lacks permissions to perform [`metadata`] call on `path`.
 /// * `path` does not exist.
 ///
 /// # Examples
@@ -962,6 +980,9 @@ pub fn metadata<P: AsRef<Path>>(path: P) -> io::Result<Metadata> {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`lstat`]: ../../libc/fn.lstat.html
+/// [`metadata`]: ../../std/fs/fn.metadata.html
 #[stable(feature = "symlink_metadata", since = "1.1.0")]
 pub fn symlink_metadata<P: AsRef<Path>>(path: P) -> io::Result<Metadata> {
     fs_imp::lstat(path.as_ref()).map(Metadata)
@@ -1021,9 +1042,9 @@ pub fn rename<P: AsRef<Path>, Q: AsRef<Path>>(from: P, to: Q) -> io::Result<()> 
 ///
 /// # Platform-specific behavior
 ///
-/// This function currently corresponds to the `open` function in Unix
-/// with `O_RDONLY` for `from` and `O_WRONLY`, `O_CREAT`, and `O_TRUNC` for `to`.
-/// `O_CLOEXEC` is set for returned file descriptors.
+/// This function currently corresponds to the [`open`] function in Unix
+/// with [`O_RDONLY`] for `from` and [`O_WRONLY`], [`O_CREAT`], and [`O_TRUNC`] for `to`.
+/// [`O_CLOEXEC`] is set for returned file descriptors.
 /// On Windows, this function currently corresponds to `CopyFileEx`.
 /// Note that, this [may change in the future][changes].
 /// [changes]: ../io/index.html#platform-specific-behavior
@@ -1047,6 +1068,13 @@ pub fn rename<P: AsRef<Path>, Q: AsRef<Path>>(from: P, to: Q) -> io::Result<()> 
 /// try!(fs::copy("foo.txt", "bar.txt"));  // Copy foo.txt to bar.txt
 /// # Ok(()) }
 /// ```
+///
+/// [`O_CLOEXEC`]: ../../libc/constant.O_CLOEXEC.html
+/// [`O_CREAT`]: ../../libc/constant.O_CREAT.html
+/// [`O_RDONLY`]: ../../libc/constant.O_RDONLY.html
+/// [`O_TRUNC`]: ../../libc/constant.O_TRUNC.html
+/// [`O_WRONLY`]: ../../libc/constant.O_WRONLY.html
+/// [`open`]: ../../libc/fn.open.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn copy<P: AsRef<Path>, Q: AsRef<Path>>(from: P, to: Q) -> io::Result<u64> {
     fs_imp::copy(from.as_ref(), to.as_ref())
@@ -1059,7 +1087,7 @@ pub fn copy<P: AsRef<Path>, Q: AsRef<Path>>(from: P, to: Q) -> io::Result<u64> {
 ///
 /// # Platform-specific behavior
 ///
-/// This function currently corresponds to the `link` function on Unix
+/// This function currently corresponds to the [`link`] function on Unix
 /// and the `CreateHardLink` function on Windows.
 /// Note that, this [may change in the future][changes].
 /// [changes]: ../io/index.html#platform-specific-behavior
@@ -1081,6 +1109,8 @@ pub fn copy<P: AsRef<Path>, Q: AsRef<Path>>(from: P, to: Q) -> io::Result<u64> {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`link`]: ../../libc/fn.link.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn hard_link<P: AsRef<Path>, Q: AsRef<Path>>(src: P, dst: Q) -> io::Result<()> {
     fs_imp::link(src.as_ref(), dst.as_ref())
@@ -1090,7 +1120,7 @@ pub fn hard_link<P: AsRef<Path>, Q: AsRef<Path>>(src: P, dst: Q) -> io::Result<(
 ///
 /// The `dst` path will be a symbolic link pointing to the `src` path.
 /// On Windows, this will be a file symlink, not a directory symlink;
-/// for this reason, the platform-specific `std::os::unix::fs::symlink`
+/// for this reason, the platform-specific [`std::os::unix::fs::symlink`]
 /// and `std::os::windows::fs::{symlink_file, symlink_dir}` should be
 /// used instead to make the intent explicit.
 ///
@@ -1104,6 +1134,8 @@ pub fn hard_link<P: AsRef<Path>, Q: AsRef<Path>>(src: P, dst: Q) -> io::Result<(
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`std::os::unix::fs::symlink`]: ../../std/os/unix/fs/fn.symlink.html
 #[stable(feature = "rust1", since = "1.0.0")]
 #[rustc_deprecated(since = "1.1.0",
              reason = "replaced with std::os::unix::fs::symlink and \
@@ -1116,7 +1148,7 @@ pub fn soft_link<P: AsRef<Path>, Q: AsRef<Path>>(src: P, dst: Q) -> io::Result<(
 ///
 /// # Platform-specific behavior
 ///
-/// This function currently corresponds to the `readlink` function on Unix
+/// This function currently corresponds to the [`readlink`] function on Unix
 /// and the `CreateFile` function with `FILE_FLAG_OPEN_REPARSE_POINT` and
 /// `FILE_FLAG_BACKUP_SEMANTICS` flags on Windows.
 /// Note that, this [may change in the future][changes].
@@ -1140,6 +1172,8 @@ pub fn soft_link<P: AsRef<Path>, Q: AsRef<Path>>(src: P, dst: Q) -> io::Result<(
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`readlink`]: ../../libc/fn.readlink.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn read_link<P: AsRef<Path>>(path: P) -> io::Result<PathBuf> {
     fs_imp::readlink(path.as_ref())
@@ -1150,7 +1184,7 @@ pub fn read_link<P: AsRef<Path>>(path: P) -> io::Result<PathBuf> {
 ///
 /// # Platform-specific behavior
 ///
-/// This function currently corresponds to the `realpath` function on Unix
+/// This function currently corresponds to the [`realpath`] function on Unix
 /// and the `CreateFile` and `GetFinalPathNameByHandle` functions on Windows.
 /// Note that, this [may change in the future][changes].
 /// [changes]: ../io/index.html#platform-specific-behavior
@@ -1173,6 +1207,8 @@ pub fn read_link<P: AsRef<Path>>(path: P) -> io::Result<PathBuf> {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`realpath`]: ../../libc/fn.realpath.html
 #[stable(feature = "fs_canonicalize", since = "1.5.0")]
 pub fn canonicalize<P: AsRef<Path>>(path: P) -> io::Result<PathBuf> {
     fs_imp::canonicalize(path.as_ref())
@@ -1182,7 +1218,7 @@ pub fn canonicalize<P: AsRef<Path>>(path: P) -> io::Result<PathBuf> {
 ///
 /// # Platform-specific behavior
 ///
-/// This function currently corresponds to the `mkdir` function on Unix
+/// This function currently corresponds to the [`mkdir`] function on Unix
 /// and the `CreateDirectory` function on Windows.
 /// Note that, this [may change in the future][changes].
 /// [changes]: ../io/index.html#platform-specific-behavior
@@ -1205,6 +1241,8 @@ pub fn canonicalize<P: AsRef<Path>>(path: P) -> io::Result<PathBuf> {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`mkdir`]: ../../libc/fn.mkdir.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn create_dir<P: AsRef<Path>>(path: P) -> io::Result<()> {
     DirBuilder::new().create(path.as_ref())
@@ -1215,7 +1253,7 @@ pub fn create_dir<P: AsRef<Path>>(path: P) -> io::Result<()> {
 ///
 /// # Platform-specific behavior
 ///
-/// This function currently corresponds to the `mkdir` function on Unix
+/// This function currently corresponds to the [`mkdir`] function on Unix
 /// and the `CreateDirectory` function on Windows.
 /// Note that, this [may change in the future][changes].
 /// [changes]: ../io/index.html#platform-specific-behavior
@@ -1240,6 +1278,8 @@ pub fn create_dir<P: AsRef<Path>>(path: P) -> io::Result<()> {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`mkdir`]: ../../libc/fn.mkdir.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn create_dir_all<P: AsRef<Path>>(path: P) -> io::Result<()> {
     DirBuilder::new().recursive(true).create(path.as_ref())
@@ -1249,7 +1289,7 @@ pub fn create_dir_all<P: AsRef<Path>>(path: P) -> io::Result<()> {
 ///
 /// # Platform-specific behavior
 ///
-/// This function currently corresponds to the `rmdir` function on Unix
+/// This function currently corresponds to the [`rmdir`] function on Unix
 /// and the `RemoveDirectory` function on Windows.
 /// Note that, this [may change in the future][changes].
 /// [changes]: ../io/index.html#platform-specific-behavior
@@ -1272,6 +1312,8 @@ pub fn create_dir_all<P: AsRef<Path>>(path: P) -> io::Result<()> {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`rmdir`]: ../../libc/fn.rmdir.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn remove_dir<P: AsRef<Path>>(path: P) -> io::Result<()> {
     fs_imp::rmdir(path.as_ref())
@@ -1285,7 +1327,7 @@ pub fn remove_dir<P: AsRef<Path>>(path: P) -> io::Result<()> {
 ///
 /// # Platform-specific behavior
 ///
-/// This function currently corresponds to `opendir`, `lstat`, `rm` and `rmdir` functions on Unix
+/// This function currently corresponds to [`opendir`], [`lstat`], `rm` and [`rmdir`] functions on Unix
 /// and the `FindFirstFile`, `GetFileAttributesEx`, `DeleteFile`, and `RemoveDirectory` functions
 /// on Windows.
 /// Note that, this [may change in the future][changes].
@@ -1305,6 +1347,10 @@ pub fn remove_dir<P: AsRef<Path>>(path: P) -> io::Result<()> {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`lstat`]: ../../libc/fn.lstat.html
+/// [`opendir`]: ../../libc/fn.opendir.html
+/// [`rmdir`]: ../../libc/fn.rmdir.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn remove_dir_all<P: AsRef<Path>>(path: P) -> io::Result<()> {
     fs_imp::remove_dir_all(path.as_ref())
@@ -1317,7 +1363,7 @@ pub fn remove_dir_all<P: AsRef<Path>>(path: P) -> io::Result<()> {
 ///
 /// # Platform-specific behavior
 ///
-/// This function currently corresponds to the `opendir` function on Unix
+/// This function currently corresponds to the [`opendir`] function on Unix
 /// and the `FindFirstFile` function on Windows.
 /// Note that, this [may change in the future][changes].
 /// [changes]: ../io/index.html#platform-specific-behavior
@@ -1354,6 +1400,8 @@ pub fn remove_dir_all<P: AsRef<Path>>(path: P) -> io::Result<()> {
 ///     Ok(())
 /// }
 /// ```
+///
+/// [`opendir`]: ../../libc/fn.opendir.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub fn read_dir<P: AsRef<Path>>(path: P) -> io::Result<ReadDir> {
     fs_imp::readdir(path.as_ref()).map(ReadDir)
@@ -1363,7 +1411,7 @@ pub fn read_dir<P: AsRef<Path>>(path: P) -> io::Result<ReadDir> {
 ///
 /// # Platform-specific behavior
 ///
-/// This function currently corresponds to the `chmod` function on Unix
+/// This function currently corresponds to the [`chmod`] function on Unix
 /// and the `SetFileAttributes` function on Windows.
 /// Note that, this [may change in the future][changes].
 /// [changes]: ../io/index.html#platform-specific-behavior
@@ -1388,6 +1436,8 @@ pub fn read_dir<P: AsRef<Path>>(path: P) -> io::Result<ReadDir> {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// [`chmod`]: ../../libc/fn.chmod.html
 #[stable(feature = "set_permissions", since = "1.1.0")]
 pub fn set_permissions<P: AsRef<Path>>(path: P, perm: Permissions)
                                        -> io::Result<()> {

@@ -8,7 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Unix-specific extensions to primitives in the `std::fs` module.
+//! Unix-specific extensions to primitives in the [`std::fs`] module.
+//!
+//! [`std::fs`]: ../../../../../std/fs/index.html
 
 #![stable(feature = "rust1", since = "1.0.0")]
 
@@ -20,7 +22,9 @@ use sys;
 use sys_common::{FromInner, AsInner, AsInnerMut};
 use sys::platform::fs::MetadataExt as UnixMetadataExt;
 
-/// Unix-specific extensions to `Permissions`
+/// Unix-specific extensions to [`Permissions`]
+///
+/// [`Permissions`]: ../../../../../std/fs/struct.Permissions.html
 #[stable(feature = "fs_ext", since = "1.1.0")]
 pub trait PermissionsExt {
     /// Returns the underlying raw `mode_t` bits that are the standard Unix
@@ -53,7 +57,9 @@ impl PermissionsExt for Permissions {
     }
 }
 
-/// Unix-specific extensions to `OpenOptions`
+/// Unix-specific extensions to [`OpenOptions`]
+///
+/// [`OpenOptions`]: ../../../../../std/fs/struct.OpenOptions.html
 #[stable(feature = "fs_ext", since = "1.1.0")]
 pub trait OpenOptionsExt {
     /// Sets the mode bits that a new file will be created with.

@@ -51,13 +51,16 @@ impl Unpacked {
     }
 }
 
-/// A helper trait to avoid duplicating basically all the conversion code for `f32` and `f64`.
+/// A helper trait to avoid duplicating basically all the conversion code for [`f32`] and [`f64`].
 ///
 /// See the parent module's doc comment for why this is necessary.
 ///
 /// Should **never ever** be implemented for other types or be used outside the dec2flt module.
 /// Inherits from `Float` because there is some overlap, but all the reused methods are trivial.
 /// The "methods" (pseudo-constants) with default implementation should not be overriden.
+///
+/// [`f32`]: ../../../../std/primitive.f32.html
+/// [`f64`]: ../../../../std/primitive.f64.html
 pub trait RawFloat : Float + Copy + Debug + LowerExp
                     + Mul<Output=Self> + Div<Output=Self> + Neg<Output=Self>
 {

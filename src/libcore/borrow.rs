@@ -18,22 +18,29 @@ use marker::Sized;
 ///
 /// In general, there may be several ways to "borrow" a piece of data.  The
 /// typical ways of borrowing a type `T` are `&T` (a shared borrow) and `&mut T`
-/// (a mutable borrow). But types like `Vec<T>` provide additional kinds of
+/// (a mutable borrow). But types like [`Vec<T>`] provide additional kinds of
 /// borrows: the borrowed slices `&[T]` and `&mut [T]`.
 ///
 /// When writing generic code, it is often desirable to abstract over all ways
-/// of borrowing data from a given type. That is the role of the `Borrow`
+/// of borrowing data from a given type. That is the role of the [`Borrow`]
 /// trait: if `T: Borrow<U>`, then `&U` can be borrowed from `&T`.  A given
 /// type can be borrowed as multiple different types. In particular, `Vec<T>:
 /// Borrow<Vec<T>>` and `Vec<T>: Borrow<[T]>`.
 ///
-/// If you are implementing `Borrow` and both `Self` and `Borrowed` implement
-/// `Hash`, `Eq`, and/or `Ord`, they must produce the same result.
+/// If you are implementing [`Borrow`] and both `Self` and `Borrowed` implement
+/// [`Hash`], [`Eq`], and/or [`Ord`], they must produce the same result.
 ///
-/// `Borrow` is very similar to, but different than, `AsRef`. See
+/// [`Borrow`] is very similar to, but different than, [`AsRef`]. See
 /// [the book][book] for more.
 ///
 /// [book]: ../../book/borrow-and-asref.html
+///
+/// [`AsRef`]: ../../std/convert/trait.AsRef.html
+/// [`Borrow`]: ../../collections/borrow/trait.Borrow.html
+/// [`Eq`]: ../../std/cmp/trait.Eq.html
+/// [`Hash`]: ../../std/hash/trait.Hash.html
+/// [`Ord`]: ../../std/cmp/trait.Ord.html
+/// [`Vec<T>`]: ../../std/vec/struct.Vec.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait Borrow<Borrowed: ?Sized> {
     /// Immutably borrows from an owned value.
@@ -61,7 +68,9 @@ pub trait Borrow<Borrowed: ?Sized> {
 
 /// A trait for mutably borrowing data.
 ///
-/// Similar to `Borrow`, but for mutable borrows.
+/// Similar to [`Borrow`], but for mutable borrows.
+///
+/// [`Borrow`]: ../../collections/borrow/trait.Borrow.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub trait BorrowMut<Borrowed: ?Sized> : Borrow<Borrowed> {
     /// Mutably borrows from an owned value.

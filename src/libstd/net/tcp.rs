@@ -73,10 +73,13 @@ pub struct TcpStream(net_imp::TcpStream);
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct TcpListener(net_imp::TcpListener);
 
-/// An infinite iterator over the connections from a `TcpListener`.
+/// An infinite iterator over the connections from a [`TcpListener`].
 ///
 /// This iterator will infinitely yield `Some` of the accepted connections. It
-/// is equivalent to calling `accept` in a loop.
+/// is equivalent to calling [`accept`] in a loop.
+///
+/// [`TcpListener`]: ../../../std/net/struct.TcpListener.html
+/// [`accept`]: ../../../libc/fn.accept.html
 #[stable(feature = "rust1", since = "1.0.0")]
 pub struct Incoming<'a> { listener: &'a TcpListener }
 

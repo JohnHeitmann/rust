@@ -36,7 +36,7 @@
 //! The `(f, e)` representation is used by almost all code past the parsing stage.
 //!
 //! We then try a long chain of progressively more general and expensive special cases using
-//! machine-sized integers and small, fixed-sized floating point numbers (first `f32`/`f64`, then
+//! machine-sized integers and small, fixed-sized floating point numbers (first [`f32`]/[`f64`], then
 //! a type with 64 bit significand, `Fp`). When all these fail, we bite the bullet and resort to a
 //! simple but very slow algorithm that involved computing `f * 10^e` fully and doing an iterative
 //! search for the best approximation.
@@ -53,8 +53,8 @@
 //! inputs get into the critical region.
 //!
 //! Another aspect that needs attention is the ``RawFloat`` trait by which almost all functions
-//! are parametrized. One might think that it's enough to parse to `f64` and cast the result to
-//! `f32`. Unfortunately this is not the world we live in, and this has nothing to do with using
+//! are parametrized. One might think that it's enough to parse to [`f64`] and cast the result to
+//! [`f32`]. Unfortunately this is not the world we live in, and this has nothing to do with using
 //! base two or half-to-even rounding.
 //!
 //! Consider for example two types `d2` and `d4` representing a decimal type with two decimal
@@ -86,6 +86,9 @@
 //! "such that the exponent +/- the number of decimal digits fits into a 64 bit integer".
 //! Larger exponents are accepted, but we don't do arithmetic with them, they are immediately
 //! turned into {positive,negative} {zero,infinity}.
+//!
+//! [`f32`]: ../../../../std/primitive.f32.html
+//! [`f64`]: ../../../../std/primitive.f64.html
 
 #![doc(hidden)]
 #![unstable(feature = "dec2flt",
