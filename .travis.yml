@@ -12,6 +12,10 @@ git:
   depth: 2
   submodules: false
 
+branches:
+  only:
+    - travis-testing
+
 matrix:
   fast_finish: true
   include:
